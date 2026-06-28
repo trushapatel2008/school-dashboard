@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>શાળા અને શિક્ષકની પ્રોફાઇલ વિગત પત્રક</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Arial Unicode MS', sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        
+        /* 🎯 હેડર અને બટન લેઆઉટ */
+        .header-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px dashed #bdc3c7;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .main-title { font-size: 18px; font-weight: bold; color: #1e3d59; text-align: center; flex-grow: 1; }
+        
+        /* પ્રિન્ટ બટનની કસ્ટમ ડિઝાઇન */
+        .btn-print {
+
+
+    margin-top:35px;
+
+    padding:14px 28px;
+
+    border-radius:40px;
+
+    text-decoration:none;
+
+    background-color: #27ae60;
+   
+    color:white;
+
+    font-weight:600;
+
+    transition:0.3s;
+
+    }
+        .btn-print:hover { transform:translateY(-3px); box-shadow:0 8px 20px #219653; }
+
+/* BACK BUTTON */
+
+.back-btn{
+
+    display:inline-block;
+
+    margin-top:35px;
+
+    padding:14px 28px;
+
+    border-radius:40px;
+
+    text-decoration:none;
+
+    background:
+    linear-gradient(
+    45deg,
+    #4facfe,
+    #00c6fb
+    );
+
+    color:white;
+
+    font-weight:600;
+
+    transition:0.3s;
+}
+
+.back-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 8px 20px rgba(0,198,251,0.3);
+}
+
+        /* 📊 એક્સેલ પત્રક ગ્રીડ ડિઝાઇન */
+        .excel-table { width: 100%; border-collapse: collapse; background-color: #fff; }
+        .excel-table td { border: 1px solid #000; padding: 10px 12px; font-size: 14px; font-weight: bold; vertical-align: middle; }
+        
+        /* કલર કોડ્સ */
+        .label-cell { background-color: #ffff00; color: #000; width: 22%; text-align: left; }
+        .value-cell { background-color: #ffffff; color: #000; width: 23%; text-align: center; border-left: 1px solid #000; border-right: 1px solid #000; }
+        .info-header { background-color: #99ff99; color: #000; font-size: 16px; text-align: center; }
+        .info-box { background-color: #99ff99; color: #000; font-weight: bold; line-height: 1.8; text-align: left; padding: 15px; }
+
+        /* ✏️ ઇનપુટ અને સિલેક્ટ બોક્સ સ્ટાઇલ */
+        .excel-input, .excel-select {
+            width: 100%;
+            padding: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+            background-color: #fffcf0;
+        }
+        .excel-input:focus, .excel-select:focus {
+            outline: none;
+            border-color: #26c6da;
+            background-color: #fff;
+        }
+
+        /* 🖨️ પ્રિન્ટ સેટિંગ્સ */
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 0; max-width: 95%; }
+            .btn-print, .btn-back { display: none !important; }
+            .header-wrapper { border-bottom: none; }
+            
+            .excel-input, .excel-select {
+                border: none !important;
+                background: transparent !important;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-wrapper">
+        <div style="width: 120px; flex-shrink: 0;">
+            <button class="btn-print" onclick="window.print()">🖨️ પ્રિન્ટ</button>
+        </div> 
+        
+        <div class="main-title">📋 શાળા અને શિક્ષકની પ્રોફાઇલ વિગત પત્રક</div>
+        
+        <div style="width: 120px; text-align: right; flex-shrink: 0;">
+            <a href="praveshotsav-file.html" class="back-btn">⬅ Back</a>
+        </div>
+    </div>
+
+    <table class="excel-table" id="mainDataTable">
+        <tr>
+            <td class="label-cell">શાળા નું નામ:-</td>
+            <td class="value-cell">હાજીપુર પ્રાથમિક શાળા</td>
+            <td colspan="2" class="info-header">સૂચનાઓ</td>
+        </tr>
+        <tr>
+            <td class="label-cell">શૈક્ષણિક વર્ષ:-</td>
+            <td class="value-cell">
+                <input type="text" id="txtYear" class="excel-input" value="">
+            </td>
+            <td colspan="2" rowspan="9" class="info-box" style="vertical-align: top;">
+                આ ફાઇલમાં જે શીટની તમને જરૂર લાગે એટલી માહિતી ભરવી અને પ્રિન્ટ કરાવી.<br><br>
+                ગુજરાતી માટે <b>Arial Unicode MS</b> આ ફોન્ટ નો ઉપયોગ કરવો.<br><br>
+                કોઈ પણ રો કે કોલમ અતિ જરૂરિયાત સિવાય ઇન્સ્ટોલ ન કરાવી.<br><br>
+                પહેલા આખી માહિતી વાંચી સમજી લેવી પછી વિગતો ભરવી.
+            </td>
+        </tr>
+        <tr>
+            <td class="label-cell">ધોરણ:-</td>
+            <td class="value-cell">
+                <select class="excel-select">
+                    <option value="બાલવાટિકા">બાલવાટિકા</option>
+                    <option value="ધોરણ - ૧">ધોરણ - ૧</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-cell">ગામ:-</td>
+            <td class="value-cell">હાજીપુર પ્રાથમિક શાળા</td>
+        </tr>
+        <tr>
+            <td class="label-cell">પે.કેન્દ્ર શાળા:-</td>
+            <td class="value-cell">ભોયણ મોટી પગાર કેન્દ્ર શાળા નં-1</td>
+        </tr>
+        <tr>
+            <td class="label-cell">તાલુકો:-</td>
+            <td class="value-cell">કાલોલ</td>
+        </tr>
+        <tr>
+            <td class="label-cell">જીલ્લો:-</td>
+            <td class="value-cell">ગાંધીનગર</td>
+        </tr>
+        <tr>
+            <td class="label-cell">સી.આર.સી.:-</td>
+            <td class="value-cell">ભોયણ મોટી</td>
+        </tr>
+        <tr>
+            <td class="label-cell">વર્ગ શિક્ષકનું નામ:-</td>
+            <td class="value-cell">
+                <input type="text" class="excel-input" placeholder="અહીં નામ લખો...">
+            </td>
+        </tr>
+        <tr>
+            <td class="label-cell">ડાયસ કોડ:-</td>
+            <td class="value-cell">24060303601</td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    // 🔄 ચાલુ નાણાકીય/શૈક્ષણિક વર્ષ આપોઆપ ગણવા માટેનું લોજિક
+    window.onload = function() {
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth(); // 0 = જાન્યુઆરી, 5 = જૂન
+        const currentYear = currentDate.getFullYear();
+        
+        let academicYear = "";
+        // જો જૂન (MonthIndex 5) કે તેના પછીનો મહિનો હોય તો ચાલુ વર્ષ અને આવતું વર્ષ લેશે
+        if (currentMonth >= 5) {
+            academicYear = currentYear + "-" + (String(currentYear + 1).slice(-2));
+        } else {
+            // જો જાન્યુઆરી થી મે મહિનો હોય તો ગયું વર્ષ અને ચાલુ વર્ષ લેશે
+            academicYear = (currentYear - 1) + "-" + (String(currentYear).slice(-2));
+        }
+        
+        // ઇનપુટ બોક્સમાં ઓટોમેટિક કરંટ શૈક્ષણિક વર્ષ સેટ કરી દેશે
+        document.getElementById("txtYear").value = academicYear;
+    };
+</script>
+</body>
+</html>

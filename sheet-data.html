@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>શાળા વ્યવસ્થા૫ન સમિતિ (SMC) રજીસ્ટર</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Arial Unicode MS', 'Shruti', sans-serif;
+        }
+        body {
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        /* Top Header Area matching your Excel layout styling */
+        .excel-header {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .excel-header .main-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1e3d59;
+            margin: 5px 0;
+        }
+        .excel-header .sub-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ff0000; /* Red stars and title text style */
+            margin: 10px 0;
+        }
+        .meta-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 2px dashed #bdc3c7;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        
+        /* Interactive Input Form for Changing Data */
+        .form-box {
+            background-color: #ebf5fb;
+            border: 1px solid #aed6f1;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+        .form-box h4 {
+            margin: 0 0 12px 0;
+            color: #2e4053;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: #34495e;
+        }
+        .form-group input, .form-group select {
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .btn-row {
+            margin-top: 12px;
+            text-align: right;
+        }
+        .btn {
+            padding: 7px 15px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .btn-save { background-color: #27ae60; color: white; }
+        .btn-cancel { background-color: #7f8c8d; color: white; margin-left: 5px; }
+
+        /* Exact Table Layout from Screenshot */
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background-color: #fff;
+        }
+        th, td {
+            border: 1px solid #000000; /* Crisp dark borders like Excel */
+            padding: 8px 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        /* Header Blue Bar Color */
+        th {
+            background-color: #1f4e78; 
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* Row styling */
+        .data-row:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .data-row:hover {
+            background-color: #e8f4f8;
+        }
+        
+        /* Action column link styles */
+        .action-btn {
+            background: none;
+            border: none;
+            color: #2980b9;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: underline;
+            padding: 0 5px;
+        }
+        .action-btn.delete {
+            color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="excel-header">
+        <div class="main-title">સમગ્ર શિક્ષા અભિયાન - વાવ થરાદ જીલ્લો</div>
+        <div class="main-title" style="font-size: 16px;">દેરિયાવાળા પ્રા.શાળા (રૂણી)</div>
+        <div class="sub-title">※ શાળા વ્યવસ્થા૫ન સમિતિ (SMC) ※</div>
+    </div>
+    
+    <div class="meta-info-grid">
+        <div>ગામ:- રૂણી, તાલુકો:- ભાભર, જીલ્લો:- વાવ થરાદ, સી.આર.સી.:- અબાળા</div>
+        <div style="text-align: right;">વર્ષ :- 2026-27</div>
+    </div>
+
+    <div class="form-box">
+        <h4 id="formTitle">✏️ નવો સભ્ય ઉમેરો / ડેટા બદલો</h4>
+        <form id="smcForm">
+            <input type="hidden" id="editIndex" value="-1">
+            <div class="form-grid">
+                <div class="form-group" style="flex: 0 0 70px;">
+                    <label>ક્રમ</label>
+                    <input type="number" id="memberSr" required min="1">
+                </div>
+                <div class="form-group">
+                    <label>નામ</label>
+                    <input type="text" id="memberName" placeholder="દા.ત. ચૌધરી કુવારાભાઈ હેમાભાઈ" required>
+                </div>
+                <div class="form-group">
+                    <label>હોદો</label>
+                    <input type="text" id="memberRole" placeholder="દા.ત. અધ્યક્ષ / સભ્ય" required>
+                </div>
+                <div class="form-group">
+                    <label>અભ્યાસ</label>
+                    <input type="text" id="memberEducation" placeholder="દા.ત. ૯ પાસ / HSC">
+                </div>
+                <div class="form-group">
+                    <label>મોબાઈલ નંબર</label>
+                    <input type="tel" id="memberMobile" placeholder="10 આંકડાનો નંબર" maxlength="10">
+                </div>
+            </div>
+            <div class="btn-row">
+                <button type="submit" class="btn btn-save" id="btnSubmit">💾 સેવ કરો</button>
+                <button type="button" class="btn btn-cancel" onclick="resetForm()">સાફ કરો</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 60px;">ક્રમ</th>
+                    <th>નામ</th>
+                    <th style="width: 150px;">હોદો</th>
+                    <th style="width: 120px;">અભ્યાસ</th>
+                    <th style="width: 160px;">મોબાઈલ નંબર</th>
+                    <th style="width: 120px;" class="no-print">એક્શન</th>
+                </tr>
+            </thead>
+            <tbody id="smcTableBody">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Sample Starter Data matching your exact screenshot rows
+    const initialData = [
+        { sr: 1, name: "ચૌધરી કુવારાભાઈ હેમાભાઈ", role: "અધ્યક્ષ", edu: "૯ પાસ", mobile: "7600519530" },
+        { sr: 2, name: "ચૌધરી ચિંતનકુમાર મણીલાલ", role: "સભ્યસચિવ", edu: "HSC/PTC", mobile: "9624339633" },
+        { sr: 3, name: "પરમાર પાર્વતીબેન જયંતીભાઈ", role: "મહિલા પ્રોમીનેટ સભ્ય", edu: "B.A", mobile: "9714382970" },
+        { sr: 4, name: "ચૌધરી શંકરભાઈ મનજીભાઈ", role: "શિક્ષણવિદ", edu: "૧૦ પાસ", mobile: "6353433563" },
+        { sr: 5, name: "ચૌધરી સવશીભાઈ ખેમાભાઈ", role: "પી.આર.આઈ.સભ્ય", edu: "--", mobile: "9924759091" },
+        { sr: 6, name: "ચૌધરી અમરતભાઈ કરસનભાઈ", role: "વાલી સભ્ય", edu: "૭ પાસ", mobile: "9909477030" }
+    ];
+
+    // Load from local storage or set initial screenshot values
+    let smcRegistry = JSON.parse(localStorage.getItem('smcRecordsData')) || initialData;
+
+    const smcForm = document.getElementById('smcForm');
+    const tableBody = document.getElementById('smcTableBody');
+
+    window.onload = function() {
+        renderTable();
+    };
+
+    // Render data inside the table matrix
+    function renderTable() {
+        tableBody.innerHTML = '';
+        
+        // Sort registry by serial number automatically
+        smcRegistry.sort((a, b) => a.sr - b.sr);
+
+        smcRegistry.forEach((member, index) => {
+            const tr = document.createElement('tr');
+            tr.className = 'data-row';
+            tr.innerHTML = `
+                <td>${member.sr}</td>
+                <td style="text-align: left; padding-left: 15px;">${member.name}</td>
+                <td>${member.role}</td>
+                <td>${member.edu || '--'}</td>
+                <td>${member.mobile || '--'}</td>
+                <td class="no-print">
+                    <button class="action-btn" onclick="editMember(${index})">બદલો</button> | 
+                    <button class="action-btn delete" onclick="deleteMember(${index})">ડીલીટ</button>
+                </td>
+            `;
+            tableBody.appendChild(tr);
+        });
+    }
+
+    // Form Submit logic (Handles both adding new and updating existing row)
+    smcForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const editIndex = parseInt(document.getElementById('editIndex').value);
+        
+        const memberData = {
+            sr: parseInt(document.getElementById('memberSr').value),
+            name: document.getElementById('memberName').value,
+            role: document.getElementById('memberRole').value,
+            edu: document.getElementById('memberEducation').value,
+            mobile: document.getElementById('memberMobile').value
+        };
+
+        if (editIndex === -1) {
+            // Check if Sr already exists to avoid duplication errors
+            const exists = smcRegistry.some(m => m.sr === memberData.sr);
+            if(exists) {
+                alert('આ ક્રમ નંબરનો ડેટા ઓલરેડી લિસ્ટમાં છે! પ્લીઝ ક્રમ બદલો અથવા તે રો ને એડિટ કરો.');
+                return;
+            }
+            // Add Mode
+            smcRegistry.push(memberData);
+        } else {
+            // Update/Change Mode
+            smcRegistry[editIndex] = memberData;
+        }
+
+        saveToLocalStorage();
+        resetForm();
+        renderTable();
+    });
+
+    // Populate data back to inputs for changing/editing
+    function editMember(index) {
+        const member = smcRegistry[index];
+        document.getElementById('editIndex').value = index;
+        document.getElementById('memberSr').value = member.sr;
+        document.getElementById('memberName').value = member.name;
+        document.getElementById('memberRole').value = member.role;
+        document.getElementById('memberEducation').value = member.edu;
+        document.getElementById('memberMobile').value = member.mobile;
+        
+        document.getElementById('formTitle').innerText = "✏️ ડેટામાં ફેરફાર કરો (Editing Mode)";
+        document.getElementById('btnSubmit').innerText = "💾 અપડેટ કરો";
+        document.getElementById('smcForm').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Delete row functionality
+    function deleteMember(index) {
+        if(confirm('શું તમે આ સભ્યનો ડેટા ખરેખર ડીલીટ કરવા માંગો છો?')) {
+            smcRegistry.splice(index, 1);
+            saveToLocalStorage();
+            renderTable();
+        }
+    }
+
+    // Sync array to Browser Local Storage memory setup
+    function saveToLocalStorage() {
+        localStorage.setItem('smcRecordsData', JSON.stringify(smcRegistry));
+    }
+
+    // Clear form reset helper
+    function resetForm() {
+        smcForm.reset();
+        document.getElementById('editIndex').value = "-1";
+        document.getElementById('formTitle').innerText = "✏️ નવો સભ્ય ઉમેરો / ડેટા બદલો";
+        document.getElementById('btnSubmit').innerText = "💾 સેવ કરો";
+        
+        // Suggest next consecutive index serial number automatically
+        if(smcRegistry.length > 0) {
+            const nextSr = Math.max(...smcRegistry.map(m => m.sr)) + 1;
+            document.getElementById('memberSr').value = nextSr;
+        } else {
+            document.getElementById('memberSr').value = 1;
+        }
+    }
+</script>
+
+</body>
+</html>

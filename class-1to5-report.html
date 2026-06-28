@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="gu">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Class 1 to 5 MDM Report (ધોરણ ૧ થી ૫ મધ્યાહન ભોજન પત્રક)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            padding: 20px;
+            margin: 0;
+        }
+
+        /* ટોપ કંટ્રોલ બાર */
+        .web-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        /* બટન ડિઝાઇન */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s;
+        }
+
+        .back-btn { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; margin-right: 10px;}
+        .back-btn:hover { background: #e2e8f0; }
+        .excel-btn { background: #198754; color: white; margin-right: 10px; text-decoration: none; display: inline-block; }
+        .excel-btn:hover { background: #146c43; }
+        .print-btn { background: #0d6efd; color: white; }
+        .print-btn:hover { background: #0b5ed7; }
+
+        /* મેઈન કંટેનર */
+        .report-sheet {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #cbd5e1;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        /* હેડિંગ્સ */
+        .main-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+        }
+        .sub-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 20px;
+        }
+
+        /* શાળાની માહિતી */
+        .school-meta-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+
+        /* ગ્રીડ લેઆઉટ */
+        .info-and-filter-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 15px;
+            gap: 20px;
+        }
+
+        .registered-box {
+            flex: 1;
+        }
+
+        .registered-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .registered-table th, .registered-table td {
+            border: 1px solid #475569;
+            padding: 6px 8px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .registered-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .registered-table td {
+            font-weight: bold;
+            background: #ffffff;
+        }
+
+        /* ફિલ્ટર બોક્સ */
+        .date-option-box {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 15px;
+            border-radius: 8px;
+            min-width: 280px;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .date-option-box label {
+            font-weight: bold;
+            color: #1e293b;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        .date-option-box select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            font-weight: 600;
+            background: #ffffff;
+            outline: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* ટેબલ કન્ટેનર */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 5px;
+            margin-bottom: 25px;
+        }
+
+        table.main-report {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table.main-report th, table.main-report td {
+            border: 1px solid #475569;
+            padding: 6px 4px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        table.main-report .main-header th {
+            background: #e2eafc;
+            color: #1e3a8a;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        table.main-report .sub-header th {
+            background: #f1f5f9;
+            color: #0f172a;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 5px 4px;
+        }
+
+        /* કલર શેડ્સ */
+        .date-col { font-weight: bold; background: #f8fafc; }
+        .sc-box { background: #faf5ff; color: #6b21a8; }
+        .st-box { background: #f0fdf4; color: #166534; }
+        .obc-box { background: #fffdf5; color: #854d0e; }
+        .gen-box { background: #f0f9ff; color: #075985; }
+        .total-box { background: #fdf2f8; color: #9d174d; font-weight: 600; }
+        .grand-total-box { background: #fef2f2; color: #991b1b; font-weight: bold; font-size: 13px; }
+        .sign-col { background: #ffffff; }
+
+        table.main-report .total-row td {
+            background: #184e77;
+            color: white;
+            font-weight: bold;
+            font-size: 13px;
+            padding: 8px 4px;
+        }
+
+        .table-split-title {
+            text-align: center; 
+            font-size: 15px; 
+            font-weight: bold; 
+            color: #1e3a8a; 
+            margin-bottom: 10px; 
+            background: #e2eafc; 
+            padding: 8px; 
+            border-radius: 5px; 
+            border: 1px solid #b9d6fe;
+        }
+
+        /* 🖨️ પ્રિન્ટ સેટિંગ્સ */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0.2in;
+            }
+            
+            .web-controls, .date-option-box { display: none !important; }
+            body { background: white; padding: 0; margin: 0; color: black; }
+            
+            .report-sheet { border: none; padding: 0; box-shadow: none; max-width: 100%; width: 100%; }
+            
+            .main-title { font-size: 16px; margin-bottom: 2px; text-align: center; }
+            .sub-title { font-size: 13px; margin-bottom: 12px; text-align: center; }
+            .table-split-title { font-size: 11px; padding: 5px; margin-bottom: 6px; }
+            
+            .school-meta-row { font-size: 11px; margin-bottom: 8px; padding-bottom: 4px; }
+            .info-and-filter-grid { margin-bottom: 10px; }
+            
+            table.main-report th, table.main-report td, .registered-table th, .registered-table td { 
+                border: 1px solid #000 !important; 
+                padding: 4px 2px !important; 
+                font-size: 10px !important;
+            }
+            
+            table.main-report .main-header th { font-size: 10.5px !important; }
+            table.main-report .sub-header th { font-size: 9.5px !important; }
+            table.main-report .total-row td { font-size: 10px !important; padding: 5px 2px !important; }
+            .grand-total-box { font-size: 10px !important; }
+
+            .table-container { margin-bottom: 15px; page-break-inside: avoid; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="web-controls">
+    <div>
+        <a href="mdm.html" class="btn back-btn">⬅ Back</a>
+    </div>
+    <div>
+        <button onclick="downloadExcel()" class="btn excel-btn">📊 Download Excel</button>
+        <button onclick="window.print()" class="btn print-btn">Print Report</button>
+    </div>
+</div>
+
+<div class="report-sheet">
+    
+    <div class="main-title">અક્ષયપાત્ર ફાઉન્ડેશન (મધ્યાહન ભોજન યોજના)</div>
+    <div class="sub-title">ધોરણ ૧ થી ૫ મધ્યાહન ભોજન વિગત પત્રક</div>
+
+    <div class="school-meta-row">
+        <div>
+            <span>શાળાનું નામ :- <b id="lblSchoolName">હાજીપુર પ્રાથમિક શાળા</b></span>
+            <span style="margin-left: 40px;">કુલ વર્ગો :- <b>૫ (ધોરણ ૧ થી ૫)</b></span>
+            <span style="margin-left: 40px;">કેન્દ્ર નંબર :- <b>............</b></span>
+        </div>
+        <div>
+            <span>તારીખ / માસ :- <b id="lblReportMonth">............</b></span>
+        </div>
+    </div>
+
+    <div class="info-and-filter-grid">
+        <div class="registered-box">
+            <table class="registered-table">
+                <thead>
+                    <tr>
+                        <th colspan="11" style="background: #e2eafc; color: #1e3a8a; font-size: 14px;">રજીસ્ટર બાળકોની સંખ્યા (Registered Students Details - Class 1 to 5)</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">અનો. જાતિ (SC)</th>
+                        <th colspan="2">અનો. જનજાતિ (ST)</th>
+                        <th colspan="2">સા.શૈ.પ.વ. (OBC)</th>
+                        <th colspan="2">અન્ય (General)</th>
+                        <th colspan="2" style="background: #fdf2f8;">કુલ</th>
+                        <th rowspan="2" style="background: #fee2e2; vertical-align: middle;">કુલ બાળકો</th>
+                    </tr>
+                    <tr>
+                        <th>કુમાર</th><th>કન્યા</th>
+                        <th>કુમાર</th><th>કન્યા</th>
+                        <th>કુમાર</th><th>કન્યા</th>
+                        <th>કુમાર</th><th>કન્યા</th>
+                        <th style="background: #fdf2f8;">કુમાર</th><th style="background: #fdf2f8;">કન્યા</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="reg_sc_b">0</td><td id="reg_sc_g">0</td>
+                        <td id="reg_st_b">0</td><td id="reg_st_g">0</td>
+                        <td id="reg_obc_b">0</td><td id="reg_obc_g">0</td>
+                        <td id="reg_gen_b">0</td><td id="reg_gen_g">0</td>
+                        <td id="reg_tot_b" style="background: #fff5f5;">0</td><td id="reg_tot_g" style="background: #fff5f5;">0</td>
+                        <td id="reg_grand_total" style="color: #2563eb; background: #ffe4e6; font-size: 14px;">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="date-option-box">
+            <label for="monthFilter">માસ પસંદ કરો:</label>
+            <select id="monthFilter" onchange="initReport()"></select>
+
+            <label for="dateFilter" style="margin-top: 5px;">તારીખ ઓપ્શન પસંદ કરો:</label>
+            <select id="dateFilter" onchange="applyDateFilter()">
+                <option value="all">આખો મહિનો (1 to 31)</option>
+                <option value="1-15">૧ થી ૧૫ (1 to 15)</option>
+                <option value="16-31">૧૬ થી ૩૧ (16 to 31)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-split-title">ધોરણ ૧ થી ૫ MDM હાજર બાળકોની સંખ્યા</div>
+    <div class="table-container">
+        <table class="main-report" id="tableAttendance">
+            <thead>
+                <tr class="main-header">
+                    <th rowspan="2" style="width: 10%;">તારીખ</th>
+                    <th colspan="2">અનો. જાતિ</th>
+                    <th colspan="2">અનો. જનજાતિ</th>
+                    <th colspan="2">સા.શૈ.પ.વ.</th>
+                    <th colspan="2">અન્ય</th>
+                    <th colspan="2">કુલ</th>
+                    <th rowspan="2" style="width: 10%;">ગ્રાન્ડ ટોટલ</th>
+                    <th rowspan="2" style="width: 12%;">આચાર્યની સહી</th>
+                </tr>
+                <tr class="sub-header">
+                    <th>કુમાર</th><th>કન્યા</th>
+                    <th>કુમાર</th><th>કન્યા</th>
+                    <th>કુમાર</th><th>કન્યા</th>
+                    <th>કુમાર</th><th>કન્યા</th>
+                    <th>કુમાર</th><th>કન્યા</th>
+                </tr>
+            </thead>
+            <tbody id="attendanceRows">
+                </tbody>
+            <tfoot>
+                </tfoot>
+        </table>
+    </div>
+
+    <div class="table-split-title">લાભાર્થી બાળકોની સંખ્યા</div>
+    <div class="table-container">
+        <table class="main-report" id="tableBeneficiary">
+            <thead>
+                <tr class="main-header">
+                    <th rowspan="2" style="width: 10%;">તારીખ</th>
+                    <th colspan="2">અનો. જાતિ</th>
+                    <th colspan="2">અનો. જનજાતિ</th>
+                    <th colspan="2">સા.શૈ.પ.વ.</th>
+                    <th colspan="2">અન્ય</th>
+                    <th colspan="2">કુલ</th>
+                    <th rowspan="2" style="width: 10%;">ગ્રાન્ડ ટોટલ</th>
+                    <th rowspan="2" style="width: 12%;">આચાર્યની સહી</th>
+                </tr>
+                <tr class="sub-header">
+                    <th>કુમાર</th><th>કન્યા</th>
+                    <th>કુમાર</th><th>કન્યા</th>
+                    <th>કુમાર</th><th>કન્યા</th>
+                    <th>કુમાર</th><th>કન્યા</th>
+                    <th>કુમાર</th><th>કન્યા</th>
+                </tr>
+            </thead>
+            <tbody id="beneficiaryRows">
+                </tbody>
+            <tfoot>
+                </tfoot>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // 🎯 ફક્ત ધોરણ ૧ થી ૫ નું જ સિલેક્શન
+    const TARGET_CLASSES = ["ધોરણ-૧", "ધોરણ-૨", "ધોરણ-૩", "ધોરણ-૪", "ધોરણ-૫"];
+    
+    const GUJ_MONTHS = ["જાન્યુઆરી", "ફેબ્રુઆરી", "માર્ચ", "એપ્રિલ", "મે", "જૂન", "જુલાઈ", "ઓગસ્ટ", "સપ્ટેમ્બર", "ઓક્ટોબર", "નવેમ્બર", "ડિસેમ્બર"];
+
+    window.onload = function() {
+        generateMonthOptions();
+        initReport();
+    };
+
+    function generateMonthOptions() {
+        const monthSelect = document.getElementById("monthFilter");
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth();
+
+        monthSelect.innerHTML = "";
+        for (let i = 0; i < 6; i++) {
+            let d = new Date(currentYear, currentMonth - i, 1);
+            let monthVal = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+            let monthText = `${GUJ_MONTHS[d.getMonth()]} - ${d.getFullYear()}`;
+            
+            let opt = document.createElement("option");
+            opt.value = monthVal;
+            opt.innerText = monthText;
+            monthSelect.appendChild(opt);
+        }
+    }
+
+    function initReport() {
+        const dbAttendance = JSON.parse(localStorage.getItem("SchoolAttendanceDB")) || {};
+        const dbSettings = JSON.parse(localStorage.getItem("SchoolSettingsDB")) || {};
+
+        if (dbSettings.profile) {
+            document.getElementById("lblSchoolName").innerText = dbSettings.profile.schoolName || "શાળાનું નામ ઉપલબ્ધ નથી";
+        }
+
+        const selectedMonthVal = document.getElementById("monthFilter").value;
+        const parts = selectedMonthVal.split("-");
+        const selYear = parseInt(parts[0]);
+        const selMonth = parseInt(parts[1]) - 1;
+
+        document.getElementById("lblReportMonth").innerText = document.getElementById("monthFilter").options[document.getElementById("monthFilter").selectedIndex].text;
+
+        // ૧. રજીસ્ટર થયેલા બાળકોનો ડેટા સેટ કરો (ધોરણ ૧ થી ૫ નો સરવાળો)
+        let regData = { sc_b:0, sc_g:0, st_b:0, st_g:0, obc_b:0, obc_g:0, gen_b:0, gen_g:0 };
+        if (dbSettings.students) {
+            TARGET_CLASSES.forEach(cls => {
+                if (dbSettings.students[cls]) {
+                    const cData = dbSettings.students[cls];
+                    regData.sc_b += parseInt(cData.sc_boy || 0);
+                    regData.sc_g += parseInt(cData.sc_girl || 0);
+                    regData.st_b += parseInt(cData.st_boy || 0);
+                    regData.st_g += parseInt(cData.st_girl || 0);
+                    regData.obc_b += parseInt(cData.obc_boy || 0);
+                    regData.obc_g += parseInt(cData.obc_girl || 0);
+                    regData.gen_b += parseInt(cData.general_boy || 0);
+                    regData.gen_g += parseInt(cData.general_girl || 0);
+                }
+            });
+        }
+
+        document.getElementById("reg_sc_b").innerText = regData.sc_b;
+        document.getElementById("reg_sc_g").innerText = regData.sc_g;
+        document.getElementById("reg_st_b").innerText = regData.st_b;
+        document.getElementById("reg_st_g").innerText = regData.st_g;
+        document.getElementById("reg_obc_b").innerText = regData.obc_b;
+        document.getElementById("reg_obc_g").innerText = regData.obc_g;
+        document.getElementById("reg_gen_b").innerText = regData.gen_b;
+        document.getElementById("reg_gen_g").innerText = regData.gen_g;
+
+        let totB = regData.sc_b + regData.st_b + regData.obc_b + regData.gen_b;
+        let totG = regData.sc_g + regData.st_g + regData.obc_g + regData.gen_g;
+        document.getElementById("reg_tot_b").innerText = totB;
+        document.getElementById("reg_tot_g").innerText = totG;
+        document.getElementById("reg_grand_total").innerText = totB + totG;
+
+        // ૨. દિવસો નક્કી કરવા (ચાલુ મહિનો હોય તો આજ સુધી, જૂનો હોય તો આખો મહિનો)
+        const today = new Date();
+        let maxDays = new Date(selYear, selMonth + 1, 0).getDate();
+        if (today.getFullYear() === selYear && today.getMonth() === selMonth) {
+            maxDays = today.getDate();
+        }
+
+        let attBodyHtml = "";
+        let benBodyHtml = "";
+
+        for (let day = 1; day <= maxDays; day++) {
+            let dateStr = `${selYear}-${String(selMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            let displayDate = `${String(day).padStart(2, '0')}/${String(selMonth + 1).padStart(2, '0')}/${selYear}`;
+
+            let dayAtt = { sc_b:0, sc_g:0, st_b:0, st_g:0, obc_b:0, obc_g:0, gen_b:0, gen_g:0 };
+            
+            if (dbAttendance[dateStr]) {
+                TARGET_CLASSES.forEach(cls => {
+                    if (dbAttendance[dateStr][cls] && dbAttendance[dateStr][cls].castAttendance) {
+                        let cast = dbAttendance[dateStr][cls].castAttendance;
+                        dayAtt.sc_b += parseInt(cast.sc_boy || 0);
+                        dayAtt.sc_g += parseInt(cast.sc_girl || 0);
+                        dayAtt.st_b += parseInt(cast.st_boy || 0);
+                        dayAtt.st_g += parseInt(cast.st_girl || 0);
+                        dayAtt.obc_b += parseInt(cast.obc_boy || 0);
+                        dayAtt.obc_g += parseInt(cast.obc_girl || 0);
+                        dayAtt.gen_b += parseInt(cast.general_boy || 0);
+                        dayAtt.gen_g += parseInt(cast.general_girl || 0);
+                    }
+                });
+            }
+
+            let tBoys = dayAtt.sc_b + dayAtt.st_b + dayAtt.obc_b + dayAtt.gen_b;
+            let tGirls = dayAtt.sc_g + dayAtt.st_g + dayAtt.obc_g + dayAtt.gen_g;
+            let gTotal = tBoys + tGirls;
+
+            let dayOfWeek = new Date(selYear, selMonth, day).getDay();
+            let isSunday = (dayOfWeek === 0);
+
+            if (isSunday) {
+                let sunRow = `<tr class="data-row" data-day="${day}">
+                    <td class="date-col">${displayDate}</td>
+                    <td colspan="12" style="background:#fee2e2; color:#991b1b; font-weight:bold; letter-spacing:2px;">રવિવાર (SUNDAY)</td>
+                </tr>`;
+                attBodyHtml += sunRow;
+                benBodyHtml += sunRow;
+            } else {
+                let rowTemplate = `
+                <tr class="data-row" data-day="${day}">
+                    <td class="date-col">${displayDate}</td>
+                    <td class="sc-box">${dayAtt.sc_b}</td><td class="sc-box">${dayAtt.sc_g}</td>
+                    <td class="st-box">${dayAtt.st_b}</td><td class="st-box">${dayAtt.st_g}</td>
+                    <td class="obc-box">${dayAtt.obc_b}</td><td class="obc-box">${dayAtt.obc_g}</td>
+                    <td class="gen-box">${dayAtt.gen_b}</td><td class="gen-box">${dayAtt.gen_g}</td>
+                    <td class="total-box">${tBoys}</td><td class="total-box">${tGirls}</td>
+                    <td class="grand-total-box">${gTotal}</td>
+                    <td class="sign-col"></td>
+                </tr>`;
+                attBodyHtml += rowTemplate;
+                benBodyHtml += rowTemplate;
+            }
+        }
+
+        document.getElementById("attendanceRows").innerHTML = attBodyHtml;
+        document.getElementById("beneficiaryRows").innerHTML = benBodyHtml;
+
+        applyDateFilter();
+    }
+
+    function applyDateFilter() {
+        let filterValue = document.getElementById("dateFilter").value;
+        let rows = document.querySelectorAll(".data-row");
+
+        rows.forEach(row => {
+            let day = parseInt(row.getAttribute("data-day"));
+            if (filterValue === "1-15") {
+                if (day >= 1 && day <= 15) row.style.display = "";
+                else row.style.display = "none";
+            } else if (filterValue === "16-31") {
+                if (day >= 16 && day <= 31) row.style.display = "";
+                else row.style.display = "none";
+            } else {
+                row.style.display = "";
+            }
+        });
+
+        calculateFooterTotals();
+    }
+
+    function calculateFooterTotals() {
+        let tables = ['tableAttendance', 'tableBeneficiary'];
+
+        tables.forEach(tableId => {
+            let table = document.getElementById(tableId);
+            let rows = table.querySelectorAll("tbody tr");
+            let sums = Array(11).fill(0);
+
+            rows.forEach(row => {
+                if (row.style.display !== "none" && !row.innerHTML.includes("રવિવાર")) {
+                    let cells = row.querySelectorAll("td");
+                    for (let i = 1; i <= 11; i++) {
+                        sums[i-1] += parseInt(cells[i].innerText || 0);
+                    }
+                }
+            });
+
+            let tfoot = table.querySelector("tfoot");
+            tfoot.innerHTML = `
+            <tr class="total-row">
+                <td>કુલ સરવાળો</td>
+                <td>${sums[0]}</td><td>${sums[1]}</td>
+                <td>${sums[2]}</td><td>${sums[3]}</td>
+                <td>${sums[4]}</td><td>${sums[5]}</td>
+                <td>${sums[6]}</td><td>${sums[7]}</td>
+                <td>${sums[8]}</td><td>${sums[9]}</td>
+                <td>${sums[10]}</td>
+                <td></td>
+            </tr>`;
+        });
+    }
+
+    // 📊 એક્સેલ ડાઉનલોડ ફંક્શન
+    function downloadExcel() {
+        let monthText = document.getElementById("monthFilter").options[document.getElementById("monthFilter").selectedIndex].text;
+        let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+        
+        csvContent += `અક્ષયપાત્ર ફાઉન્ડેશન (મધ્યાહન ભોજન યોજના),,, ધોરણ ૧ થી ૫ મધ્યાહન ભોજન વિગત પત્રક\n`;
+        csvContent += `શાળાનું નામ: ${document.getElementById("lblSchoolName").innerText},,,માસ: ${monthText}\n\n`;
+        
+        csvContent += `ધોરણ ૧ થી ૫ MDM હાજર બાળકોની સંખ્યા\n`;
+        let attTable = document.getElementById("tableAttendance");
+        csvContent += `તારીખ,SC કુમાર,SC કન્યા,ST કુમાર,ST કન્યા,OBC કુમાર,OBC કન્યા,GEN કુમાર,GEN કન્યા,કુલ કુમાર,કુલ કન્યા,ગ્રાન્ડ ટોટલ\n`;
+        
+        attTable.querySelectorAll("tbody tr").forEach(row => {
+            if(row.style.display !== "none") {
+                let cells = row.querySelectorAll("td");
+                if(row.innerHTML.includes("SUNDAY")) {
+                    csvContent += `${cells[0].innerText},રવિવાર,,,,,,,,,\n`;
+                } else {
+                    let rowData = [];
+                    for(let i=0; i<12; i++) { rowData.push(cells[i].innerText); }
+                    csvContent += rowData.join(",") + "\n";
+                }
+            }
+        });
+        
+        let footCells = attTable.querySelectorAll("tfoot td");
+        let footData = [];
+        for(let i=0; i<12; i++) { footData.push(footCells[i].innerText); }
+        csvContent += footData.join(",") + "\n";
+
+        let encodedUri = encodeURI(csvContent);
+        let link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `MDM_Report_Class_1to5_${monthText.replace(/ /g,'')}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+
+</body>
+</html>

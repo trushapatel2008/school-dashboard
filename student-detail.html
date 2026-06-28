@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>વિદ્યાર્થી પ્રોફાઇલ સર્ચ - હાજીપુર</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { min-height: 100vh; background: linear-gradient(rgba(240,255,252,0.90), rgba(225,245,255,0.90)); padding: 30px 20px; }
+        
+        .main-card { width: 100%; max-width: 800px; margin: 0 auto; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 24px; padding: 35px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 2px solid rgba(24, 78, 119, 0.1); padding-bottom: 15px; }
+        .header h1 { color: #184e77; font-size: 26px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .back-btn { padding: 8px 20px; border-radius: 30px; text-decoration: none; color: white; font-weight: 600; background: linear-gradient(45deg, #4facfe, #00c6fb); box-shadow: 0 4px 15px rgba(0, 198, 251, 0.3); transition: 0.3s; font-size: 14px; }
+        .back-btn:hover { transform: translateY(-2px); }
+        
+        /* FILTER PANEL */
+        .filter-panel { background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.05); margin-bottom: 25px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .filter-group { display: flex; flex-direction: column; gap: 8px; }
+        .filter-group label { color: #184e77; font-weight: 600; font-size: 14px; }
+        .custom-select { padding: 12px; font-size: 15px; border-radius: 10px; border: 2px solid #a2d2ff; outline: none; background-color: #f8fdff; cursor: pointer; transition: 0.3s; color: #333; }
+        .custom-select:focus { border-color: #4facfe; box-shadow: 0 0 8px rgba(79, 172, 254, 0.2); }
+        .custom-select:disabled { background-color: #f1f5f9; border-color: #cbd5e1; cursor: not-allowed; color: #94a3b8; }
+
+        /* PROFILE DISPLAY CARD */
+        .detail-display { background: white; border-radius: 16px; padding: 25px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.05); display: none; }
+        .profile-title { color: #0077b6; margin-bottom: 20px; border-bottom: 2px solid #4facfe; padding-bottom: 8px; font-size: 20px; font-weight: 600; }
+        .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #edf2f7; }
+        .detail-row:last-child { border-bottom: none; }
+        .detail-label { font-weight: 600; color: #184e77; font-size: 14px; }
+        .detail-value { color: #333; text-align: right; max-width: 60%; font-size: 14px; font-weight: 500; word-break: break-all; }
+
+        .status-msg { text-align: center; padding: 25px; color: #718096; font-size: 15px; font-weight: 500; background: white; border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.05); }
+    </style>
+</head>
+<body>
+
+    <div class="main-card">
+        <div class="header">
+            <h1><span>🎓</span> વિદ્યાર્થી પ્રોફાઇલ કાર્ડ</h1>
+            <a href="information.html" class="back-btn">⬅ Back</a>
+        </div>
+
+        <div class="filter-panel">
+            <div class="filter-group">
+                <label for="classSelect">૧. ધોરણ પસંદ કરો:</label>
+                <select id="classSelect" class="custom-select" onchange="onClassChange()" disabled>
+                    <option value="">-- લોડ થઈ રહ્યું છે... --</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="divSelect">૨. વર્ગ (Section) પસંદ કરો:</label>
+                <select id="divSelect" class="custom-select" onchange="onSectionChange()" disabled>
+                    <option value="">-- પહેલા ધોરણ પસંદ કરો --</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="studentSelect">૩. વિદ્યાર્થીનું નામ પસંદ કરો:</label>
+                <select id="studentSelect" class="custom-select" onchange="onStudentNameChange()" disabled>
+                    <option value="">-- પહેલા વર્ગ પસંદ કરો --</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="statusMsg" class="status-msg">💡 માહિતી જોવા માટે કૃપા કરીને ઉપરથી ધોરણ અને વર્ગ પસંદ કરો.</div>
+
+        <div id="profileCard" class="detail-display"></div>
+    </div>
+
+    <script>
+        let studentMasterData = []; // લોકલ સ્ટોરેજનો આખો ડેટા
+        let filteredStudentsList = []; // ફિલ્ટર થયેલા વિદ્યાર્થીઓનું લિસ્ટ
+
+        window.onload = function() {
+            const classSelect = document.getElementById("classSelect");
+            const statusMsg = document.getElementById("statusMsg");
+
+            // 📥 બ્રાઉઝર મેમરીમાંથી વિદ્યાર્થીઓનો ડેટા ખેંચવો
+            let savedData = localStorage.getItem("hajipur_student_data");
+            
+            if (savedData) {
+                studentMasterData = JSON.parse(savedData);
+
+                if (studentMasterData && studentMasterData.length > 0) {
+                    // ૧. એક્સેલમાંથી આપોઆપ યુનિક ધોરણ (Classes) શોધીને ગોઠવવા
+                    let classes = new Set();
+                    studentMasterData.forEach(row => {
+                        if (row.StudyingClass !== undefined) {
+                            classes.add(row.StudyingClass.toString().trim());
+                        }
+                    });
+
+                    let sortedClasses = Array.from(classes).sort((a, b) => a - b);
+
+                    classSelect.innerHTML = '<option value="">-- ધોરણ પસંદ કરો --</option>';
+                    sortedClasses.forEach(cls => {
+                        let option = document.createElement("option");
+                        option.value = cls;
+                        option.text = `ધોરણ ${cls}`;
+                        classSelect.appendChild(option);
+                    });
+
+                    classSelect.disabled = false;
+                } else {
+                    statusMsg.innerHTML = "❌ ડેટાબેઝમાં કોઈ વિદ્યાર્થીનો ડેટા મળ્યો નથી.";
+                }
+            } else {
+                statusMsg.innerHTML = "⚠️ બ્રાઉઝર મેમરી ખાલી છે. પહેલા મેઇન પેજ પર જઈને એક્સેલ ફાઇલ અપલોડ કરો.";
+            }
+        };
+
+        // ૨. ધોરણ બદલાય ત્યારે તે ધોરણના સેક્શન (Sections) લોડ કરવા
+        function onClassChange() {
+            const selectedClass = document.getElementById("classSelect").value;
+            const divSelect = document.getElementById("divSelect");
+            const studentSelect = document.getElementById("studentSelect");
+            const profileCard = document.getElementById("profileCard");
+            const statusMsg = document.getElementById("statusMsg");
+
+            profileCard.style.display = "none";
+            statusMsg.style.display = "block";
+            studentSelect.innerHTML = '<option value="">-- પહેલા વર્ગ પસંદ કરો --</option>';
+            studentSelect.disabled = true;
+
+            if (selectedClass === "") {
+                divSelect.innerHTML = '<option value="">-- પહેલા ધોરણ પસંદ કરો --</option>';
+                divSelect.disabled = true;
+                statusMsg.innerText = "💡 માહિતી જોવા માટે કૃપા કરીને ઉપરથી ધોરણ અને વર્ગ પસંદ કરો.";
+                return;
+            }
+
+            let sections = new Set();
+            studentMasterData.forEach(row => {
+                if (row.StudyingClass !== undefined && row.StudyingClass.toString().trim() === selectedClass) {
+                    if (row.Section) {
+                        sections.add(row.Section.toString().trim());
+                    }
+                }
+            });
+
+            divSelect.innerHTML = '<option value="">-- સેક્શન પસંદ કરો --</option>';
+            sections.forEach(sec => {
+                let option = document.createElement("option");
+                option.value = sec;
+                option.text = `Section ${sec}`;
+                divSelect.appendChild(option);
+            });
+
+            divSelect.disabled = false;
+            statusMsg.innerText = "💡 હવે સેક્શન (વર્ગ) પસંદ કરો.";
+        }
+
+        // ૩. સેક્શન બદલાય ત્યારે વિદ્યાર્થીઓના નામ લોડ કરવા
+        function onSectionChange() {
+            const selectedClass = document.getElementById("classSelect").value;
+            const selectedSection = document.getElementById("divSelect").value;
+            const studentSelect = document.getElementById("studentSelect");
+            const profileCard = document.getElementById("profileCard");
+            const statusMsg = document.getElementById("statusMsg");
+
+            profileCard.style.display = "none";
+            statusMsg.style.display = "block";
+
+            if (selectedSection === "") {
+                studentSelect.innerHTML = '<option value="">-- પહેલા વર્ગ પસંદ કરો --</option>';
+                studentSelect.disabled = true;
+                return;
+            }
+
+            // ક્લાસ અને સેક્શન બંને મેચ થાય તેવા સ્ટુડન્ટ્સ ફિલ્ટર કરો
+            filteredStudentsList = studentMasterData.filter(row => {
+                let cMatch = row.StudyingClass !== undefined && row.StudyingClass.toString().trim() === selectedClass;
+                let sMatch = row.Section !== undefined && row.Section.toString().trim() === selectedSection;
+                return cMatch && sMatch;
+            });
+
+            studentSelect.innerHTML = '<option value="">-- નામ પસંદ કરો --</option>';
+            filteredStudentsList.forEach((student, index) => {
+                let name = student.studentname || `વિદ્યાર્થી ${index + 1}`;
+                let option = document.createElement("option");
+                option.value = index;
+                option.text = name;
+                studentSelect.appendChild(option);
+            });
+
+            studentSelect.disabled = false;
+            statusMsg.innerText = "💡 હવે લિસ્ટમાંથી વિદ્યાર્થીનું નામ પસંદ કરો.";
+        }
+
+        // ૪. ડ્રોપડાઉનમાંથી નામ પસંદ થાય ત્યારે
+        function onStudentNameChange() {
+            const index = document.getElementById("studentSelect").value;
+            const profileCard = document.getElementById("profileCard");
+            const statusMsg = document.getElementById("statusMsg");
+
+            if (index === "") {
+                profileCard.style.display = "none";
+                statusMsg.style.display = "block";
+                return;
+            }
+
+            const selectedStudent = filteredStudentsList[index];
+            statusMsg.style.display = "none";
+            profileCard.innerHTML = "";
+
+            let studentName = selectedStudent.studentname || "વિદ્યાર્થી પ્રોફાઇલ";
+            let cardHtml = `<h2 class="profile-title">👤 પ્રોફાઇલ કાર્ડ: ${studentName}</h2>`;
+
+            // એક્સેલની તમામ કોલમ આપોઆપ લિસ્ટમાં ગોઠવાઈ જશે
+            for (let key in selectedStudent) {
+                let displayKey = key;
+                // કોલમના હેડિંગને યુઝર ફ્રેન્ડલી નામ આપવા માટે
+                if (key === "Column2") displayKey = "Gender (જાતિ)";
+                if (key === "studentname") displayKey = "Student Name";
+                if (key === "StudyingClass") displayKey = "Class";
+                
+                let value = selectedStudent[key] !== undefined && selectedStudent[key] !== null ? selectedStudent[key] : '-';
+
+                cardHtml += `
+                    <div class="detail-row">
+                        <div class="detail-label">${displayKey.replace(/_/g, ' ')}</div>
+                        <div class="detail-value"><b>${value}</b></div>
+                    </div>
+                `;
+            }
+
+            profileCard.innerHTML = cardHtml;
+            profileCard.style.display = "block";
+        }
+    </script>
+</body>
+</html>

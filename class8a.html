@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <title>ધોરણ 8A રિપોર્ટ ઇન્ડેક્સ</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #fdfdfd; padding: 25px; }
+        .report-box { max-width: 750px; margin: 0 auto; background: white; padding: 20px; border: 1px solid #d1d5db; border-radius: 4px; }
+        .header-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        h3 { margin: 0; color: #111827; font-size: 19px; }
+        .action-area { display: flex; align-items: center; gap: 12px; }
+        .btn-back { background-color: #38bdf8; color: white; text-decoration: none; padding: 8px 22px; font-size: 14px; font-weight: bold; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: background 0.2s; }
+        .btn-back:hover { background-color: #0ea5e9; }
+        .status-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: bold; padding: 6px 14px; border-radius: 30px; }
+        .status-connected { color: #10b981; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); }
+        .status-disconnected { color: #ef4444; background: #fce8e6; border: 1px solid #f5c2bc; }
+        @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+        .blink-dot { animation: pulse 1.8s infinite; display: inline-block; }
+        .meta-info { text-align: center; font-weight: bold; color: #4b5563; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #9ca3af; padding: 11px; text-align: center; font-size: 15px; }
+        th { background: #f3f4f6; font-weight: bold; color: #1f2937; }
+        .row-heading { font-weight: bold; background: #f9fafb; }
+        .align-left { text-align: left; padding-left: 25px; }
+        .bg-present { background: #e2f0d9; font-weight: bold; color: #2e7d32; }
+        .bg-absent { background: #fce4d6; font-weight: bold; color: #c62828; }
+        .style-total { font-weight: bold; background: #fff2cc; }
+        .style-grand { font-weight: bold; background: #ffd966; font-size: 18px; color: #000; }
+    </style>
+</head>
+<body>
+
+<div class="report-box">
+    <div class="header-container">
+        <h3>📋 Student Attendance Report - Class 8A</h3>
+        <div class="action-area">
+            {% if is_live %}
+                <div class="status-badge status-connected"><span class="blink-dot">🟢</span> Connected</div>
+            {% else %}
+                <div class="status-badge status-disconnected"><span class="blink-dot">🔴</span> Not Connected</div>
+            {% endif %}
+            <a href="javascript:history.back()" class="btn-back">← Back</a>
+        </div>
+    </div>
+
+    <div class="meta-info">📅 રિપોર્ટ તારીખ: {{ report_date }}</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 25%;">વિગત</th>
+                <th style="width: 25%;">કેટેગરી</th>
+                <th style="background: #c6e0b4;">હાજર (Present)</th>
+                <th style="background: #f8cbad;">ગેરહાજર (Absent)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="4" class="row-heading">કુમાર (Boys)</td>
+                <td class="align-left">OBC</td>
+                <td class="bg-present">{{ data.boys_obc_p }}</td>
+                <td class="bg-absent">{{ data.boys_obc_a }}</td>
+            </tr>
+            <tr>
+                <td class="align-left">SC</td>
+                <td class="bg-present">{{ data.boys_sc_p }}</td>
+                <td class="bg-absent">{{ data.boys_sc_a }}</td>
+            </tr>
+            <tr>
+                <td class="align-left">ST</td>
+                <td class="bg-present">{{ data.boys_st_p }}</td>
+                <td class="bg-absent">{{ data.boys_st_a }}</td>
+            </tr>
+            <tr>
+                <td class="align-left">general</td>
+                <td class="bg-present">{{ data.boys_gen_p }}</td>
+                <td class="bg-absent">{{ data.boys_gen_a }}</td>
+            </tr>
+
+            <tr>
+                <td rowspan="4" class="row-heading" style="color: #b91c1c;">કન્યા (Girls)</td>
+                <td class="align-left">OBC</td>
+                <td class="bg-present">{{ data.girls_obc_p }}</td>
+                <td class="bg-absent">{{ data.girls_obc_a }}</td>
+            </tr>
+            <tr>
+                <td class="align-left">SC</td>
+                <td class="bg-present">{{ data.girls_sc_p }}</td>
+                <td class="bg-absent">{{ data.girls_sc_a }}</td>
+            </tr>
+            <tr>
+                <td class="align-left">ST</td>
+                <td class="bg-present">{{ data.girls_st_p }}</td>
+                <td class="bg-absent">{{ data.girls_st_a }}</td>
+            </tr>
+            <tr>
+                <td class="align-left">general</td>
+                <td class="bg-present">{{ data.girls_gen_p }}</td>
+                <td class="bg-absent">{{ data.girls_gen_a }}</td>
+            </tr>
+
+            <tr class="style-total">
+                <td colspan="2">total</td>
+                <td>{{ data.total_p }}</td>
+                <td>{{ data.total_a }}</td>
+            </tr>
+            <tr class="style-grand">
+                <td colspan="2">total students in class</td>
+                <td colspan="2">{{ data.grand_total }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

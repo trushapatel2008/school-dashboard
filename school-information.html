@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="gu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>શાળા પરિચય</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* BODY */
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(240, 255, 252, 0.90), rgba(225, 245, 255, 0.90));
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* CONTAINER */
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* LOGO */
+        .logo {
+            color: #184e77;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo img {
+            width: 140px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        /* MENU */
+        .menu {
+            flex: 1;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.45);
+            color: #184e77;
+            text-decoration: none;
+            padding: 14px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            font-weight: 500;
+        }
+
+        .menu a:hover, .menu a.active {
+            background: linear-gradient(45deg, #4facfe, #00c6fb);
+            color: white;
+            transform: translateX(6px);
+        }
+
+        /* ADD MENU BOX */
+        .bottom-add-box {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        /* INPUT */
+        .bottom-add-box input {
+            flex: 1;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.45);
+            color: #184e77;
+            font-size: 14px;
+        }
+
+        .bottom-add-box input::placeholder {
+            color: #5c677d;
+        }
+
+        /* PLUS BUTTON */
+        .bottom-add-box button {
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #06b6d4, #3b82f6);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .bottom-add-box button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 12px #3b82f6;
+        }
+
+        /* LOGOUT */
+        .logout-link {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 14px;
+            text-decoration: none;
+            color: white;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .logout-link:hover {
+            transform: scale(1.03);
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            padding: 30px;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #184e77;
+            font-size: 36px;
+        }
+
+        .header p {
+            color: #355070;
+            font-size: 18px;
+        }
+
+        /* BUTTON */
+        .about-btn {
+            padding: 14px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            background: linear-gradient(45deg, #4f46e5, #4338ca);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+            transition: 0.3s;
+        }
+
+        .about-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5);
+        }
+
+        /* CLASS SECTION */
+        .class-section {
+            margin-top: 20px;
+        }
+
+        /* TITLE */
+        .class-title {
+            color: #184e77;
+            font-size: 38px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* IMAGE SLIDER */
+        .school-image {
+            width: 100%;
+            height: 500px;
+            border-radius: 25px;
+            overflow: hidden;
+            margin-bottom: 35px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+            position: relative;
+            background: #e2e8f0;
+        }
+
+        .school-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s ease-in-out;
+        }
+
+        /* SLIDER DOTS */
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: white;
+            opacity: 0.5;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            opacity: 1;
+            transform: scale(1.2);
+            background: #00c6fb;
+        }
+
+        /* BOX GRID */
+        .top-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        /* TOP CARDS */
+        .top-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* CARD */
+        .card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 25px;
+            color: #184e77;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.60);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #0077b6;
+        }
+
+        .card p {
+            font-size: 22px;
+            font-weight: bold;
+            color: #355070;
+            line-height: 1.6;
+        }
+
+        .card h2 {
+            margin-bottom: 18px;
+            font-size: 28px;
+            color: #0077b6;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* BACK BUTTON */
+        .back-btn {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 14px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            background: linear-gradient(45deg, #4facfe, #00c6fb);
+            color: white;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 198, 251, 0.3);
+        }
+
+        /* MOBILE */
+        @media(max-width:768px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; min-height: auto; }
+            .top-section { grid-template-columns: 1fr; }
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .school-image { height: 280px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="sidebar">
+            <div class="logo">
+                <img src="static/images/logo.jpg" onerror="this.src='https://placehold.co/140x140?text=SCHOOL+LOGO'" alt="School Logo">
+            </div>
+
+            <div class="menu" id="menu">
+                <a href="school-information.html" class="active">શાળા પરિચય</a>
+                <a href="attendance.html">દૈનિક હાજરી</a>
+                <a href="mdm.html">મધ્યાહન ભોજન યોજના</a>
+                <a href="information.html">માહિતી</a>
+                <a href="report.html">પત્રક</a>
+                <a href="praveshotsav.html">પ્રવેશોત્સવ</a>
+                <a href="gr-register.html">જી.આર. રજીસ્ટર</a>
+                <a href="training.html">તાલીમ માહિતી</a>
+                <a href="smc.html">S.M.C.</a>
+                <a href="gallery.html">કાર્યક્રમ ફોટો ફાઇલ</a>
+                <a href="settings.html">સેટિંગ્સ</a>
+            </div>
+
+            <div class="bottom-add-box">
+                <input type="text" id="menuInput" placeholder="Enter New Menu">
+                <button onclick="addMenu()">+</button>
+            </div>
+
+            <a href="#" class="logout-link" onclick="logout()">🚪 લોગ આઉટ</a>
+        </div>
+
+        <div class="main">
+            <div class="header">
+                <div>
+                    <h1>Welcome 👋</h1>
+                    <p>હાજીપુર પ્રાથમિક શાળા</p>
+                </div>
+                <a href="about.html" class="about-btn">About Us</a>
+            </div>
+
+            <div class="class-section">
+                <h2 class="class-title">📚 શાળા પરિચય</h2>
+
+                <div class="school-image">
+                    <img id="slider" src="static/images/IMG_20260126_081325.jpg" onerror="this.src='https://picsum.photos/1000/500?random=1'" alt="School Building">
+
+                    <div class="slider-dots">
+                        <span class="dot active" onclick="changeSlide(0)"></span>
+                        <span class="dot" onclick="changeSlide(1)"></span>
+                        <span class="dot" onclick="changeSlide(2)"></span>
+                    </div>
+                </div>
+
+                <div class="top-cards">
+                    <div class="card">
+                        <h3>ગામનું નામ</h3>
+                        <p>હાજીપુર</p>
+                    </div>
+                    <div class="card">
+                        <h3>તાલુકો</h3>
+                        <p>કલોલ</p>
+                    </div>
+                    <div class="card">
+                        <h3>જિલ્લો</h3>
+                        <p>ગાંધીનગર</p>
+                    </div>
+                    <div class="card">
+                        <h3>સ્થાપનાનું વર્ષ</h3>
+                        <p>1 એપ્રિલ 1920</p>
+                    </div>
+                </div>
+
+                <div class="top-cards">
+                    <div class="card">
+                        <h3>અક્ષાંશ (Longitude)</h3>
+                        <p>23.175343°</p>
+                    </div>
+                    <div class="card">
+                        <h3>રેખાંશ (Latitude)</h3>
+                        <p>72.415275°</p>
+                    </div>
+                </div>
+
+                <div class="top-section">
+                    <div class="card">
+                        <h2>📘 શાળા વિશે</h2>
+                        <p>હાજીપુર પ્રાથમિક શાળા એક ઉત્તમ અને આધુનિક શિક્ષણ આપતી શાળા છે. વિદ્યાર્થીઓના સર્વાંગી વિકાસ માટે વિવિધ પ્રવૃત્તિઓ યોજવામાં આવે છે.</p>
+                    </div>
+
+                    <div class="card">
+                        <h2>🏫 સુવિધાઓ</h2>
+                        <p>
+                            ✔️ સ્માર્ટ ક્લાસરૂમ<br>
+                            ✔️ કમ્પ્યુટર લેબ<br>
+                            ✔️ લાઇબ્રેરી<br>
+                            ✔️ રમતગમત મેદાન<br>
+                            ✔️ ટ્રાન્સપોર્ટેશન
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h2>🎯 ધ્યેય</h2>
+                        <p>વિદ્યાર્થીઓને ગુણવત્તાયુક્ત શિક્ષણ આપવું અને સારા નાગરિક તરીકે વિકસાવવાનો મુખ્ય ઉદ્દેશ્ય.</p>
+                    </div>
+
+                    <div class="card">
+                        <h2>📞 સંપર્ક માહિતી</h2>
+                        <p>
+                            📍 હાજીપુર, કલોલ, ગાંધીનગર, ગુજરાત<br>
+                            📞 9512104218<br>
+                            ✉️ principal24060303601@ssguj.in
+                        </p>
+                    </div>
+                </div>
+
+                <a href="home.html" class="back-btn">⬅ Back To Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ADD MENU FUNCTIONAL */
+        function addMenu() {
+            let input = document.getElementById("menuInput");
+            let value = input.value.trim();
+
+            if (value == "") {
+                alert("કૃપા કરીને મેનૂનું નામ લખો.");
+                return;
+            }
+
+            let menu = document.getElementById("menu");
+            let a = document.createElement("a");
+            
+            // નવું ફાઈલ નેમ બનાવવા માટે સ્પેસ હટાવીને લોઅરકેસ કન્વર્ટ કરશે
+            let fileName = value.toLowerCase().replace(/[^a-z0-9]/g, "") + ".html";
+            a.href = fileName;
+            a.innerText = value;
+            menu.appendChild(a);
+            input.value = "";
+        }
+
+        /* LOGOUT FUNCTIONAL */
+        function logout() {
+            let confirmLogout = confirm("શું તમે ખરેખર લોગ આઉટ કરવા માંગો છો?");
+            if (confirmLogout) {
+                sessionStorage.clear();
+                window.location.href = "index.html"; // સીધું મેઈન લોગિન પેજ ખોલશે
+            }
+        }
+
+        /* ENHANCED IMAGE SLIDER */
+        let images = [
+            "static/images/IMG_20260126_081325.jpg",
+            "static/images/IMG_20260126_081320.jpg",
+            "static/images/IMG_20260126_081258.jpg"
+        ];
+        
+        // જો ફોલ્ડરમાં ઈમેજીસ ના હોય તો બેકઅપ ઓનલાઈન લિંક્સ
+        let backupImages = [
+            "https://picsum.photos/1000/500?random=1",
+            "https://picsum.photos/1000/500?random=2",
+            "https://picsum.photos/1000/500?random=3"
+        ];
+
+        let index = 0;
+        let slider = document.getElementById("slider");
+        let dots = document.querySelectorAll(".dot");
+        let sliderInterval;
+
+        // સ્લાઈડ ચેન્જ કરવાનું ફંક્શન (ક્લિક કરવાથી પણ ચાલશે)
+        function changeSlide(newIndex) {
+            index = newIndex;
+            
+            // પેલા લોકલ ઈમેજ ટ્રાય કરશે, જો નહિ હોય તો ઓટોમેટેડ ઓનલાઈન બેકઅપ પિક્ચર લોડ કરશે
+            slider.src = images[index];
+            slider.onerror = function() {
+                this.src = backupImages[index];
+            };
+
+            dots.forEach(dot => dot.classList.remove("active"));
+            dots[index].classList.add("active");
+        }
+
+        // ઓટો સ્લાઈડર સ્ટાર્ટ કરવાનું લોજિક (દર ૫ સેકન્ડે)
+        function startSlider() {
+            sliderInterval = setInterval(function () {
+                index++;
+                if (index >= images.length) {
+                    index = 0;
+                }
+                changeSlide(index);
+            }, 5000);
+        }
+
+        // જ્યારે કોઈ યુઝર ડોટ પર ક્લિક કરે ત્યારે ઓટો ટાઈમર રીસેટ થશે
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                clearInterval(sliderInterval);
+                changeSlide(i);
+                startSlider(); // રીસેટ થયા પછી ફરી ટાઈમર ચાલુ થશે
+            });
+        });
+
+        // પેજ ઓપન થતા જ સ્લાઈડર શરૂ કરો
+        startSlider();
+    </script>
+</body>
+
+</html>

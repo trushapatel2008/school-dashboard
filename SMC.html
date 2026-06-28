@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMC ઓલ બ્રાઉઝર સિંક રજીસ્ટર</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Arial Unicode MS', sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        
+        /* હેડર અને બેક બટન માટેનું નવું ફોર્મેટ */
+        .header-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px dashed #bdc3c7;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .excel-header { flex-grow: 1; text-align: center; }
+        .excel-header .main-title { font-size: 18px; font-weight: bold; color: #1e3d59; margin: 5px 0; }
+        .excel-header .sub-title { font-size: 16px; font-weight: bold; color: #ff0000; margin: 5px 0; }
+        
+        /* 🎯 બેક બટનની બિલકુલ સેમ ડિઝાઇન */
+        .btn-back {
+            background: linear-gradient(45deg,#4facfe,#00c6fb);
+            color: white;
+            text-decoration: none;
+            padding: 8px 22px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 176, 255, 0.3);
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .btn-back:hover {
+            box-shadow: 0 6px 15px rgba(0, 176, 255, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .meta-info-grid { display: grid; grid-template-columns: 1fr 1fr; font-size: 14px; font-weight: bold; color: #333; margin-bottom: 20px; }
+        .form-box { background-color: #ebf5fb; border: 1px solid #aed6f1; padding: 15px; border-radius: 6px; margin-bottom: 25px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-size: 12px; font-weight: bold; margin-bottom: 4px; color: #34495e; }
+        .form-group input { padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
+        .btn-row { margin-top: 12px; text-align: right; }
+        .btn { padding: 7px 15px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 13px; }
+        .btn-save { background-color: #27ae60; color: white; }
+        .btn-print { 
+            background: green; 
+            color: white; 
+            text-decoration: none; 
+            padding: 8px 24px; 
+            font-size: 14px; 
+            font-weight: bold; 
+            border-radius: 20px; 
+            display: inline-flex; 
+            align-items: center; 
+            border: none; 
+            cursor: pointer; 
+            margin-right: 8px; 
+            transition: all 0.3s ease;
+        } 
+        .btn-print:hover { 
+            box-shadow: 0 6px 15px rgba(37, 117, 252, 0.5); 
+            transform: translateY(-1px); 
+        }
+        .btn-cancel { background-color: #7f8c8d; color: white; margin-left: 5px; }
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; background-color: #fff; }
+        th, td { border: 1px solid #000; padding: 8px 10px; text-align: center; }
+        th { background-color: #1f4e78; color: white; font-weight: bold; }
+        .loading { text-align: center; font-weight: bold; color: #e67e22; padding: 10px; font-size: 14px; }
+        
+        /* ========================================================
+           🖨️ પ્રિન્ટ સેટિંગ્સ (ડાબે-જમણે સ્પેસ અને એક્શન હાઇડ)
+           ======================================================== */
+        @media print {
+            @page {
+                margin: 10mm 15mm 10mm 15mm; /* ડાબે-જમણે પર્ફેક્ટ સ્પેસ માટે */
+            }
+            body { background-color: white; padding: 0; margin: 0; }
+            .container { box-shadow: none; padding: 0; max-width: 100%; width: 90%; }
+            
+            /* .action-col લખવાથી 'એક્શન' હેડિંગ અને 'બદલો' બટન બંને પ્રિન્ટમાં સંતાઈ જશે */
+            .form-box, .btn-print, .btn-back, .action-col { display: none !important; } 
+            
+            th { background-color: #1f4e78 !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            table { width: 100%; border: 1px solid #000; }
+            th, td { padding: 6px 4px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+        <div style="width: 1200px; padding-bottom: 10px; text-align: right;">
+            <button onclick="window.print()" class="btn-print">🖨️ Print</button>
+            <a href="praveshotsav-file.html" class="btn-back">⬅ Back</a>
+        </div>
+
+<div class="container">
+    
+    <div class="header-wrapper">
+        <div style="width:auto; flex-shrink: 0;" class="hide-mobile"></div> 
+        
+        <div class="excel-header">
+            <div class="main-title">સમગ્ર શિક્ષા અભિયાન - દેરિયાવાળા પ્રા.શાળા (રૂણી)</div>
+            <div class="sub-title">※ કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span id="lblAcademicYear"></span> ※</div>
+        </div>
+        
+    </div>
+    
+    <div class="meta-info-grid">
+        <div>ગામ:- રૂણી,તાલુકો:- ભાભર, જીલ્લો:- વાવ થરાદ</div>
+        <div style="text-align: right;">શાળા વ્યવસ્થા૫ન સમિતિ (SMC) લાઈવ પત્રક</div>
+    </div>
+
+    <div class="form-box">
+        <h4 id="formTitle">✏️ ડેટા ઉમેરો અથવા બદલો (બધા બ્રાઉઝરમાં લાઈવ સિંક થશે)</h4>
+        <div id="loadingStatus" class="loading" style="display:none;">ગૂગલ શીટમાં ડેટા સેવ થઈ રહ્યો છે... પ્લીઝ વેઇટ...</div>
+        <form id="smcForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>ક્રમ (Sr)</label>
+                    <input type="number" id="memberSr" required>
+                </div>
+                <div class="form-group">
+                    <label>નામ</label>
+                    <input type="text" id="memberName" required>
+                </div>
+                <div class="form-group">
+                    <label>હોદો</label>
+                    <input type="text" id="memberRole" required>
+                </div>
+                <div class="form-group">
+                    <label>અભ્યાસ</label>
+                    <input type="text" id="memberEducation">
+                </div>
+                <div class="form-group">
+                    <label>મોબાઈલ નંબર</label>
+                    <input type="text" id="memberMobile" maxlength="10">
+                </div>
+            </div>
+            <div class="btn-row">
+                <button type="submit" class="btn btn-save" id="btnSubmit">💾 સેવ કરો</button>
+                <button type="button" class="btn btn-cancel" onclick="resetForm()">સાફ કરો</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 60px;">ક્રમ</th>
+                    <th>નામ</th>
+                    <th style="width: 150px;">હોદો</th>
+                    <th style="width: 120px;">અભ્યાસ</th>
+                    <th style="width: 160px;">મોબાઈલ નંબર</th>
+                    <th style="width: 120px;">એક્શન</th>
+                </tr>
+            </thead>
+            <tbody id="smcTableBody">
+                <tr><td colspan="6" class="loading">ગૂગલ શીટમાંથી ડેટા લોડ થઈ રહ્યો છે...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbwlcpqqImfgCjQyv-GtbXn0dkdgFKHvBE8iyC30yoqYsQVdX8thf22wvY2B2w9B_yME/exec"; 
+
+    window.onload = function() {
+        // 🔄 કરંટ શૈક્ષણિક વર્ષ ઓટોમેટિક સેટ કરવાનું લોજિક
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth(); 
+        const currentYear = currentDate.getFullYear();
+        let academicYear = "";
+        
+        if (currentMonth >= 5) { // જૂન (5) કે તેના પછી
+            academicYear = currentYear + "-" + (String(currentYear + 1).slice(-2));
+        } else { // જાન્યુઆરી થી મે
+            academicYear = (currentYear - 1) + "-" + (String(currentYear).slice(-2));
+        }
+        document.getElementById("lblAcademicYear").innerText = academicYear;
+
+        loadData();
+    };
+
+    function loadData() {
+        const oldScript = document.getElementById('jsonpScript');
+        if(oldScript) oldScript.remove(); 
+
+        const script = document.createElement('script');
+        script.id = 'jsonpScript';
+        script.src = API_URL + "?callback=handleResponse&_ts=" + new Date().getTime(); 
+        document.body.appendChild(script);
+    }
+
+    window.handleResponse = function(data) {
+        const tableBody = document.getElementById('smcTableBody');
+        tableBody.innerHTML = '';
+        
+        if (!data || data.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan='6'>હજુ સુધી કોઈ ડેટા નથી. નવો ઉમેરો!</td></tr>`;
+            return;
+        }
+
+        let formattedData = data.map(item => {
+            return {
+                sr: item["ક્રમ"] || item.sr || '',
+                name: item["નામ"] || item.name || '',
+                role: item["હોદો"] || item.role || '',
+                edu: item["અભ્યાસ"] || item.edu || '',
+                mobile: item["મોબાઈલ નંબર"] || item.mobile || ''
+            };
+        });
+
+        formattedData.sort((a, b) => parseInt(a.sr || 0) - parseInt(b.sr || 0));
+
+        let rowsAdded = 0;
+        formattedData.forEach((member) => {
+            if (!member.sr && !member.name) return; 
+            rowsAdded++;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${member.sr || '--'}</td>
+                <td style="text-align: left; padding-left:10px;">${member.name || '--'}</td>
+                <td>${member.role || '--'}</td>
+                <td>${member.edu || '--'}</td>
+                <td>${member.mobile || '--'}</td>
+                <td>
+                    <button class="btn" style="background:#3498db; color:white; padding:3px 8px; font-size:11px;" onclick="editMember('${member.sr}', '${member.name}', '${member.role}', '${member.edu}', '${member.mobile}')">બદલો</button>
+                </td>
+            `;
+            tableBody.appendChild(tr);
+        });
+
+        if (rowsAdded === 0) {
+            tableBody.innerHTML = `<tr><td colspan='6'>હજુ સુધી કોઈ સાચો ડેટા ઉપલબ્ધ નથી.</td></tr>`;
+        }
+    };
+
+    document.getElementById('smcForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        showLoading(true);
+
+        const payload = {
+            data: [{
+                sr: document.getElementById('memberSr').value,
+                name: document.getElementById('memberName').value,
+                role: document.getElementById('memberRole').value,
+                edu: document.getElementById('memberEducation').value,
+                mobile: document.getElementById('memberMobile').value
+            }]
+        };
+
+        fetch(API_URL, {
+            method: 'POST',
+            mode: 'no-cors', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(() => {
+            setTimeout(() => {
+                showLoading(false);
+                resetForm();
+                loadData();
+            }, 1500);
+        })
+        .catch((err) => {
+            alert("સેવ કરવામાં સમસ્યા થઈ!");
+            showLoading(false);
+        });
+    });
+
+    function editMember(sr, name, role, edu, mobile) {
+        document.getElementById('memberSr').value = sr;
+        document.getElementById('memberName').value = name === 'undefined' ? '' : name;
+        document.getElementById('memberRole').value = role === 'undefined' ? '' : role;
+        document.getElementById('memberEducation').value = (edu === '--' || edu === 'undefined') ? '' : edu;
+        document.getElementById('memberMobile').value = (mobile === '--' || mobile === 'undefined') ? '' : mobile;
+        document.getElementById('btnSubmit').innerText = "💾 ફેરફાર સેવ કરો";
+    }
+
+    function resetForm() {
+        document.getElementById('smcForm').reset();
+        document.getElementById('btnSubmit').innerText = "💾 સેવ કરો";
+    }
+
+    function showLoading(status) {
+        document.getElementById('loadingStatus').style.display = status ? "block" : "none";
+    }
+</script>
+</body>
+</html>

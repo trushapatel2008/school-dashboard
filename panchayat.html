@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ગ્રામ પંચાયતના સભ્યોની યાદી - શાળા પ્રવેશોત્સવ</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Arial Unicode MS', sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 10px; }
+        
+        /* 🖨️ મુખ્ય પેજ કન્ટેનર */
+        .page-border {
+            max-width: 780px;
+            height: 1020px; 
+            margin: 0 auto;
+            background: white;
+            padding: 20px 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        /* એક્શન બાર */
+        .top-action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .btn { padding: 6px 14px; font-weight: bold; border-radius: 4px; cursor: pointer; border: none; text-decoration: none; font-size: 13px; }
+        .btn-print { background-color: #27ae60; color: white; }
+        .btn-save { background-color: #f39c12; color: white; margin-left: 10px; }
+        .btn-back { background-color: #00b0ff; color: white; }
+        #status-msg { font-size: 13px; font-weight: bold; color: #27ae60; margin-left: 10px; }
+
+        /* હેડર સેક્શન */
+        .main-header { font-size: 18px; font-weight: bold; color: #d35400; text-align: center; margin: 2px 0; }
+        
+        /* 🎯 લોગોને બરાબર સેન્ટરમાં લાવવા માટેનું નવું CSS લોજિક */
+        .logo-wrapper {
+            display: flex;
+            justify-content: center; /* સેન્ટર અલાઈનમેન્ટ */
+            align-items: center;
+            margin: 8px 0;
+            width: 100%;
+        }
+        .school-logo { 
+            width: 120px; 
+            height: auto; 
+            display: block;
+        }
+
+        .school-name { font-size: 26px; font-weight: bold; color: #2c3e50; text-align: center; margin: 2px 0; }
+        .school-details { font-size: 13px; font-weight: bold; color: #27ae60; text-align: center; line-height: 1.4; }
+        .festival-year { font-size: 16px; font-weight: bold; text-align: center; margin: 5px 0; color: #e74c3c; }
+        .section-title { font-size: 18px; font-weight: bold; color: #0000ff; text-align: center; margin: 5px 0; }
+
+        /* 📊 પંચાયત કોષ્ટક */
+        .panchayat-table { width: 100%; border-collapse: collapse; margin-top: 5px; flex-grow: 1; table-layout: fixed; }
+        .panchayat-table th, .panchayat-table td { border: 2px solid #000; padding: 4px 6px; font-size: 14px; font-weight: bold; text-align: center; vertical-align: middle; }
+        .panchayat-table th { background-color: #ffffff; line-height: 1.3; }
+        
+        .panchayat-table td { height: 40px; }
+
+        /* ✏️ ઇનપુટ બોક્સ વિથ ડૅશ્ડ બોર્ડર */
+        .table-input {
+            width: 100%;
+            height: 90%;
+            border: 1px dashed #b0bec5;
+            background-color: #fafafa;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .table-input:focus {
+            outline: none;
+            border-color: #ff6f00;
+            background-color: #fff;
+        }
+        .text-left-input { text-align: left; padding-left: 8px; }
+
+        /* કોલમ વિડ્થ */
+        .col-sr { width: 8%; }
+        .col-name { width: 47%; }
+        .col-role { width: 22%; }
+        .col-phone { width: 23%; }
+
+        /* 🌷 ફૂટર ગ્રાફિક્સ */
+        .footer-graphics {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding: 0 15px;
+        }
+        .flower-img { width: 50px; height: auto; }
+        .bottom-badge { width: 100px; height: auto; }
+
+        /* 🖨️ SINGLE PAGE PRINT SETTINGS */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0; 
+            }
+            body { background: white; padding: 0; margin: 0; overflow: hidden; }
+            .top-action-bar { display: none !important; }
+            
+            .page-border { 
+                box-shadow: none !important;  
+                max-width: 100% !important; 
+                width: 100vw !important; 
+                height: 100vh !important; 
+                padding: 30px 45px !important; 
+                box-sizing: border-box;
+                page-break-inside: avoid; 
+            }
+            .table-input { border: 1px dashed #b0bec5 !important; background: transparent !important; }
+            input::placeholder { color: transparent !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-border">
+    
+    <!-- એક્શન બટન્સ -->
+    <div class="top-action-bar">
+        <div>
+            <button class="btn btn-print" onclick="window.print()">🖨️ પ્રિન્ટ</button>
+            <button class="btn btn-save" onclick="saveDataToSheet()">💾 શીટમાં સેવ કરો</button>
+            <span id="status-msg">લોડ થઈ રહ્યું છે...</span>
+        </div>
+        <a href="praveshotsav-file.html" class="btn btn-back">⬅ Back</a>
+    </div>
+
+    <!-- હેડર સેક્શન -->
+    <div>
+        <div class="main-header">સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જીલ્લો</div>
+        
+        <!-- 🎯 ફક્ત સિંગલ લોગો સેન્ટરમાં ગોઠવ્યો -->
+        <div class="logo-wrapper">
+            <img src="static/images/logo.jpg" class="school-logo" alt="Hajipur School Logo">
+        </div>
+        
+        <div class="school-name">હાજીપુર પ્રાથમિક શાળા</div>
+        <div class="school-details">હાજીપુર પ્રાથમિક શાળા , તાલુકો:- કાલોલ , જીલ્લો:- ગાંધીનગર , સી.આર.સી.:- ભોયણ મોટી , ડાયસ કોડ:- ૨</div>
+        <div class="festival-year">કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span id="lblAcademicYear"></span></div>
+        <div class="section-title">※ ગ્રામ પંચાયતના સભ્યોની યાદી ※</div>
+    </div>
+
+    <!-- પંચાયત ટેબલ -->
+    <table class="panchayat-table">
+        <thead>
+            <tr>
+                <th class="col-sr">ક્રમ</th>
+                <th class="col-name">પંચાયત સભ્યનું નામ</th>
+                <th class="col-role">પંચાયતમાં<br>હોદ્દો</th>
+                <th class="col-phone">સંપર્ક નંબર</th>
+            </tr>
+        </thead>
+        <tbody id="panchayatTableBody">
+            <!-- ડેટા રો અહીં લોડ થશે -->
+        </tbody>
+    </table>
+
+
+</div>
+
+<script>
+    // 🔗 તમારી ગૂગલ એપ્સ સ્ક્રિપ્ટ વેબ એપ URL અહીં પેસ્ટ કરો:
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzdgj-YoYIpy5_dM9j6q1IDUTg-VH2y20ReozXxTmM33DQRAkai5yxcUyg3Nf9Av80U5g/exec";
+
+    window.onload = function() {
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth(); 
+        const currentYear = currentDate.getFullYear();
+        let academicYear = "";
+        
+        if (currentMonth >= 5) {
+            academicYear = currentYear + "-" + (String(currentYear + 1).slice(-2));
+        } else {
+            academicYear = (currentYear - 1) + "-" + (String(currentYear).slice(-2));
+        }
+        document.getElementById("lblAcademicYear").innerText = academicYear;
+
+        if(SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_FOR_PANCHAYAT_URL_HERE") {
+            document.getElementById("status-msg").innerText = "⚠️ Apps Script URL સેટ કરો.";
+            document.getElementById("status-msg").style.color = "red";
+            generateBlankRows(); 
+            return;
+        }
+        loadDataFromSheet();
+    };
+
+    function generateBlankRows(data = []) {
+        const tbody = document.getElementById("panchayatTableBody");
+        tbody.innerHTML = "";
+        
+        for (let i = 1; i <= 13; i++) {
+            let rowData = data[i - 1] || { name: "", role: "", phone: "" };
+            
+            let tr = `<tr>
+                <td>${i}</td>
+                <td><input type="text" class="table-input text-left-input row-name" value="${rowData.name}" placeholder="..."></td>
+                <td><input type="text" class="table-input row-role" value="${rowData.role}" placeholder="..."></td>
+                <td><input type="text" class="table-input row-phone" maxlength="10" value="${rowData.phone}" placeholder="..."></td>
+            </tr>`;
+            tbody.innerHTML += tr;
+        }
+    }
+
+    function loadDataFromSheet() {
+        document.getElementById("status-msg").innerText = "🔄 લોડ થઈ રહ્યું છે...";
+        document.getElementById("status-msg").style.color = "#f39c12";
+
+        fetch(SCRIPT_URL)
+            .then(response => response.json())
+            .then(data => {
+                generateBlankRows(data);
+                document.getElementById("status-msg").innerText = "✅ ડેટા લાઈવ છે!";
+                document.getElementById("status-msg").style.color = "#27ae60";
+            })
+            .catch(error => {
+                generateBlankRows();
+                document.getElementById("status-msg").innerText = "❌ ભૂલ આવી!";
+                document.getElementById("status-msg").style.color = "red";
+            });
+    }
+
+    function saveDataToSheet() {
+        document.getElementById("status-msg").innerText = "⏳ સેવ થઈ રહ્યું છે...";
+        document.getElementById("status-msg").style.color = "#f39c12";
+
+        const names = document.querySelectorAll(".row-name");
+        const roles = document.querySelectorAll(".row-role");
+        const phones = document.querySelectorAll(".row-phone");
+        
+        let rowsData = [];
+        for (let i = 0; i < 13; i++) {
+            rowsData.push({
+                sr: i + 1,
+                name: names[i].value,
+                role: roles[i].value,
+                phone: phones[i].value
+            });
+        }
+
+        fetch(SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ rows: rowsData })
+        })
+        .then(() => {
+            document.getElementById("status-msg").innerText = "💾 સેવ થઈ ગયું!";
+            document.getElementById("status-msg").style.color = "#27ae60";
+            setTimeout(loadDataFromSheet, 1000);
+        })
+        .catch(error => {
+            document.getElementById("status-msg").innerText = "❌ સેવ ન થયું!";
+            document.getElementById("status-msg").style.color = "red";
+        });
+    }
+</script>
+</body>
+</html>

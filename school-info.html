@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>શાળા દર્પણ - હાજીપુર પ્રાથમિક શાળા</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Arial Unicode MS', 'Hind Vadodara', sans-serif; }
+        body { background-color: #f0f3f6; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        /* 🖨️ પ્રિન્ટ અને એક્શન કંટ્રોલ બટન્સ */
+        .top-actions { max-width: 820px; width: 100%; display: flex; justify-content: flex-end; margin-bottom: 15px; gap: 10px; }
+        .btn-print { background: green; color: white; padding: 8px 24px; font-weight: bold; border-radius: 20px; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(37,117,252,0.2); }
+        .btn-back { background: linear-gradient(45deg,#4facfe,#00c6fb); color: white; padding: 8px 22px; font-weight: bold; border-radius: 20px; text-decoration: none; }
+
+        /* ==================================================
+            📸 મુખ્ય સિંગલ પત્રક ડિઝાઇન 
+        ================================================== */
+        .print-page { 
+            width: 820px; 
+            min-height: 1050px;
+            background: white; 
+            padding: 30px 35px; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* ઓરિજિનલ જેવી ડબલ બોર્ડર */
+        .inner-border { 
+            border: 4px double #1f4e78; 
+            padding: 25px; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* હેડર સ્ટાઇલ */
+        .header-section { text-align: center; margin-bottom: 20px; }
+        .top-sub { font-size: 19px; font-weight: bold; color: #b82d24; margin: 0; }
+        .main-logo-text { font-size: 32px; font-weight: 900; color: #1f4e78; margin: 5px 0; }
+        .village-info { font-size: 13px; font-weight: bold; color: #1e824c; border-bottom: 1px dashed #000; padding-bottom: 8px; margin: 5px 0; line-height: 1.4; }
+        .festival-title { font-size: 17px; font-weight: bold; color: #b82d24; margin: 8px 0; }
+        .page-subtitle { font-size: 16px; font-weight: bold; color: #333; margin: 5px 0; letter-spacing: 1px; }
+
+        /* 📊 માસ્ટર ટેબલ સ્ટ્રક્ચર */
+        table.master-table { width: 100%; border-collapse: collapse; margin-top: 5px; table-layout: fixed; }
+        table.master-table td { padding: 7px 0; font-size: 15.5px; font-weight: bold; color: #000; vertical-align: middle; border: none; }
+        
+        /* કોલમ ફિક્સ વિડ્થ */
+        .col-star { width: 25px; text-align: left; }
+        .col-label { width: 310px; text-align: left; }
+        .col-dots { width: 25px; text-align: left; }
+        .col-value { text-align: left; }
+
+        /* ✏️ લાઈવ એડિટ ટેક્સ્ટ */
+        .edit-text { 
+            border: none;
+            background: transparent;
+            font-size: 15.5px;
+            font-weight: bold;
+            color: #000;
+            outline: none;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        .edit-text:hover { background-color: #f2f4f5; cursor: text; }
+        .edit-text:focus { border-bottom: 1px dashed #27ae60; background: #fff; }
+
+        /* 🔲 અલાઈનમેન્ટ કન્ટેનર */
+        .inline-row-layout { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 15px; 
+            white-space: nowrap; 
+            flex-wrap: nowrap; 
+        }
+        
+        .item-group {
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        /* 🔢 ઓટો સરવાળા માટેનું ચોરસ લાઈવ બોક્સ */
+        .data-box { 
+            border: 1px solid #000; 
+            padding: 2px 8px; 
+            min-width: 40px; 
+            text-align: center; 
+            font-weight: bold; 
+            background: #fff; 
+            display: inline-block;
+            margin-left: 6px;
+        }
+        
+        /* 🔼🔽 ઇનપુટ બોક્સ */
+        .number-scroll-input {
+            border: 1px solid #000;
+            padding: 2px 2px 2px 6px;
+            font-size: 14px;
+            font-weight: bold;
+            background: #fff;
+            width: 50px;
+            text-align: center;
+            outline: none;
+            margin-left: 6px;
+        }
+
+        /* 👶 બોટમ સરસ્વતી માતા અને ચિત્રો */
+        .bottom-graphics { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-end; 
+            margin-top: auto; 
+            padding-top: 15px;
+        }
+        .bottom-graphics img { height: 70px; object-fit: contain; }
+
+        /* ==================================================
+            🖨️ પ્યોર વન પેજ પ્રિન્ટ સેટિંગ્સ
+        ================================================== */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 10mm; /* પ્રિન્ટ માર્જિન સેટ કર્યું */
+            }
+            body { background: white; padding: 0; margin: 0; }
+            .top-actions { display: none !important; }
+            .print-page { 
+                box-shadow: none; 
+                padding: 0; 
+                width: 95%; 
+                min-height: auto; 
+                height: 100%;
+                page-break-inside: avoid; /* પેજ તૂટતા અટકાવશે */
+            }
+            .inner-border { padding: 20px; }
+            .edit-text:hover { background: transparent; }
+            
+            .number-scroll-input { 
+                background: transparent !important; 
+                appearance: textfield;
+                -moz-appearance: textfield;
+                padding-right: 6px !important;
+            }
+            .number-scroll-input::-webkit-outer-spin-button,
+            .number-scroll-input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-actions">
+    <button onclick="window.print()" class="btn-print">🖨️ પ્રિન્ટ આઉટ કાઢો</button>
+    <a href="praveshotsav-file.html" class="btn-back">⬅ પાછા જાઓ</a>
+</div>
+
+<div class="print-page">
+    <div class="inner-border">
+        
+        <div class="header-section">
+            <p class="top-sub">સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</p>
+            <h1 class="main-logo-text">હાજીપુર પ્રાથમિક શાળા</h1>
+            <p class="village-info">ગામ:- હાજીપુર, તાલુકો:- કાલોલ, જીલ્લો:- ગાંધીનગર, પી.આર.સી:- રૂણી, બી.આર.સી:- ભાભર, ડાયસ કોડ:- 24060303601</p>
+            <div class="festival-title">※ કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span id="academic-year"></span> ※</div>
+            <div class="page-subtitle">※ શાળા દર્પણ ※</div>
+        </div>
+
+        <table class="master-table">
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">શાળા સ્થાપના તારીખ</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">1-Apr-1920</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">શાળાનો ડાયસ કોડ</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">24060303601</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">સી.આર.સી.નું નામ</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true" style="min-width: 250px; border-bottom: 1px dashed #ccc;"></span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">બી.આર.સી. ભવનથી શાળાનું અંતર</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">5 કિ.મી.</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">પગાર કેન્દ્રનું નામ</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">રૂણી</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">પગાર કેન્દ્રથી શાળાનું અંતર</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">4 કિ.મી.</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">તાલુકા મુખ્ય મથકથી શાળાનું અંતર</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">11 કિ.મી.</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">શાળાનો પ્રકાર (કુમાર/કન્યા/મિશ્ર)</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">મિશ્ર શાળા</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">કેટલા ધોરણની શાળા છે</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">ધોરણ ૧ થી ૫</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">શાળાનું કુલ મહેકમ</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">3 (ત્રણ)</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">શાળામાં હાલ કામ કરતા શિક્ષકો</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value">
+                    <div class="inline-row-layout">
+                        <div class="item-group">પુરુષ : <input type="number" class="number-scroll-input" id="m_staff" value="0" min="0" max="100" oninput="calcStaff()" onchange="calcStaff()"></div>
+                        <div class="item-group">સ્ત્રી : <input type="number" class="number-scroll-input" id="f_staff" value="0" min="0" max="100" oninput="calcStaff()" onchange="calcStaff()"></div>
+                        <div class="item-group">કુલ : <span class="data-box" id="t_staff">0</span></div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">શાળાની રજીસ્ટર સંખ્યા</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value">
+                    <div class="inline-row-layout">
+                        <div class="item-group">કુમાર : <input type="number" class="number-scroll-input" id="boys" value="0" min="0" max="999" oninput="calcStudents()" onchange="calcStudents()"></div>
+                        <div class="item-group">કન્યા : <input type="number" class="number-scroll-input" id="girls" value="0" min="0" max="999" oninput="calcStudents()" onchange="calcStudents()"></div>
+                        <div class="item-group">કુલ : <span class="data-box" id="t_reg">0</span></div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">પાણીની પરબ છે?</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value">
+                    <div class="inline-row-layout">
+                        <span class="edit-text" contenteditable="true" style="min-width:30px;">હા</span>
+                        <div class="item-group" style="margin-left:25px;">કેટલા નળ? <input type="number" class="number-scroll-input" id="taps" value="0" min="0" max="100"></div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">સેનિટેશનની સુવિધા છે</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value">
+                    <div class="inline-row-layout">
+                        <div class="item-group">કુમાર : <input type="number" class="number-scroll-input" id="san_b" value="0" min="0" max="50" oninput="calcSan()" onchange="calcSan()"></div>
+                        <div class="item-group">કન્યા : <input type="number" class="number-scroll-input" id="san_g" value="0" min="0" max="50" oninput="calcSan()" onchange="calcSan()"></div>
+                        <div class="item-group">કુલ : <span class="data-box" id="t_san">0</span></div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">Smart T.V. (પ્રોજેક્ટર) છે?</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value">
+                    <div class="inline-row-layout">
+                        <span class="edit-text" contenteditable="true" style="min-width:30px;">હા</span>
+                        <div class="item-group" style="margin-left:25px;">જો હા તો સંખ્યા : <input type="number" class="number-scroll-input" id="smart_tv" value="0" min="0" max="50"></div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ટી.વી. છે?</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value">
+                    <div class="inline-row-layout">
+                        <span class="edit-text" contenteditable="true" style="min-width:30px;">હા</span>
+                        <div class="item-group" style="margin-left:25px;">જો હા તો સંખ્યા : <input type="number" class="number-scroll-input" id="tv" value="0" min="0" max="50"></div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">કોમ્પ્યુટર છે?</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value">
+                    <div class="inline-row-layout">
+                        <span class="edit-text" contenteditable="true" style="min-width:30px;">હા</span>
+                        <div class="item-group" style="margin-left:25px;">જો હા તો સંખ્યા : <input type="number" class="number-scroll-input" id="comp" value="0" min="0" max="200"></div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">મ.ભ.યો. / પ્રાર્થના શેડ</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">હા</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ક્રીડાંગણ (મેદાન)</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value">
+                    <div class="inline-row-layout">
+                        <span class="edit-text" contenteditable="true" style="min-width:30px;">ના</span>
+                        <div class="item-group" style="margin-left:40px;">અંદાજીત માપ : &nbsp;<span class="edit-text" contenteditable="true" style="min-width:100px; border-bottom: 1px dashed #ccc;"></span></div>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+</div>
+
+<script>
+    // 🔢 ઓટોમેટીક લાઈવ સરવાળા ગણતરી લોજિક
+    function calcStaff() {
+        let m = parseInt(document.getElementById('m_staff').value) || 0;
+        let f = parseInt(document.getElementById('f_staff').value) || 0;
+        document.getElementById('t_staff').innerText = m + f;
+    }
+
+    function calcStudents() {
+        let b = parseInt(document.getElementById('boys').value) || 0;
+        let g = parseInt(document.getElementById('girls').value) || 0;
+        document.getElementById('t_reg').innerText = b + g;
+    }
+
+    function calcSan() {
+        let b = parseInt(document.getElementById('san_b').value) || 0;
+        let g = parseInt(document.getElementById('san_g').value) || 0;
+        document.getElementById('t_san').innerText = b + g;
+    }
+
+    // 📅 શૈક્ષણિક વર્ષ ઓટોમેટીક અપડેટ કરવાનું સચોટ લોજિક (જૂન મહિનાથી નવું વર્ષ બદલાશે)
+    function updateAcademicYear() {
+        let today = new Date();
+        let currentYear = today.getFullYear();
+        let currentMonth = today.getMonth(); // 0 = જાન્યુઆરી, 5 = જૂન
+        
+        let startYear, endYear;
+        
+        // જો મહિનો જૂન (5) કે તેના પછીનો હોય, તો ચાલુ વર્ષ શૈક્ષણિક વર્ષનું પ્રથમ વર્ષ બનશે.
+        if (currentMonth >= 5) {
+            startYear = currentYear;
+            endYear = currentYear + 1;
+        } else {
+            // જો જાન્યુઆરી થી મે મહિનો હોય, તો આગળનું વર્ષ ગણાશે
+            startYear = currentYear - 1;
+            endYear = currentYear;
+        }
+        
+        let nextYearShort = endYear.toString().slice(-2);
+        let yearContainer = document.getElementById('academic-year');
+        
+        if (yearContainer) {
+            yearContainer.innerText = startYear + "-" + nextYearShort;
+        }
+    }
+
+    // પેજ લોડ થાય ત્યારે પણ બધી ગણતરીઓ રન થઈ જાય
+    window.addEventListener('DOMContentLoaded', () => {
+        calcStaff();
+        calcStudents();
+        calcSan();
+        updateAcademicYear();
+    });
+</script>
+</body>
+</html>

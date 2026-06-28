@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>શાળા દર્પણ - હાજીપુર પ્રાથમિક શાળા</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Arial Unicode MS', 'Hind Vadodara', sans-serif; }
+        body { background-color: #f0f3f6; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        /* 🖨️ પ્રિન્ટ અને એક્શન કંટ્રોલ બટન્સ */
+        .top-actions { max-width: 820px; width: 100%; display: flex; justify-content: flex-end; margin-bottom: 15px; gap: 10px; }
+        .btn-print { background: green; color: white; padding: 8px 24px; font-weight: bold; border-radius: 20px; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(37,117,252,0.2); }
+        .btn-back { background:linear-gradient(45deg,#4facfe,#00c6fb); color: white; padding: 8px 22px; font-weight: bold; border-radius: 20px; text-decoration: none; }
+
+        /* ==================================================
+            📸 મુખ્ય સિંગલ પત્રક ડિઝાઇન 
+        ================================================== */
+        .print-page { 
+            width: 820px; 
+            min-height: 1050px;
+            background: white; 
+            padding: 30px 35px; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* ઓરિજિનલ જેવી ડબલ બોર્ડર */
+        .inner-border { 
+            border: 4px double #1f4e78; 
+            padding: 25px; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* હેડર સ્ટાઇલ */
+        .header-section { text-align: center; margin-bottom: 20px; }
+        .top-sub { font-size: 19px; font-weight: bold; color: #b82d24; margin: 0; }
+        .main-logo-text { font-size: 32px; font-weight: 900; color: #1f4e78; margin: 5px 0; }
+        .village-info { font-size: 13px; font-weight: bold; color: #1e824c; border-bottom: 1px dashed #000; padding-bottom: 8px; margin: 5px 0; line-height: 1.4; }
+        .festival-title { font-size: 17px; font-weight: bold; color: #b82d24; margin: 8px 0; }
+        .page-subtitle { font-size: 16px; font-weight: bold; color: #333; margin: 5px 0; letter-spacing: 1px; }
+
+        /* 📊 માસ્ટર ટેબલ સ્ટ્રક્ચર */
+        table.master-table { width: 100%; border-collapse: collapse; margin-top: 5px; table-layout: fixed; }
+        table.master-table td { padding: 7px 0; font-size: 15.5px; font-weight: bold; color: #000; vertical-align: middle; border: none; }
+        
+        /* કોલમ ફિક્સ વિડ્થ */
+        .col-star { width: 25px; text-align: left; }
+        .col-label { width: 310px; text-align: left; }
+        .col-dots { width: 25px; text-align: left; }
+        .col-value { text-align: left; }
+
+        /* ✏️ લાઈવ એડિટ ટેક્સ્ટ */
+        .edit-text { 
+            border: none;
+            background: transparent;
+            font-size: 15.5px;
+            font-weight: bold;
+            color: #000;
+            outline: none;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        .edit-text:hover { background-color: #f2f4f5; cursor: text; }
+        .edit-text:focus { border-bottom: 1px dashed #27ae60; background: #fff; }
+
+        /* 🔲 અલાઈનમેન્ટ કન્ટેનર */
+        .inline-row-layout { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 15px; 
+            white-space: nowrap; 
+            flex-wrap: nowrap; 
+        }
+        
+        .item-group {
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        /* 🔢 ઓટો સરવાળા માટેનું ચોરસ લાઈવ બોક્સ */
+        .data-box { 
+            border: 1px solid #000; 
+            padding: 2px 8px; 
+            min-width: 40px; 
+            text-align: center; 
+            font-weight: bold; 
+            background: #fff; 
+            display: inline-block;
+            margin-left: 6px;
+        }
+        
+        /* 🔼🔽 ઇનપુટ બોક્સ */
+        .number-scroll-input {
+            border: 1px solid #000;
+            padding: 2px 2px 2px 6px;
+            font-size: 14px;
+            font-weight: bold;
+            background: #fff;
+            width: 50px;
+            text-align: center;
+            outline: none;
+            margin-left: 6px;
+        }
+
+        /* ==================================================
+            🖨️ પ્યોર વન પેજ પ્રિન્ટ સેટિંગ્સ
+        ================================================== */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 10mm;
+            }
+            body { background: white; padding: 0; margin: 0; }
+            .top-actions { display: none !important; }
+            .print-page { 
+                box-shadow: none; 
+                padding: 0; 
+                width: 95%; 
+                min-height: auto; 
+                height: 100%;
+                page-break-inside: avoid;
+            }
+            .inner-border { padding: 20px; }
+            .edit-text:hover { background: transparent; }
+            
+            .number-scroll-input { 
+                border: 1px solid #000 !important; 
+                background: transparent !important; 
+                appearance: textfield;
+                -moz-appearance: textfield;
+                padding-right: 6px !important;
+            }
+            .number-scroll-input::-webkit-outer-spin-button,
+            .number-scroll-input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-actions">
+    <button onclick="window.print()" class="btn-print">🖨️ પ્રિન્ટ આઉટ કાઢો</button>
+    <a href="praveshotsav-file.html" class="btn-back">⬅ પાછા જાઓ</a>
+</div>
+
+<div class="print-page">
+    <div class="inner-border">
+        
+        <div class="header-section">
+            <p class="top-sub">સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</p>
+            <h1 class="main-logo-text">હાજીપુર પ્રાથમિક શાળા</h1>
+            <p class="village-info">ગામ:- હાજીપુર, તાલુકો:- કાલોલ, જીલ્લો:- ગાંધીનગર, પી.આર.સી:- રૂણી, બી.આર.સી:- ભાભર, ડાયસ કોડ:- 24060303601</p>
+            <div class="festival-title">※ કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span id="academic-year"></span> ※</div>
+            <div class="page-subtitle">※  ગામ દર્શન ※</div>
+        </div>
+
+        <table class="master-table">
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ગામનું નામ </td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">હાજીપુર પ્રાથમિક શાળા</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">તાલુકો</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">કાલોલ</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">જીલ્લો</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">ગાંધીનગર</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ગામની વસ્તી</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value">
+                    <div class="inline-row-layout">
+                        <div class="item-group">પુરુષ : <input type="number" class="number-scroll-input" id="m_staff" value="0" min="0" max="100" oninput="calcStaff()" onchange="calcStaff()"></div>
+                        <div class="item-group">સ્ત્રી : <input type="number" class="number-scroll-input" id="f_staff" value="0" min="0" max="100" oninput="calcStaff()" onchange="calcStaff()"></div>
+                        <div class="item-group">કુલ : <span class="data-box" id="t_staff">0</span></div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ગામનો સાક્ષરતા દર</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">24.45%</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ગામના સરપંચશ્રીનું નામ</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true" style="min-width: 250px; border-bottom: 1px dashed #ccc;"></span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ગામની સંસ્થાઓ</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">સેવા સ.મંડળી, દૂઘ મંડળી, પંચાયત,<br>સસ્તા અનાજની દુકાન , સરકારી દવાખાનું</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">વાહન વ્યવહારની સુવિઘાઓ</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">બસ, રિક્ષા, જી૫, ખાનગી વાહન</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">શૈક્ષણિક સંસ્થાઓ</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">આંગણવાડી, પ્રા.શાળા, માધ્યમિક શાળા</span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ઉચ્ચ શૈક્ષણિક સુસ્થાઓ</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">નથી </span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ખાનગી સંસ્થાઓ</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">નથી </span></td>
+            </tr>
+            
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ગામમાં મળી આવતી સુવિઘાઓ</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">જીવન જરૂરી તમામ ચીજ વસ્તુ ગામમાં મળે છે.</span></td>
+            </tr>
+
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ગામના લોકોનો મુખ્ય વ્યવસાય </td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">ખેતી, ૫શુપાલન, મજુરી, ખાનગી નોકરી<br>કડિયાકામ, કારીગરી </span></td>
+            </tr>
+
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ખેતીના મુખ્ય પાકો</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">બાજરી, ઘઉં, ટામેટા, એરંડા, કપાસ, મરચાં <br>જુવાર, બટાટા, મગફળી</span></td>
+            </tr>
+
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ગામથી પોસ્ટ ઓફિસનું અંતર</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">0.5 કિ.મી.</span></td>
+            </tr>
+
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ગામથી પ્રા.આરોગ્ય કેન્દ્રનું અંતર</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">0.5 કિ.મી.</span></td>
+            </tr>
+
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ગામથી બેંકનું અંતર</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">0.5 કિ.મી.</span></td>
+            </tr>
+
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ગામથી માઘ્યમિક શાળાનું અંતર</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">0.5 કિ.મી.</span></td>
+            </tr>
+
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ગામથી તાલુકા મથકનું અંતર</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">12 કિ.મી. ભાભર</span></td>
+            </tr>
+
+            <tr>
+                <td class="col-star">★</td>
+                <td class="col-label">ઘાર્મિક સ્થળો</td>
+                <td class="col-dots">:-</td>
+                <td class="col-value"><span class="edit-text" contenteditable="true">5 (પાંચ) </span></td>
+            </tr>
+
+        </table>
+
+    </div>
+</div>
+
+<script>
+    // 🔢 ઓટોમેટીક લાઈવ સરવાળા ગણતરી લોજિક
+    function calcStaff() {
+        let m = parseInt(document.getElementById('m_staff').value) || 0;
+        let f = parseInt(document.getElementById('f_staff').value) || 0;
+        document.getElementById('t_staff').innerText = m + f;
+    }
+
+    // 📅 શૈક્ષણિક વર્ષ ઓટોમેટીક અપડેટ કરવાનું સચોટ લોજિક (જૂન મહિનાથી નવું વર્ષ બદલાશે)
+    function updateAcademicYear() {
+        let today = new Date();
+        let currentYear = today.getFullYear();
+        let currentMonth = today.getMonth(); // 0 = જાન્યુઆરી, 5 = જૂન
+        
+        let startYear, endYear;
+        
+        // જો મહિનો જૂન (5) કે તેના પછીનો હોય, તો ચાલુ વર્ષ શૈક્ષણિક વર્ષનું પ્રથમ વર્ષ બનશે.
+        if (currentMonth >= 5) {
+            startYear = currentYear;
+            endYear = currentYear + 1;
+        } else {
+            // જો જાન્યુઆરી થી મે મહિનો હોય, તો આગળનું વર્ષ ગણાશે
+            startYear = currentYear - 1;
+            endYear = currentYear;
+        }
+        
+        let nextYearShort = endYear.toString().slice(-2);
+        let yearContainer = document.getElementById('academic-year');
+        
+        if (yearContainer) {
+            yearContainer.innerText = startYear + "-" + nextYearShort;
+        }
+    }
+
+    // પેજ લોડ થાય ત્યારે બધી ગણતરીઓ ચાલુ થઈ જશે
+    window.addEventListener('DOMContentLoaded', () => {
+        calcStaff();
+        updateAcademicYear();
+    });
+</script>
+</body>
+</html>

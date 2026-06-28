@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <title>ધોરણ {{ class_name }} - વિદ્યાર્થીઓ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{ margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body{ min-height:100vh; background: linear-gradient(rgba(240,255,252,0.90), rgba(225,245,255,0.90)); padding:30px; }
+        .header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:35px; }
+        .header h1{ color:#184e77; font-size:32px; }
+        .back-btn{ padding:12px 24px; border-radius:40px; text-decoration:none; color:white; font-weight:600; background: linear-gradient(45deg, #4facfe, #00c6fb); transition:0.3s; }
+        .back-btn:hover{ transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,198,251,0.3); }
+        .table-container { background:rgba(255,255,255,0.5); backdrop-filter:blur(12px); border-radius:25px; padding:30px; box-shadow:0 5px 20px rgba(0,0,0,0.08); border:1px solid rgba(255,255,255,0.25); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 15px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        th { color: #0077b6; font-size: 18px; }
+        td { color: #184e77; font-weight: 500; }
+        .view-btn { padding: 6px 14px; background: #0077b6; color: white; border-radius: 8px; text-decoration: none; font-size: 14px; transition: 0.2s; }
+        .view-btn:hover { background: #184e77; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📋 વિદ્યાર્થીઓની યાદી: ધોરણ {{ class_name }}</h1>
+        <a href="/student-detail" class="back-btn">⬅ ધોરણો પર પાછા જાઓ</a>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>જી.આર. નં</th>
+                    <th>વિદ્યાર્થીનું નામ</th>
+                    <th>જાતિ</th>
+                    <th>કેટેગરી</th>
+                    <th>પ્રોફાઇલ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.gr_no }}</td>
+                    <td style="font-weight: 600;">{{ student.name }}</td>
+                    <td>{{ student.gender }}</td>
+                    <td>{{ student.category }}</td>
+                    <td>
+                        <a href="/student/profile/{{ class_name }}/{{ student.gr_no }}" class="view-btn">👁 જુઓ</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" style="text-align: center; color: #777;">આ ધોરણમાં હજુ કોઈ લાઈવ ડેટા મળ્યો નથી.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>બાળકને શાળામાં દાખલ કરવા માટેનું વાલી ફોર્મ</title>
+    <style>
+        :root {
+            --primary-color: #4b39ef;
+            --success-color: #24d160;
+            --bg-color: #f1f4f8;
+            --card-bg: #ffffff;
+            --text-color: #14181b;
+            --border-color: #e0e3e7;
+            --btn-back-color: #ff5252; /* લાલ કલર બેક બટન માટે */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .main-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            position: relative; /* ટોપ-રાઇટ બટન ગોઠવવા માટે */
+        }
+
+        /* 🔴 રાઇટ સાઇડ ટોપ બેક બટન ડિઝાઇન 🔴 */
+        .top-right-back {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+        }
+
+        .btn-back-top {
+            background-color: var(--btn-back-color);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 8px rgba(255, 82, 82, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .btn-back-top:hover {
+            background-color: #e04040;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(255, 82, 82, 0.3);
+        }
+
+        /* ઇનપુટ ગ્રીડ સિસ્ટમ */
+        .form-section-title {
+            margin-top: 20px;
+            color: var(--primary-color);
+            font-size: 1.15rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 15px 0 25px 0;
+        }
+
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-size: 0.85rem; margin-bottom: 6px; font-weight: 600; color: #57636c; }
+        .form-group input { padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.95rem; outline: none; }
+        .form-group input:focus { border-color: var(--primary-color); }
+
+        /* 💾 ડેટાબેઝ ટેબલ સેક્શન */
+        .table-section {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95rem; }
+        th, td { border: 1px solid var(--border-color); padding: 12px; text-align: left; }
+        th { background-color: #f8f9fa; color: #57636c; }
+        tr:hover { background-color: #f1f4f8; }
+
+        /* 📄 અસલી વાલી ફોર્મ પ્રિન્ટ લેઆઉટ */
+        .excel-vali-form {
+            border: 2px solid #000;
+            padding: 45px;
+            background: #fff;
+            color: #000;
+            box-sizing: border-box;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .excel-header { text-align: center; font-weight: bold; font-size: 1.35rem; margin-bottom: 5px; }
+        .excel-sub-header { text-align: center; font-size: 1.1rem; margin-bottom: 15px; }
+        .excel-main-title { text-align: center; font-weight: bold; font-size: 1.3rem; margin: 15px 0; text-decoration: underline; }
+        .part-header { text-align: center; font-weight: bold; font-size: 1.2rem; margin: 20px 0 10px 0; letter-spacing: 1px; }
+        .meta-row { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .dotted-line { border-bottom: 1px dotted #000; padding: 0 6px; font-weight: bold; display: inline-block; }
+        .data-row { margin-bottom: 12px; text-align: justify; }
+        .condition-text { margin-top: 20px; line-height: 1.6; font-size: 1.05rem; }
+        .signature-row { display: flex; justify-content: space-between; margin-top: 45px; margin-bottom: 25px; }
+
+        /* બટન્સ સ્ટાઇલ */
+        .btn-container { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-print { background-color: var(--primary-color); color: white; padding: 12px 28px; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+        .btn-save { background-color: var(--success-color); color: white; padding: 12px 28px; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+        .btn-action { padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
+        .btn-view { background-color: #00bcd4; color: white; margin-right: 5px; }
+        .btn-delete { background-color: #ff5252; color: white; }
+
+        /* 🖨️ A4 સાઇઝ પ્રિન્ટ સેટિંગ્સ */
+        @media print {
+            .form-card-section, .btn-container, .table-section, .selection-title-main, .top-right-back { display: none !important; }
+            body { background: #fff; padding: 0; margin: 0; }
+            .main-card { box-shadow: none; padding: 0; margin: 0; }
+            .excel-vali-form { border: 2px solid #000; padding: 30px; margin: 0 auto; width: 94% !important; box-sizing: border-box; page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="main-card">
+        <div class="top-right-back">
+            <a href="praveshotsav.html" class="btn-back-top">⬅️ Back</a>
+        </div>
+
+        <div class="form-card-section">
+            <h3 class="selection-title-main" style="margin-top: 0; color: var(--primary-color); font-size: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 12px; width: 75%;">📝 બાળકને શાળામાં દાખલ કરવા માટેનું વાલી ફોર્મ</h3>
+            
+            <div class="form-section-title">🔹 ભાગ - ૧ (બાળકની વિગતો)</div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>વાલી ફોર્મ નં.</label>
+                    <input type="text" id="inValiFormNo" value="10" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>વય પત્રક નંબર</label>
+                    <input type="text" id="inVayPatrakNo" value="0" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૧) બાળકનું નામ</label>
+                    <input type="text" id="inChildName" value="બારીયા ઈસાબેન સતીષભાઈ" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૨) બાળકનો આધાર કાર્ડ</label>
+                    <input type="text" id="inChildAadhar" value="2403 5800 2095" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૩) પિતાનું નામ</label>
+                    <input type="text" id="inFatherName" value="બારીયા સતીષભાઈ રમેશભાઈ" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૪) માતાનું નામ</label>
+                    <input type="text" id="inMotherName" value="રેખાબેન" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૫) ધર્મ, જ્ઞાતિ અને પેટા જ્ઞાતિ</label>
+                    <input type="text" id="inCasteDetails" value="હિંદુ બારીયા" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>જ્ઞાતિ પ્રકાર (બક્ષીપંચ/Sc/St/Gen)</label>
+                    <input type="text" id="inCasteType" value="બક્ષીપંચ" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૬) જન્મ તારીખ (આંકડામાં)</label>
+                    <input type="text" id="inDobNum" value="2018-09-28" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>જન્મ તારીખ (શબ્દોમાં)</label>
+                    <input type="text" id="inDobWords" value="અઠ્ઠાવીસ સપ્ટેમ્બર બે હજાર અઢાર" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૭) જન્મસ્થળ - ગામ</label>
+                    <input type="text" id="inBPlaceGam" value="ધનપુરી-CHC" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>જન્મસ્થળ - તાલુકો</label>
+                    <input type="text" id="inBPlaceTal" value="જાંબુઘોડા" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>જન્મસ્થળ - જીલ્લો</label>
+                    <input type="text" id="inBPlaceJil" value="પંચમહાલ" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૮) કુટુંબનું સ્થાયી રહેવાનું ગામ</label>
+                    <input type="text" id="inPermGam" value="નાની રાસ્કી" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>કુટુંબનું સ્થાયી રહેવાનો તાલુકો</label>
+                    <input type="text" id="inPermTal" value="બોડેલી" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>કુટુંબનું સ્થાયી રહેવાનો જીલ્લો</label>
+                    <input type="text" id="inPermJil" value="છોટાઉદેપુર" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૯) માતૃભાષા</label>
+                    <input type="text" id="inLanguage" value="ગુજરાતી" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૧૦) કયા ધોરણમાં દાખલ કરવાનું છે?</label>
+                    <input type="text" id="inClass" value="બાલવાટિકા" oninput="updateValiForm()">
+                </div>
+            </div>
+
+            <div class="form-section-title">🔹 ભાગ - ૨ (વાલીની વિગતો)</div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>૧) વાલીનું હાલનું સરનામું (ગામ-તા-જી)</label>
+                    <input type="text" id="inCurrentAddress" value="ગામ: નાની રાસ્કી, તા: બોડેલી, જી: છોટાઉદેપુર" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૨) વાલીનું કાયમી સરનામું (ગામ-તા-જી)</label>
+                    <input type="text" id="inPermanentAddress" value="ગામ: નાની રાસ્કી, તા: બોડેલી, જી: છોટાઉદેપુર" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૩) પિતાનો આધારકાર્ડ નંબર</label>
+                    <input type="text" id="inFatherAadhar" value="0" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>માતા / વાલીનો આધારકાર્ડ</label>
+                    <input type="text" id="inMotherAadhar" value="5550 6554 8907" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૪) વાલીનો વ્યવસાય</label>
+                    <input type="text" id="inJob" value="ખેતી" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>વાર્ષિક આવક</label>
+                    <input type="text" id="inIncome" value="0" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૫) વાલીનો રાશનકાર્ડ નંબર</label>
+                    <input type="text" id="inRationCard" value="31900 80049 31677" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૬) બી.પી.એલ. કાર્ડ છે? (હા/ના)</label>
+                    <input type="text" id="inBplStatus" value="હા" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>બી.પી.એલ. નંબર</label>
+                    <input type="text" id="inBplNo" value="0" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૭) મોબાઈલ નંબર</label>
+                    <input type="text" id="inMobile" value="0" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>૮) બેંક ખાતા નંબર</label>
+                    <input type="text" id="inBankNo" value="0" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>બેન્કનો IFSC કોડ</label>
+                    <input type="text" id="inIfsc" value="0" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>બેન્કનું નામ</label>
+                    <input type="text" id="inBankName" value="0" oninput="updateValiForm()">
+                </div>
+                <div class="form-group">
+                    <label>શાખા</label>
+                    <input type="text" id="inBranch" value="0" oninput="updateValiForm()">
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <button class="btn-save" onclick="saveValiData()">💾 ફોર્મ ડેટા સેવ કરો</button>
+                <button class="btn-print" onclick="window.print()">🖨️ વાલી ફોર્મ પ્રિન્ટ કરો</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-section">
+        <h3 style="margin-top: 0; color: #14181b; font-size: 1.15rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">📊 સેવ કરેલા વાલી ફોર્મની યાદી</h3>
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ફોર્મ નં.</th>
+                        <th>બાળકનું નામ</th>
+                        <th>દાખલ ધોરણ</th>
+                        <th>મોબાઈલ</th>
+                        <th>રાશનકાર્ડ નં.</th>
+                        <th>એક્શન</th>
+                    </tr>
+                </thead>
+                <tbody id="valiTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="excel-vali-form" id="printArea">
+        <div class="excel-header">જીલ્લા પંચાયત શિક્ષણ સમિતિ - <span class="dotted-line">ગાંધીનગર</span></div>
+        <div class="excel-sub-header">
+            <b>શાળાનું નામ :</b> <span class="dotted-line" style="min-width:180px;">હાજીપુર પ્રા. શાળા</span>
+            &nbsp;&nbsp;<b>તાલુકો :</b> <span class="dotted-line" style="min-width:100px;">કલોલ</span>
+            &nbsp;&nbsp;<b>જીલ્લો :</b> <span class="dotted-line" style="min-width:100px;">ગાંધીનગર</span>
+        </div>
+        
+        <div class="excel-main-title">બાળકને શાળામાં દાખલ કરવા માટેનું વાલી ફોર્મ</div>
+
+        <div class="part-header">PART - 1 (ભાગ - ૧)</div>
+        <div class="meta-row">
+            <div><b>વાલી ફોર્મ નં. :</b> <span id="lblValiFormNo" class="dotted-line" style="min-width:80px;">10</span></div>
+            <div><b>વય પત્રક નંબર :</b> <span id="lblVayPatrakNo" class="dotted-line" style="min-width:80px;">0</span></div>
+        </div>
+
+        <div class="data-row"><b>૧) બાળકનું નામ :</b> <span id="lblChildName" class="dotted-line" style="min-width:450px;">બારીયા ઈસાબેન સતીષભાઈ</span></div>
+        <div class="data-row"><b>૨) બાળકનો આધાર કાર્ડ :</b> <span id="lblChildAadhar" class="dotted-line" style="min-width:350px;">2403 5800 2095</span></div>
+        <div class="data-row"><b>૩) પિતાનું નામ :</b> <span id="lblFatherName" class="dotted-line" style="min-width:450px;">બારીયા સતીષભાઈ રમેશભાઈ</span></div>
+        <div class="data-row"><b>૪) માતાનું નામ :</b> <span id="lblMotherName" class="dotted-line" style="min-width:450px;">રેખાબેન</span></div>
+        <div class="data-row">
+            <b>૫) ધર્મ, જ્ઞાતિ અને પેટા જ્ઞાતિ :</b> <span id="lblCasteDetails" class="dotted-line" style="min-width:250px;">હિંદુ બારીયા</span>
+            &nbsp;&nbsp;<b>જ્ઞાતિ :</b> <span id="lblCasteType" class="dotted-line" style="min-width:120px;">બક્ષીપંચ</span>
+        </div>
+        <div class="data-row"><b>૬) જન્મ તારીખ (આંકડામાં) :</b> <span id="lblDobNum" class="dotted-line" style="min-width:200px;">2018-09-28</span></div>
+        <div class="data-row" style="padding-left: 23px;"><b>જન્મ તારીખ (શબ્દોમાં) :</b> <span id="lblDobWords" class="dotted-line" style="min-width:450px;">અઠ્ઠાવીસ સપ્ટેમ્બર બે હજાર અઢાર</span></div>
+        
+        <div class="data-row">
+            <b>૭) જન્મસ્થળ :</b> 
+            <b>ગામ :</b> <span id="lblBPlaceGam" class="dotted-line" style="min-width:120px;">ધનપુરી-CHC</span>
+            <b>તાલુકો :</b> <span id="lblBPlaceTal" class="dotted-line" style="min-width:110px;">જાંબુઘોડા</span>
+            <b>જીલ્લો :</b> <span id="lblBPlaceJil" class="dotted-line" style="min-width:110px;">પંચમહાલ</span>
+        </div>
+        
+        <div class="data-row">
+            <b>૮) કુટુંબનું સ્થાયી રહેવાનું ઠેકાણું :</b> 
+            <b>ગામ :</b> <span id="lblPermGam" class="dotted-line" style="min-width:120px;">નાની રાસ્કી</span>
+            <b>તાલુકો :</b> <span id="lblPermTal" class="dotted-line" style="min-width:110px;">બોડેલી</span>
+            <b>જીલ્લો :</b> <span id="lblPermJil" class="dotted-line" style="min-width:110px;">છોટાઉદેપુર</span>
+        </div>
+        
+        <div class="data-row"><b>૯) માતૃભાષા :</b> <span id="lblLanguage" class="dotted-line" style="min-width:150px;">ગુજરાતી</span></div>
+        <div class="data-row"><b>૧૦) કયા ધોરણમાં દાખલ કરવામાં આવે છે? :</b> <span id="lblClass" class="dotted-line" style="min-width:180px;">બાલવાટિકા</span></div>
+
+        <div class="condition-text">
+            આથી હું દાખલો આપું છું કે મારા દિકરા / દિકરીના કે મારા રક્ષણ હેઠળના બાળક/બાળકીના સંબંધમાં આપેલી માહિતી ખરી છે.
+        </div>
+
+        <div class="signature-row">
+            <div><b>સ્થળ :</b> <span class="dotted-line">હાજીપુર પ્રા. શાળા</span></div>
+            <div><b>વાલીની સહી :</b> <span class="dotted-line" style="min-width:150px;"></span></div>
+        </div>
+        <div class="signature-row" style="margin-top: 15px;">
+            <div><b>તારીખ :</b> <span class="dotted-line">17-06-2026</span></div>
+            <div><b>વર્ગશિક્ષકની સહી :</b> <span class="dotted-line" style="min-width:120px;"></span></div>
+            <div><b>આચાર્યની સહી :</b> <span class="dotted-line" style="min-width:120px;"></span></div>
+        </div>
+
+        <div class="part-header" style="border-top: 1px dashed #000; padding-top: 15px;">PART - 2 (ભાગ - ૨)</div>
+        
+        <div class="data-row"><b>૧) વાલીનું હાલનું સરનામું :</b> <span id="lblCurrentAddress" class="dotted-line" style="min-width:550px;">ગામ: નાની રાસ્કી, તા: બોડેલી, જી: છોટાઉદેપુર</span></div>
+        <div class="data-row"><b>૨) વાલીનું કાયમી સરનામું :</b> <span id="lblPermanentAddress" class="dotted-line" style="min-width:550px;">ગામ: નાની રાસ્કી, તા: બોડેલી, જી: છોટાઉદેપુર</span></div>
+        
+        <div class="data-row">
+            <b>૩) આધારકાર્ડ નંબર :</b> 
+            <b>પિતા :</b> <span id="lblFatherAadhar" class="dotted-line" style="min-width:180px;">0</span>
+            &nbsp;&nbsp;<b>માતા / વાલી :</b> <span id="lblMotherAadhar" class="dotted-line" style="min-width:180px;">5550 6554 8907</span>
+        </div>
+
+        <div class="data-row">
+            <b>૪) વાલીનો વ્યવસાય :</b> <span id="lblJob" class="dotted-line" style="min-width:180px;">ખેતી</span>
+            &nbsp;&nbsp;<b>વાર્ષિક આવક :</b> <span id="lblIncome" class="dotted-line" style="min-width:120px;">0</span>
+        </div>
+
+        <div class="data-row"><b>૫) વાલીનો રાશનકાર્ડ નંબર :</b> <span id="lblRationCard" class="dotted-line" style="min-width:300px;">31900 80049 31677</span></div>
+        
+        <div class="data-row">
+            <b>૬) બી.પી.એલ. કાર્ડ છે? હા/ના :</b> <span id="lblBplStatus" class="dotted-line" style="min-width:80px;">હા</span>
+            &nbsp;&nbsp;<b>હા તો નંબર :</b> <span id="lblBplNo" class="dotted-line" style="min-width:150px;">0</span>
+        </div>
+
+        <div class="data-row"><b>૭) મોબાઈલ નંબર :</b> <span id="lblMobile" class="dotted-line" style="min-width:200px;">0</span></div>
+        
+        <div class="data-row">
+            <b>૮) બેંક ખાતા નંબર :</b> <span id="lblBankNo" class="dotted-line" style="min-width:200px;">0</span>
+            &nbsp;&nbsp;<b>બેન્કનો IFSC કોડ :</b> <span id="lblIfsc" class="dotted-line" style="min-width:150px;">0</span>
+        </div>
+        <div class="data-row" style="padding-left: 20px;">
+            <b>બેન્કનું નામ :</b> <span id="lblBankName" class="dotted-line" style="min-width:220px;">0</span>
+            &nbsp;&nbsp;<b>શાખા :</b> <span id="lblBranch" class="dotted-line" style="min-width:150px;">0</span>
+        </div>
+
+        <div class="condition-text" style="font-weight: bold; font-size: 1rem;">
+            આથી હું દાખલો આપું છું કે મારા દિકરા / દિકરીના કે મારા રક્ષણ હેઠળના બાળક/બાળકીના સંબંધમાં મેં આપેલી માહિતી ખરી છે. ખોટી માહિતી આપવી ગુન્હો બને છે. ભવિષ્યમાં ખોટી માહિતી માલુમ પડશે તો તેની તમામ જવાબદારી વાલી, માતા/પિતા તરીકે મારી રહેશે.
+        </div>
+
+        <div class="signature-row">
+            <div><b>સ્થળ :</b> <span class="dotted-line">હાજીપુર પ્રા. શાળા</span></div>
+            <div><b>વાલીની સહી :</b> <span class="dotted-line" style="min-width:150px;"></span></div>
+        </div>
+        <div class="signature-row" style="margin-top: 15px;">
+            <div><b>તારીખ :</b> <span class="dotted-line">17-06-2026</span></div>
+            <div><b>વર્ગશિક્ષકની સહી :</b> <span class="dotted-line" style="min-width:120px;"></span></div>
+            <div><b>આચાર્યની સહી :</b> <span class="dotted-line" style="min-width:120px;"></span></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let valiList = [];
+
+    window.onload = function() {
+        if (localStorage.getItem('savedValiForms')) {
+            valiList = JSON.parse(localStorage.getItem('savedValiForms'));
+        }
+        renderValiTable();
+        updateValiForm();
+    };
+
+    function updateValiForm() {
+        document.getElementById('lblValiFormNo').innerText = document.getElementById('inValiFormNo').value;
+        document.getElementById('lblVayPatrakNo').innerText = document.getElementById('inVayPatrakNo').value;
+        document.getElementById('lblChildName').innerText = document.getElementById('inChildName').value;
+        document.getElementById('lblChildAadhar').innerText = document.getElementById('inChildAadhar').value;
+        document.getElementById('lblFatherName').innerText = document.getElementById('inFatherName').value;
+        document.getElementById('lblMotherName').innerText = document.getElementById('inMotherName').value;
+        document.getElementById('lblCasteDetails').innerText = document.getElementById('inCasteDetails').value;
+        document.getElementById('lblCasteType').innerText = document.getElementById('inCasteType').value;
+        document.getElementById('lblDobNum').innerText = document.getElementById('inDobNum').value;
+        document.getElementById('lblDobWords').innerText = document.getElementById('inDobWords').value;
+        document.getElementById('lblBPlaceGam').innerText = document.getElementById('inBPlaceGam').value;
+        document.getElementById('lblBPlaceTal').innerText = document.getElementById('inBPlaceTal').value;
+        document.getElementById('lblBPlaceJil').innerText = document.getElementById('inBPlaceJil').value;
+        document.getElementById('lblPermGam').innerText = document.getElementById('inPermGam').value;
+        document.getElementById('lblPermTal').innerText = document.getElementById('inPermTal').value;
+        document.getElementById('lblPermJil').innerText = document.getElementById('inPermJil').value;
+        document.getElementById('lblLanguage').innerText = document.getElementById('inLanguage').value;
+        document.getElementById('lblClass').innerText = document.getElementById('inClass').value;
+
+        document.getElementById('lblCurrentAddress').innerText = document.getElementById('inCurrentAddress').value;
+        document.getElementById('lblPermanentAddress').innerText = document.getElementById('inPermanentAddress').value;
+        document.getElementById('lblFatherAadhar').innerText = document.getElementById('inFatherAadhar').value;
+        document.getElementById('lblMotherAadhar').innerText = document.getElementById('inMotherAadhar').value;
+        document.getElementById('lblJob').innerText = document.getElementById('inJob').value;
+        document.getElementById('lblIncome').innerText = document.getElementById('inIncome').value;
+        document.getElementById('lblRationCard').innerText = document.getElementById('inRationCard').value;
+        document.getElementById('lblBplStatus').innerText = document.getElementById('inBplStatus').value;
+        document.getElementById('lblBplNo').innerText = document.getElementById('inBplNo').value;
+        document.getElementById('lblMobile').innerText = document.getElementById('inMobile').value;
+        document.getElementById('lblBankNo').innerText = document.getElementById('inBankNo').value;
+        document.getElementById('lblIfsc').innerText = document.getElementById('inIfsc').value;
+        document.getElementById('lblBankName').innerText = document.getElementById('inBankName').value;
+        document.getElementById('lblBranch').innerText = document.getElementById('inBranch').value;
+    }
+
+    function saveValiData() {
+        const valiFormNo = document.getElementById('inValiFormNo').value;
+        const formData = {
+            id: Date.now(),
+            valiFormNo: valiFormNo,
+            vayPatrakNo: document.getElementById('inVayPatrakNo').value,
+            childName: document.getElementById('inChildName').value,
+            childAadhar: document.getElementById('inChildAadhar').value,
+            fatherName: document.getElementById('inFatherName').value,
+            motherName: document.getElementById('inMotherName').value,
+            casteDetails: document.getElementById('inCasteDetails').value,
+            casteType: document.getElementById('inCasteType').value,
+            dobNum: document.getElementById('inDobNum').value,
+            dobWords: document.getElementById('inDobWords').value,
+            bPlaceGam: document.getElementById('inBPlaceGam').value,
+            bPlaceTal: document.getElementById('inBPlaceTal').value,
+            bPlaceJil: document.getElementById('inBPlaceJil').value,
+            permGam: document.getElementById('inPermGam').value,
+            permTal: document.getElementById('inPermTal').value,
+            permJil: document.getElementById('inPermJil').value,
+            language: document.getElementById('inLanguage').value,
+            sClass: document.getElementById('inClass').value,
+            currentAddress: document.getElementById('inCurrentAddress').value,
+            permanentAddress: document.getElementById('inPermanentAddress').value,
+            fatherAadhar: document.getElementById('inFatherAadhar').value,
+            motherAadhar: document.getElementById('inMotherAadhar').value,
+            job: document.getElementById('inJob').value,
+            income: document.getElementById('inIncome').value,
+            rationCard: document.getElementById('inRationCard').value,
+            bplStatus: document.getElementById('inBplStatus').value,
+            bplNo: document.getElementById('inBplNo').value,
+            mobile: document.getElementById('inMobile').value,
+            bankNo: document.getElementById('inBankNo').value,
+            ifsc: document.getElementById('inIfsc').value,
+            bankName: document.getElementById('inBankName').value,
+            branch: document.getElementById('inBranch').value
+        };
+
+        const index = valiList.findIndex(item => item.valiFormNo === valiFormNo);
+        if (index > -1) {
+            valiList[index] = formData;
+        } else {
+            valiList.push(formData);
+        }
+
+        localStorage.setItem('savedValiForms', JSON.stringify(valiList));
+        renderValiTable();
+        alert('🎉 વાલી ફોર્મ ડેટાબેઝમાં સફળતાપૂર્વક સેવ થઈ ગયું છે!');
+    }
+
+    function renderValiTable() {
+        const tbody = document.getElementById('valiTableBody');
+        tbody.innerHTML = '';
+
+        if (valiList.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#777;">કોઈ વાલી ફોર્મ ડેટા સેવ નથી.</td></tr>`;
+            return;
+        }
+
+        valiList.forEach((item) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><b>${item.valiFormNo}</b></td>
+                <td>${item.childName}</td>
+                <td>${item.sClass}</td>
+                <td>${item.mobile}</td>
+                <td>${item.rationCard}</td>
+                <td>
+                    <button class="btn-action btn-view" onclick="viewValiForm(${item.id})">🔍 લોડ કરો</button>
+                    <button class="btn-action btn-delete" onclick="deleteValiForm(${item.id})">❌ ડીલીટ</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function viewValiForm(id) {
+        const item = valiList.find(s => s.id === id);
+        if (item) {
+            document.getElementById('inValiFormNo').value = item.valiFormNo;
+            document.getElementById('inVayPatrakNo').value = item.vayPatrakNo;
+            document.getElementById('inChildName').value = item.childName;
+            document.getElementById('inChildAadhar').value = item.childAadhar;
+            document.getElementById('inFatherName').value = item.fatherName;
+            document.getElementById('inMotherName').value = item.motherName;
+            document.getElementById('inCasteDetails').value = item.casteDetails;
+            document.getElementById('inCasteType').value = item.casteType;
+            document.getElementById('inDobNum').value = item.dobNum;
+            document.getElementById('inDobWords').value = item.dobWords;
+            document.getElementById('inBPlaceGam').value = item.bPlaceGam;
+            document.getElementById('inBPlaceTal').value = item.bPlaceTal;
+            document.getElementById('inBPlaceJil').value = item.bPlaceJil;
+            document.getElementById('inPermGam').value = item.permGam;
+            document.getElementById('inPermTal').value = item.permTal;
+            document.getElementById('inPermJil').value = item.permJil;
+            document.getElementById('inLanguage').value = item.language;
+            document.getElementById('inClass').value = item.sClass;
+            document.getElementById('inCurrentAddress').value = item.currentAddress;
+            document.getElementById('inPermanentAddress').value = item.permanentAddress;
+            document.getElementById('inFatherAadhar').value = item.fatherAadhar;
+            document.getElementById('inMotherAadhar').value = item.motherAadhar;
+            document.getElementById('inJob').value = item.job;
+            document.getElementById('inIncome').value = item.income;
+            document.getElementById('inRationCard').value = item.rationCard;
+            document.getElementById('inBplStatus').value = item.bplStatus;
+            document.getElementById('inBplNo').value = item.bplNo;
+            document.getElementById('inMobile').value = item.mobile;
+            document.getElementById('inBankNo').value = item.bankNo;
+            document.getElementById('inIfsc').value = item.ifsc;
+            document.getElementById('inBankName').value = item.bankName;
+            document.getElementById('inBranch').value = item.branch;
+
+            updateValiForm();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+
+    function deleteValiForm(id) {
+        if (confirm('શું તમે આ વાલી ફોર્મનો ડેટા ડીલીટ કરવા માંગો છો?')) {
+            valiList = valiList.filter(s => s.id !== id);
+            localStorage.setItem('savedValiForms', JSON.stringify(valiList));
+            renderValiTable();
+            updateValiForm();
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="gu">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Date Wise Report (MDM તારીજ)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            padding: 20px;
+            margin: 0;
+        }
+
+        /* ટોપ કંટ્રોલ બાર */
+        .web-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        /* બટન સ્ટાઇલિંગ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+
+        .back-btn { 
+            background: #f1f5f9; 
+            color: #475569; 
+            border: 1px solid #cbd5e1; 
+        }
+        .back-btn:hover { 
+            background: #e2e8f0; 
+        }
+
+        .excel-btn { 
+            background: #198754; 
+            color: white; 
+            margin-right: 10px; 
+        }
+        .excel-btn:hover { 
+            background: #146c43; 
+        }
+
+        .print-btn { 
+            background: #0d6efd; 
+            color: white; 
+        }
+        .print-btn:hover { 
+            background: #0b5ed7; 
+        }
+
+        /* મેઈન કંટેનર */
+        .report-sheet {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #cbd5e1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* મુખ્ય ટાઇટલ */
+        .main-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+        }
+        .sub-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 20px;
+        }
+
+        /* શાળાની માહિતી */
+        .school-meta-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+
+        /* ગ્રીડ લેઆઉટ */
+        .info-and-filter-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end; 
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        /* રજીસ્ટર ટેબલ */
+        .registered-box {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .registered-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .registered-table th, .registered-table td {
+            border: 1px solid #475569;
+            padding: 8px 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .registered-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .registered-table td {
+            font-weight: bold;
+            background: #ffffff;
+        }
+
+        /* ડેટા ઓપ્શન / ફિલ્ટર બોક્સ */
+        .date-option-box {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 15px;
+            border-radius: 8px;
+            min-width: 280px;
+            text-align: right; 
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .date-option-box label {
+            font-weight: bold;
+            color: #1e293b;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        .date-option-box select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            font-weight: 600;
+            background: #ffffff;
+            outline: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* મુખ્ય રિપોર્ટ ટેબલ */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        table.main-report {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table.main-report th, table.main-report td {
+            border: 1px solid #475569;
+            padding: 10px 5px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        table.main-report .main-header th {
+            background: #f1f5f9;
+            color: #0f172a;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        table.main-report .sub-header th {
+            background: #0077b6;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 4px;
+        }
+
+        /* સોફ્ટ કલર શેડ્સ */
+        .date-col { font-weight: bold; background: #f8fafc; }
+        .bv-box { background: #f0fdf4; color: #166534; }       
+        .class1-box { background: #fffdf5; color: #854d0e; }   
+        .class6-box { background: #f0f9ff; color: #075985; }   
+        .grand-total-box { background: #fef2f2; color: #991b1b; font-weight: bold; } 
+        .sign-col { background: #ffffff; }
+
+        /* સરવાળા વાળી રો નું સ્ટાઇલિંગ */
+        table.main-report .total-row td {
+            background: #184e77;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            padding: 12px 5px;
+        }
+
+        /* 🖨️ પ્રિન્ટ સેટિંગ્સ */
+        @media print {
+            .web-controls { display: none; }
+            .date-option-box label, .date-option-box select { display: none; }
+            .date-option-box { border: none; padding: 0; min-width: auto; background: none; text-align: right; }
+            .date-option-box::after {
+                content: "તારીખ ગાળો: " attr(data-selected);
+                font-weight: bold;
+                font-size: 14px;
+            }
+            body { background: white; padding: 0; color: black; }
+            .report-sheet { border: none; padding: 0; box-shadow: none; max-width: 100%; }
+            table.main-report th, table.main-report td, .registered-table th, .registered-table td { border: 1px solid #000; }
+            table.main-report .total-row td { background: #184e77 !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="web-controls">
+    <div>
+        <a href="mdm.html" class="btn back-btn">⬅ Back</a>
+    </div>
+    <div>
+        <button onclick="downloadExcel()" class="btn excel-btn">📊 Download Excel</button>
+        <button onclick="window.print()" class="btn print-btn">Print</button>
+    </div>
+</div>
+
+<div class="report-sheet">
+    
+    <div class="main-title">અક્ષયપાત્ર ફાઉન્ડેશન (મધ્યાહન ભોજન યોજના)</div>
+    <div class="sub-title">મુખ્યમંત્રી પૌષ્ટિક અલ્પાહાર યોજના (MDM તારીજ પત્રક)</div>
+
+    <div class="school-meta-row">
+        <div>
+            <span>શાળાનું નામ :- <b id="lblSchoolName">હાજીપુર પ્રાથમિક શાળા</b></span>
+            <span style="margin-left: 40px;">કેન્દ્ર નં :- <b>............</b></span>
+        </div>
+        <div>
+            <span>તારીખ / માસ :- <b id="lblReportMonth">............</b></span>
+        </div>
+    </div>
+
+    <div class="info-and-filter-grid">
+        
+        <div class="registered-box">
+            <table class="registered-table">
+                <tr>
+                    <th colspan="4" style="background: #e2eafc; color: #1e3a8a;">રજીસ્ટર બાળકોની સંખ્યા (Registered Students)</th>
+                </tr>
+                <tr>
+                    <th>બાલવાટિકા</th>
+                    <th>ધોરણ ૧ થી ૫</th>
+                    <th>ધોરણ ૬ થી ૮</th>
+                    <th style="background: #fee2e2;">કુલ બાળકો</th>
+                </tr>
+                <tr>
+                    <td id="reg_balvatika">0</td>
+                    <td id="reg_class1_5">0</td>
+                    <td id="reg_class6_8">0</td>
+                    <td id="reg_total" style="color: #2563eb; background: #fff5f5;">0</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="dateBoxContainer" class="date-option-box" data-selected="આખો મહિનો">
+            <label for="monthFilter">માસ પસંદ કરો:</label>
+            <select id="monthFilter" onchange="initReport()"></select>
+
+            <label for="dateFilter" style="margin-top: 5px;">તારીખ ઓપ્શન પસંદ કરો:</label>
+            <select id="dateFilter" onchange="applyDateFilter()">
+                <option value="all">આખો મહિનો (1 to 31)</option>
+                <option value="1-15">૧ થી ૧૫ (1 to 15)</option>
+                <option value="16-31">૧૬ થી ૩૧ (16 to 31)</option>
+            </select>
+        </div>
+        
+    </div>
+
+    <div class="table-container">
+        <table class="main-report" id="tableMainReport">
+            <thead>
+                <tr class="main-header">
+                    <th rowspan="2" style="width: 10%;">તારીખ</th>
+                    <th colspan="2">બાલવાટિકા</th>
+                    <th colspan="2">ધોરણ ૧ થી ૫</th>
+                    <th colspan="2">ધોરણ ૬ થી ૮</th>
+                    <th colspan="2">કુલ બાળકોની સંખ્યા</th>
+                    <th rowspan="2" style="width: 14%;">આચાર્યની સહી</th>
+                </tr>
+                <tr class="sub-header">
+                    <th>હાજર</th><th>લાભાર્થી</th>
+                    <th>હાજર</th><th>લાભાર્થી</th>
+                    <th>હાજર</th><th>લાભાર્થી</th>
+                    <th>હાજર</th><th>લાભાર્થી</th>
+                </tr>
+            </thead>
+            <tbody id="reportRows">
+                </tbody>
+            <tfoot>
+                </tfoot>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    const GUJ_MONTHS = ["જાન્યુઆરી", "ફેબ્રુઆરી", "માર્ચ", "એપ્રિલ", "મે", "જૂન", "જુલાઈ", "ઓગસ્ટ", "સપ્ટેમ્બર", "ઓક્ટોબર", "નવેમ્બર", "ડિસેમ્બર"];
+
+    window.onload = function() {
+        generateMonthOptions();
+        initReport();
+    };
+
+    // માસ સિલેક્શન ડ્રોપડાઉન જનરેટ કરવું
+    function generateMonthOptions() {
+        const monthSelect = document.getElementById("monthFilter");
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth();
+
+        monthSelect.innerHTML = "";
+        for (let i = 0; i < 6; i++) {
+            let d = new Date(currentYear, currentMonth - i, 1);
+            let monthVal = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+            let monthText = `${GUJ_MONTHS[d.getMonth()]} - ${d.getFullYear()}`;
+            
+            let opt = document.createElement("option");
+            opt.value = monthVal;
+            opt.innerText = monthText;
+            monthSelect.appendChild(opt);
+        }
+    }
+
+    function initReport() {
+        const dbAttendance = JSON.parse(localStorage.getItem("SchoolAttendanceDB")) || {};
+        const dbSettings = JSON.parse(localStorage.getItem("SchoolSettingsDB")) || {};
+
+        // ૧. સ્કૂલ પ્રોફાઈલ સેટ કરો
+        if (dbSettings.profile) {
+            document.getElementById("lblSchoolName").innerText = dbSettings.profile.schoolName || "હાજીપુર પ્રાથમિક શાળા";
+        }
+
+        const selectedMonthVal = document.getElementById("monthFilter").value;
+        const parts = selectedMonthVal.split("-");
+        const selYear = parseInt(parts[0]);
+        const selMonth = parseInt(parts[1]) - 1;
+
+        document.getElementById("lblReportMonth").innerText = document.getElementById("monthFilter").options[document.getElementById("monthFilter").selectedIndex].text;
+
+        // ૨. રજીસ્ટર બાળકોની ગણતરી (બાલવાટિકા, ૧ થી ૫, ૬ થી ૮)
+        let regCounts = { balvatika: 0, class1_5: 0, class6_8: 0 };
+        
+        if (dbSettings.students) {
+            Object.keys(dbSettings.students).forEach(cls => {
+                let s = dbSettings.students[cls];
+                let totalForClass = parseInt(s.sc_boy || 0) + parseInt(s.sc_girl || 0) + 
+                                    parseInt(s.st_boy || 0) + parseInt(s.st_girl || 0) + 
+                                    parseInt(s.obc_boy || 0) + parseInt(s.obc_girl || 0) + 
+                                    parseInt(s.general_boy || 0) + parseInt(s.general_girl || 0);
+
+                if (cls.includes("બાલવાટિકા")) {
+                    regCounts.balvatika += totalForClass;
+                } else if (["ધોરણ-૧", "ધોરણ-૨", "ધોરણ-૩", "ધોરણ-૪", "ધોરણ-૫"].includes(cls)) {
+                    regCounts.class1_5 += totalForClass;
+                } else if (["ધોરણ-૬", "ધોરણ-૭", "ધોરણ-૮"].includes(cls)) {
+                    regCounts.class6_8 += totalForClass;
+                }
+            });
+        }
+
+        document.getElementById("reg_balvatika").innerText = regCounts.balvatika;
+        document.getElementById("reg_class1_5").innerText = regCounts.class1_5;
+        document.getElementById("reg_class6_8").innerText = regCounts.class6_8;
+        document.getElementById("reg_total").innerText = regCounts.balvatika + regCounts.class1_5 + regCounts.class6_8;
+
+        // ૩. ચાલુ મહિનો હોય તો આજ સુધીના જ દિવસો લાવવા
+        const today = new Date();
+        let maxDays = new Date(selYear, selMonth + 1, 0).getDate();
+        if (today.getFullYear() === selYear && today.getMonth() === selMonth) {
+            maxDays = today.getDate();
+        }
+
+        let bodyHtml = "";
+
+        for (let day = 1; day <= maxDays; day++) {
+            let dateStr = `${selYear}-${String(selMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            let displayDate = `${String(day).padStart(2, '0')}/${String(selMonth + 1).padStart(2, '0')}/${selYear}`;
+
+            let dayData = {
+                bv_h: 0, bv_l: 0,
+                c15_h: 0, c15_l: 0,
+                c68_h: 0, c68_l: 0
+            };
+
+            if (dbAttendance[dateStr]) {
+                Object.keys(dbAttendance[dateStr]).forEach(cls => {
+                    let att = dbAttendance[dateStr][cls];
+                    let hajar = parseInt(att.presentCount || 0);
+                    let labharthi = parseInt(att.mdmBeneficiaryCount || att.presentCount || 0); // જો લાભાર્થી અલગ ન હોય તો હાજર સંખ્યા જ ગણાશે
+
+                    if (cls.includes("બાલવાટિકા")) {
+                        dayData.bv_h += hajar; dayData.bv_l += labharthi;
+                    } else if (["ધોરણ-૧", "ધોરણ-૨", "ધોરણ-૩", "ધોરણ-૪", "ધોરણ-૫"].includes(cls)) {
+                        dayData.c15_h += hajar; dayData.c15_l += labharthi;
+                    } else if (["ધોરણ-૬", "ધોરણ-૭", "ધોરણ-૮"].includes(cls)) {
+                        dayData.c68_h += hajar; dayData.c68_l += labharthi;
+                    }
+                });
+            }
+
+            let grandHajar = dayData.bv_h + dayData.c15_h + dayData.c68_h;
+            let grandLabharthi = dayData.bv_l + dayData.c15_l + dayData.c68_l;
+
+            let dayOfWeek = new Date(selYear, selMonth, day).getDay();
+            let isSunday = (dayOfWeek === 0);
+
+            if (isSunday) {
+                bodyHtml += `
+                <tr class="data-row" data-day="${day}">
+                    <td class="date-col">${displayDate}</td>
+                    <td colspan="8" style="background:#fee2e2; color:#991b1b; font-weight:bold; letter-spacing:2px;">રવિવાર (SUNDAY)</td>
+                    <td class="sign-col"></td>
+                </tr>`;
+            } else {
+                bodyHtml += `
+                <tr class="data-row" data-day="${day}">
+                    <td class="date-col">${displayDate}</td>
+                    <td class="bv-box">${dayData.bv_h}</td>
+                    <td class="bv-box">${dayData.bv_l}</td>
+                    <td class="class1-box">${dayData.c15_h}</td>
+                    <td class="class1-box">${dayData.c15_l}</td>
+                    <td class="class6-box">${dayData.c68_h}</td>
+                    <td class="class6-box">${dayData.c68_l}</td>
+                    <td class="grand-total-box">${grandHajar}</td>
+                    <td class="grand-total-box">${grandLabharthi}</td>
+                    <td class="sign-col"></td>
+                </tr>`;
+            }
+        }
+
+        document.getElementById("reportRows").innerHTML = bodyHtml;
+        applyDateFilter();
+    }
+
+    // તારીખ ફિલ્ટર (૧ થી ૧૫ કે ૧૬ થી ૩૧) એપ્લાય કરવું
+    function applyDateFilter() {
+        let selectElement = document.getElementById("dateFilter");
+        let filterValue = selectElement.value;
+        let container = document.getElementById("dateBoxContainer");
+        
+        if(container) {
+            container.setAttribute("data-selected", selectElement.options[selectElement.selectedIndex].text);
+        }
+
+        let rows = document.querySelectorAll(".data-row");
+        rows.forEach(row => {
+            let day = parseInt(row.getAttribute("data-day"));
+
+            if (filterValue === "1-15") {
+                if (day >= 1 && day <= 15) row.style.display = "";
+                else row.style.display = "none";
+            } else if (filterValue === "16-31") {
+                if (day >= 16 && day <= 31) row.style.display = "";
+                else row.style.display = "none";
+            } else {
+                row.style.display = "";
+            }
+        });
+
+        calculateFooterTotals();
+    }
+
+    // ફૂટરનો કુલ સરવાળો કરવો
+    function calculateFooterTotals() {
+        let table = document.getElementById("tableMainReport");
+        let rows = table.querySelectorAll("tbody tr");
+        let sums = Array(8).fill(0);
+
+        rows.forEach(row => {
+            if (row.style.display !== "none" && !row.innerHTML.includes("રવિવાર")) {
+                let cells = row.querySelectorAll("td");
+                for (let i = 1; i <= 8; i++) {
+                    sums[i-1] += parseInt(cells[i].innerText || 0);
+                }
+            }
+        });
+
+        let tfoot = table.querySelector("tfoot");
+        tfoot.innerHTML = `
+        <tr class="total-row">
+            <td>કુલ સરવાળો</td>
+            <td>${sums[0]}</td><td>${sums[1]}</td>
+            <td>${sums[2]}</td><td>${sums[3]}</td>
+            <td>${sums[4]}</td><td>${sums[5]}</td>
+            <td>${sums[6]}</td><td>${sums[7]}</td>
+            <td></td>
+        </tr>`;
+    }
+
+    // 📊 એક્સેલ રિપોર્ટ ડાઉનલોડ કરવા માટેનું ફંક્શન
+    function downloadExcel() {
+        let monthText = document.getElementById("monthFilter").options[document.getElementById("monthFilter").selectedIndex].text;
+        let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+        
+        csvContent += `અક્ષયપાત્ર ફાઉન્ડેશન (મધ્યાહન ભોજન યોજના),,, MDM તારીજ પત્રક\n`;
+        csvContent += `શાળાનું નામ: ${document.getElementById("lblSchoolName").innerText},,,માસ: ${monthText}\n\n`;
+        
+        csvContent += `તારીખ,બાલવાટિકા હાજર,બાલવાટિકા લાભાર્થી,ધોરણ ૧-૫ હાજર,ધોરણ ૧-૫ લાભાર્થી,ધોરણ ૬-૮ હાજર,ધોરણ ૬-૮ લાભાર્થી,કુલ હાજર,કુલ લાભાર્થી\n`;
+        
+        let rows = document.querySelectorAll("#reportRows tr");
+        rows.forEach(row => {
+            if(row.style.display !== "none") {
+                let cells = row.querySelectorAll("td");
+                if(row.innerHTML.includes("SUNDAY")) {
+                    csvContent += `${cells[0].innerText},રવિવાર,,,,,,,\n`;
+                } else {
+                    let rowData = [];
+                    for(let i=0; i<9; i++) { rowData.push(cells[i].innerText); }
+                    csvContent += rowData.join(",") + "\n";
+                }
+            }
+        });
+        
+        let footCells = document.querySelectorAll("tfoot tr td");
+        let footData = [];
+        for(let i=0; i<9; i++) { footData.push(footCells[i].innerText); }
+        csvContent += footData.join(",") + "\n";
+
+        let encodedUri = encodeURI(csvContent);
+        let link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `MDM_Tariz_Report_${monthText.replace(/ /g,'')}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+
+</body>
+</html>

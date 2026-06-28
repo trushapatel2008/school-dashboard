@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1" />
+
+  <title>
+    About Us - હાજીપુર પ્રાથમિક શાળા
+  </title>
+
+  <!-- Tailwind -->
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Font -->
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    /* BODY */
+
+    body{
+
+      min-height:100vh;
+
+      background:
+
+      linear-gradient(
+      rgba(240,255,252,0.90),
+      rgba(225,245,255,0.90)
+      );
+
+      background-attachment:fixed;
+
+      color:#184e77;
+    }
+
+    /* HEADER */
+
+    header{
+
+      background:#184e77;
+
+      color:white;
+
+      box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    /* BUTTON */
+
+    .back-btn{
+
+      background:
+      linear-gradient(
+      45deg,
+      #4f46e5,
+      #4338ca
+      );
+
+      padding:12px 22px;
+
+      border-radius:40px;
+
+      color:white;
+
+      text-decoration:none;
+
+      font-weight:600;
+
+      transition:0.3s;
+
+      box-shadow:
+      0 5px 15px rgba(79,70,229,0.4);
+    }
+
+    .back-btn:hover{
+
+      transform:translateY(-3px);
+
+      box-shadow:
+      0 8px 20px rgba(79,70,229,0.5);
+    }
+
+    /* CARDS */
+
+    .info-card{
+
+      background:rgba(255,255,255,0.45);
+
+      backdrop-filter:blur(12px);
+
+      border-radius:20px;
+
+      padding:30px;
+
+      border:1px solid rgba(255,255,255,0.25);
+
+      box-shadow:0 5px 20px rgba(0,0,0,0.08);
+
+      transition:0.3s;
+    }
+
+    .info-card:hover{
+
+      transform:translateY(-8px);
+
+      background:rgba(255,255,255,0.60);
+    }
+
+    /* DEVELOPER CARD */
+
+    .developer-card{
+
+      background:rgba(255,255,255,0.45);
+
+      backdrop-filter:blur(12px);
+
+      border-radius:25px;
+
+      padding:40px;
+
+      border:1px solid rgba(255,255,255,0.25);
+
+      box-shadow:0 5px 20px rgba(0,0,0,0.08);
+
+      transition:0.3s;
+    }
+
+    .developer-card:hover{
+
+      transform:translateY(-8px);
+
+      background:rgba(255,255,255,0.60);
+    }
+
+    /* CONTACT BUTTON */
+
+    .contact-btn{
+
+      background:
+      linear-gradient(
+      45deg,
+      #06b6d4,
+      #3b82f6
+      );
+
+      color:white;
+
+      padding:14px 28px;
+
+      border-radius:40px;
+
+      text-decoration:none;
+
+      font-weight:600;
+
+      transition:0.3s;
+
+      display:inline-block;
+
+      margin-top:25px;
+    }
+
+    .contact-btn:hover{
+
+      transform:scale(1.05);
+
+      box-shadow:0 0 15px #3b82f6;
+    }
+
+    /* FOOTER */
+
+    footer{
+
+      background:#184e77;
+
+      color:white;
+
+      text-align:center;
+
+      padding:25px;
+
+      margin-top:70px;
+    }
+
+    @media(max-width:768px){
+
+      .header-box{
+
+        flex-direction:column;
+
+        gap:20px;
+
+        text-align:center;
+      }
+
+      .school-name{
+
+        font-size:22px;
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header>
+
+    <div class="max-w-7xl mx-auto flex justify-between items-center py-6 px-6 header-box">
+
+      <!-- LOGO -->
+
+      <div class="flex items-center space-x-4">
+
+        <!-- IMPORTANT -->
+        <!-- Put logo inside static/images folder -->
+
+        <img src="static/images/logo.jpg"
+             alt="School Logo"
+             class="h-16 w-16 rounded-full shadow-lg">
+
+        <h1 class="text-3xl font-extrabold tracking-wide school-name">
+
+          હાજીપુર પ્રાથમિક શાળા
+
+        </h1>
+
+      </div>
+
+      <!-- BUTTON -->
+
+      <a href="home.html"
+         class="back-btn">
+
+        ⬅ Back to Home
+
+      </a>
+
+    </div>
+
+  </header>
+
+  <!-- MAIN -->
+
+  <main class="max-w-6xl mx-auto py-16 px-6">
+
+    <!-- ABOUT -->
+
+    <section class="text-center mb-16">
+
+      <h2 class="text-5xl font-extrabold mb-6">
+
+        About Us
+
+      </h2>
+
+      <p class="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
+
+        <strong>હાજીપુર પ્રાથમિક શાળા</strong>
+        is committed to providing quality education
+        and building a bright future for students.
+
+        Our school focuses on academic excellence,
+        discipline, creativity, and overall development
+        of every child.
+
+      </p>
+
+    </section>
+
+    <!-- INFORMATION SECTION -->
+
+    <section class="grid md:grid-cols-2 gap-10 mb-20">
+
+      <!-- MISSION -->
+
+      <div class="info-card">
+
+        <h3 class="text-3xl font-bold text-cyan-700 mb-5">
+
+          🎯 Our Mission
+
+        </h3>
+
+        <p class="text-gray-700 leading-relaxed text-lg">
+
+          To provide high-quality education
+          and help students become responsible,
+          confident, and successful individuals
+          in society.
+
+        </p>
+
+      </div>
+
+      <!-- FACILITIES -->
+
+      <div class="info-card">
+
+        <h3 class="text-3xl font-bold text-cyan-700 mb-5">
+
+          🏫 School Facilities
+
+        </h3>
+
+        <ul class="list-disc list-inside text-gray-700 space-y-3 text-lg">
+
+          <li>Smart Classrooms</li>
+
+          <li>Computer Education</li>
+
+          <li>Library Facility</li>
+
+          <li>Sports Activities</li>
+
+          <li>Experienced Teachers</li>
+
+        </ul>
+
+      </div>
+
+    </section>
+
+    <!-- DEVELOPER -->
+
+    <section class="text-center">
+
+      <h3 class="text-4xl font-bold mb-10">
+
+        👩‍💻 Developer
+
+      </h3>
+
+      <div class="max-w-md mx-auto developer-card">
+
+      <!-- PHOTO -->
+
+        <img src="https://ui-avatars.com/api/?name=Patel+Trusha&background=4F46E5&color=fff&size=200"
+             alt="Patel Trusha"
+
+             class="w-36 h-36 mx-auto rounded-full shadow-lg mb-6">
+
+        <!-- NAME -->
+
+        <h4 class="text-3xl font-bold text-cyan-700">
+
+         Trusha Patel
+
+        </h4>
+
+        <!-- ROLE -->
+
+        <p class="text-gray-600 mt-3 text-lg">
+
+          Diploma IT Student
+
+        </p>
+
+        <!-- DESCRIPTION -->
+
+        <p class="text-gray-700 mt-6 leading-relaxed text-lg">
+
+          Passionate about web development and technology.
+
+          This website is developed to digitally manage
+          and display school information in a modern,
+          simple, and user-friendly way.
+
+        </p>
+
+        <!-- BUTTON -->
+
+        <a href="mailto:yourmail@gmail.com"
+           class="contact-btn">
+
+          Contact Me
+
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <p>
+
+      © 2026 હાજીપુર પ્રાથમિક શાળા |
+      Designed & Developed by Patel Trusha
+
+    </p>
+
+  </footer>
+
+</body>
+
+</html>

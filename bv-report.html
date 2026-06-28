@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="gu">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Balvatika MDM Excel Design Report</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .web-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-left {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s;
+        }
+
+        .back-btn { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+        .back-btn:hover { background: #e2e8f0; }
+        .excel-btn { background: #198754; color: white; }
+        .excel-btn:hover { background: #146c43; }
+        .print-btn { background: #0d6efd; color: white; }
+        .print-btn:hover { background: #0b5ed7; }
+
+        .info-and-filter-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .registered-box {
+            flex: 1;
+        }
+
+        .date-option-box {
+            border: 1px solid #cbd5e1;
+            padding: 15px;
+            border-radius: 8px;
+            background: #ffffff;
+            min-width: 280px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .date-option-box label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #334155;
+        }
+
+        .date-option-box select, .date-option-box input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            font-size: 14px;
+            font-weight: 600;
+            background-color: #fff;
+            color: #0f172a;
+            outline: none;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+            margin-bottom: 8px;
+        }
+
+        .report-sheet {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #cbd5e1;
+            max-width: 1500px;
+            margin: 0 auto 30px auto;
+        }
+
+        .main-title { text-align: center; font-size: 24px; font-weight: bold; color: #000; margin-bottom: 5px; }
+        .sub-title { text-align: center; font-size: 18px; font-weight: bold; color: #1e3a8a; margin-bottom: 20px; background: #e2eafc; padding: 10px; border-radius: 5px; border: 1px solid #b9d6fe; }
+
+        .school-meta-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 8px;
+        }
+
+        .registered-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .registered-table th, .registered-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .registered-table th { background: #f8fafc; }
+
+        table.main-report { width: 100%; border-collapse: collapse; margin-top: 5px; margin-bottom: 15px; }
+        table.main-report th, table.main-report td { border: 1px solid #000; padding: 6px 3px; text-align: center; font-size: 13px; }
+
+        table.main-report thead tr th { background: #f1f5f9; color: #000; font-weight: bold; }
+        .sub-head-cast th { background: #f8fafc !important; font-size: 11px !important; padding: 4px 2px !important; }
+
+        .date-col { font-weight: bold; background: #f8fafc; }
+        .total-col { background: #fef2f2; font-weight: bold; }
+        .grand-col { background: #fee2e2; font-weight: bold; color: #991b1b; }
+
+        table.main-report .total-row td {
+            background: #1e293b;
+            color: white;
+            font-weight: bold;
+            font-size: 13px;
+            padding: 10px 3px;
+        }
+
+        @media print {
+            .web-controls, .date-option-box { display: none !important; }
+            body { background: white; padding: 0; margin: 0; color: black; font-size: 11px; }
+            .report-sheet { border: none; padding: 5px; box-shadow: none; max-width: 100%; }
+            .main-title { font-size: 18px; margin-bottom: 2px; }
+            .sub-title { font-size: 14px; padding: 5px; margin-bottom: 10px; }
+            .school-meta-row { font-size: 12px; margin-bottom: 8px; padding-bottom: 4px; }
+            
+            .registered-table th, .registered-table td { padding: 4px; font-size: 11px; }
+            table.main-report th, table.main-report td { padding: 3px 2px; font-size: 10px; }
+            .sub-head-cast th { font-size: 9px !important; padding: 2px 1px !important; }
+            table.main-report .total-row td { padding: 5px 2px; font-size: 10px; }
+            
+            table.main-report thead tr th, table.main-report td, .registered-table th, .registered-table td { border: 1px solid #000 !important; }
+            table.main-report .total-row td { background: #1e293b !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="web-controls">
+    <div class="btn-left">
+        <a href="mdm.html" class="btn back-btn">⬅ Back</a>
+    </div>
+    <div>
+        <button onclick="exportToExcel()" class="btn excel-btn">📊 Download Excel</button>
+        <button onclick="window.print()" class="btn print-btn">Print Report</button>
+    </div>
+</div>
+
+<div class="report-sheet" id="printArea">
+    <div class="main-title">અક્ષયપાત્ર ફાઉન્ડેશન</div>
+
+    <div class="school-meta-row">
+        <div>
+            <span>શાળાનું નામ :- <b id="lblSchoolName">હાજીપુર પ્રાથમિક શાળા</b></span>
+            <span style="margin-left: 30px;">કેન્દ્ર નં :- <b>_____</b></span>
+        </div>
+        <div>
+            <span>તારીખ / માસ :- <b id="lblReportMonth">_____</b></span>
+        </div>
+    </div>
+
+    <div class="info-and-filter-grid">
+        <div class="registered-box">
+            <table class="registered-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="vertical-align: middle;">રજીસ્ટર બાળકોની સંખ્યા</th>
+                        <th colspan="2">અનુ. જાતિ (SC)</th>
+                        <th colspan="2">અનુ. જ. જા. (ST)</th>
+                        <th colspan="2">સા.શૈ.પ.વ. (OBC)</th>
+                        <th colspan="2">અન્ય (GEN)</th>
+                        <th colspan="2">કુલ</th>
+                        <th rowspan="2" style="vertical-align: middle; background: #fee2e2;">કુલ બાળકો</th>
+                    </tr>
+                    <tr style="background: #f8fafc; font-weight: bold; font-size: 12px;">
+                        <td>કુમાર</td><td>કન્યા</td><td>કુમાર</td><td>કન્યા</td><td>કુમાર</td><td>કન્યા</td><td>કુમાર</td><td>કન્યા</td><td>કુમાર</td><td>કન્યા</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>બાલવાટિકા કુલ રજીસ્ટર</b></td>
+                        <td id="reg_sc_b">0</td><td id="reg_sc_g">0</td>
+                        <td id="reg_st_b">0</td><td id="reg_st_g">0</td>
+                        <td id="reg_obc_b">0</td><td id="reg_obc_g">0</td>
+                        <td id="reg_gen_b">0</td><td id="reg_gen_g">0</td>
+                        <td><b id="reg_tot_b">0</b></td><td><b id="reg_tot_g">0</b></td>
+                        <td id="reg_grand" style="background: #fee2e2; font-weight: bold;">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="dateBoxContainer" class="date-option-box">
+            <label>અહેવાલનો માસ પસંદ કરો:</label>
+            <input type="month" id="reportMonthPicker" onchange="loadBalvatikaLiveReport()">
+
+            <label for="dateFilter">તારીખ ઓપ્શન પસંદ કરો:</label>
+            <select id="dateFilter" onchange="filterDates()">
+                <option value="all">આખો મહિનો (1 to Present)</option>
+                <option value="1-15">૧ થી ૧૫ (1 to 15)</option>
+                <option value="16-31">૧૬ થી ૩૧ (16 to 31)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="sub-title">બાલવાટિકા મધ્યાહન ભોજન યોજના દૈનિક વિગત પત્રક</div>
+    <table class="main-report">
+        <thead>
+            <tr>
+                <th rowspan="2" style="width: 8%; vertical-align: middle;">તારીખ</th>
+                <th colspan="2">અનુ. જાતિ</th>
+                <th colspan="2">અનુ. જ. જા.</th>
+                <th colspan="2">સા.શૈ.પ.વ.</th>
+                <th colspan="2">અન્ય</th>
+                <th colspan="2">કુલ</th>
+                <th rowspan="2" style="width: 8%; vertical-align: middle;">કુલ</th>
+                <th rowspan="2" style="width: 12%; vertical-align: middle;">આચાર્યની સહી</th>
+            </tr>
+            <tr class="sub-head-cast">
+                <th>કુમાર</th><th>કન્યા</th>
+                <th>કુમાર</th><th>કન્યા</th>
+                <th>કુમાર</th><th>કન્યા</th>
+                <th>કુમાર</th><th>કન્યા</th>
+                <th>કુમાર</th><th>કન્યા</th>
+            </tr>
+        </thead>
+        <tbody id="mdmReportBody">
+            </tbody>
+    </table>
+
+    <div class="sub-title">લાભાર્થી બાળકોની સંખ્યા</div>
+    <table class="main-report">
+        <thead>
+            <tr>
+                <th rowspan="2" style="width: 8%; vertical-align: middle;">તારીખ</th>
+                <th colspan="2">અનુ. જાતિ</th>
+                <th colspan="2">અનુ. જ. જા.</th>
+                <th colspan="2">સા.શૈ.પ.વ.</th>
+                <th colspan="2">અન્ય</th>
+                <th colspan="2">કુલ</th>
+                <th rowspan="2" style="width: 8%; vertical-align: middle;">કુલ</th>
+                <th rowspan="2" style="width: 12%; vertical-align: middle;">આચાર્યની સહી</th>
+            </tr>
+            <tr class="sub-head-cast">
+                <th>કુમાર</th><th>કન્યા</th>
+                <th>કુમાર</th><th>કન્યા</th>
+                <th>કુમાર</th><th>કન્યા</th>
+                <th>કુમાર</th><th>કન્યા</th>
+                <th>કુમાર</th><th>કન્યા</th>
+            </tr>
+        </thead>
+        <tbody id="beneficiaryReportBody">
+            </tbody>
+    </table>
+</div>
+
+<script>
+    // ચાલુ મહિનાને ડિફોલ્ટ સેટ કરવો
+    const todayObj = new Date();
+    const currentMonthStr = todayObj.getFullYear() + '-' + String(todayObj.getMonth() + 1).padStart(2, '0');
+    document.getElementById('reportMonthPicker').value = currentMonthStr;
+
+    function loadBalvatikaLiveReport() {
+        let monthValue = document.getElementById("reportMonthPicker").value;
+        if (!monthValue) return;
+
+        let year = parseInt(monthValue.split("-")[0]);
+        let month = parseInt(monthValue.split("-")[1]);
+        
+        document.getElementById("lblReportMonth").innerText = `${String(month).padStart(2, '0')} / ${year}`;
+
+        let attendanceDB = JSON.parse(localStorage.getItem("SchoolAttendanceDB")) || {};
+        let settingsDB = JSON.parse(localStorage.getItem("SchoolSettingsDB")) || {};
+
+        let regData = settingsDB["બાળવાટિકા"] || settingsDB["બાલવાટિકા"] || {
+            sc_b: 0, sc_g: 0, st_b: 0, st_g: 0, obc_b: 0, obc_g: 0, gen_b: 0, gen_g: 0
+        };
+
+        document.getElementById("reg_sc_b").innerText = regData.sc_b || 0;
+        document.getElementById("reg_sc_g").innerText = regData.sc_g || 0;
+        document.getElementById("reg_st_b").innerText = regData.st_b || 0;
+        document.getElementById("reg_st_g").innerText = regData.st_g || 0;
+        document.getElementById("reg_obc_b").innerText = regData.obc_b || 0;
+        document.getElementById("reg_obc_g").innerText = regData.obc_g || 0;
+        document.getElementById("reg_gen_b").innerText = regData.gen_b || 0;
+        document.getElementById("reg_gen_g").innerText = regData.gen_g || 0;
+        
+        let totRegB = (parseInt(regData.sc_b)||0) + (parseInt(regData.st_b)||0) + (parseInt(regData.obc_b)||0) + (parseInt(regData.gen_b)||0);
+        let totRegG = (parseInt(regData.sc_g)||0) + (parseInt(regData.st_g)||0) + (parseInt(regData.obc_g)||0) + (parseInt(regData.gen_g)||0);
+        document.getElementById("reg_tot_b").innerText = totRegB;
+        document.getElementById("reg_tot_g").innerText = totRegG;
+        document.getElementById("reg_grand").innerText = totRegB + totRegG;
+
+        // લૂપ ક્યાં સુધી ફેરવવી તેની સ્માર્ટ ગણતરી
+        let lastDayToShow = new Date(year, month, 0).getDate(); // મહિનાના પૂરા દિવસો
+        
+        // જો સિલેક્ટ કરેલો મહિનો અને વર્ષ ચાલુ માસના જ હોય, તો આજની તારીખ સુધી જ લૂપ ચલાવવી
+        if (year === todayObj.getFullYear() && month === (todayObj.getMonth() + 1)) {
+            lastDayToShow = todayObj.getDate(); 
+        }
+
+        let mdmBody = document.getElementById("mdmReportBody");
+        let benBody = document.getElementById("beneficiaryReportBody");
+        
+        mdmBody.innerHTML = "";
+        benBody.innerHTML = "";
+
+        let runningTotals = { sc_b:0, sc_g:0, st_b:0, st_g:0, obc_b:0, obc_g:0, gen_b:0, gen_g:0, tot_b:0, tot_g:0, grand:0 };
+
+        // ૧ થી આજની તારીખ (અથવા જૂનો મહિનો હોય તો પૂરા દિવસ) સુધી જ લૂપ ફરશે
+        for (let day = 1; day <= lastDayToShow; day++) {
+            let dayStr = String(day).padStart(2, '0');
+            let monthStr = String(month).padStart(2, '0');
+            let fullDateKey = `${year}-${monthStr}-${dayStr}`; 
+
+            let uniqueKey1 = `${fullDateKey}_બાલવાટિકા`;
+            let uniqueKey2 = `${fullDateKey}_બાળવાટિકા`;
+            let dayData = attendanceDB[uniqueKey1] || attendanceDB[uniqueKey2] || null;
+
+            let sc_b = dayData ? (dayData.b_sc_p || 0) : 0;
+            let sc_g = dayData ? (dayData.g_sc_p || 0) : 0;
+            let st_b = dayData ? (dayData.b_st_p || 0) : 0;
+            let st_g = dayData ? (dayData.g_st_p || 0) : 0;
+            let obc_b = dayData ? (dayData.b_obc_p || 0) : 0;
+            let obc_g = dayData ? (dayData.g_obc_p || 0) : 0;
+            let gen_b = dayData ? (dayData.b_gen_p || 0) : 0;
+            let gen_g = dayData ? (dayData.g_gen_p || 0) : 0;
+
+            let tot_b = sc_b + st_b + obc_b + gen_b;
+            let tot_g = sc_g + st_g + obc_g + gen_g;
+            let grand = tot_b + tot_g;
+
+            runningTotals.sc_b += sc_b; runningTotals.sc_g += sc_g;
+            runningTotals.st_b += st_b; runningTotals.st_g += st_g;
+            runningTotals.obc_b += obc_b; runningTotals.obc_g += obc_g;
+            runningTotals.gen_b += gen_b; runningTotals.gen_g += gen_g;
+            runningTotals.tot_b += tot_b; runningTotals.tot_g += tot_g;
+            runningTotals.grand += grand;
+
+            let rowHTML = `
+                <tr class="data-row" data-date="${dayStr}-${monthStr}-${year}" data-sc-b="${sc_b}" data-sc-g="${sc_g}" data-st-b="${st_b}" data-st-g="${st_g}" data-obc-b="${obc_b}" data-obc-g="${obc_g}" data-gen-b="${gen_b}" data-gen-g="${gen_g}" data-tot-b="${tot_b}" data-tot-g="${tot_g}" data-grand="${grand}">
+                    <td class="date-col">${dayStr}-${monthStr}-${year}</td>
+                    <td>${sc_b}</td><td>${sc_g}</td>
+                    <td>${st_b}</td><td>${st_g}</td>
+                    <td>${obc_b}</td><td>${obc_g}</td>
+                    <td>${gen_b}</td><td>${gen_g}</td>
+                    <td class="total-col">${tot_b}</td>
+                    <td class="total-col">${tot_g}</td>
+                    <td class="grand-col">${grand}</td>
+                    <td></td>
+                </tr>
+            `;
+            mdmBody.innerHTML += rowHTML;
+            benBody.innerHTML += rowHTML;
+        }
+
+        appendTotalRow(mdmBody, "mdm-total", runningTotals);
+        appendTotalRow(benBody, "ben-total", runningTotals);
+        
+        filterDates();
+    }
+
+    function appendTotalRow(targetBody, idPrefix, t) {
+        targetBody.innerHTML += `
+            <tr class="total-row" id="${idPrefix}">
+                <td>કુલ સરવાળો</td>
+                <td id="${idPrefix}_sc_b">${t.sc_b}</td><td id="${idPrefix}_sc_g">${t.sc_g}</td>
+                <td id="${idPrefix}_st_b">${t.st_b}</td><td id="${idPrefix}_st_g">${t.st_g}</td>
+                <td id="${idPrefix}_obc_b">${t.obc_b}</td><td id="${idPrefix}_obc_g">${t.obc_g}</td>
+                <td id="${idPrefix}_gen_b">${t.gen_b}</td><td id="${idPrefix}_gen_g">${t.gen_g}</td>
+                <td id="${idPrefix}_tot_b">${t.tot_b}</td><td id="${idPrefix}_tot_g">${t.tot_g}</td>
+                <td id="${idPrefix}_grand" style="background: #ef4444; color: white;">${t.grand}</td>
+                <td></td>
+            </tr>
+        `;
+    }
+
+    function filterDates() {
+        let filterValue = document.getElementById("dateFilter").value;
+        let rows = document.querySelectorAll(".data-row");
+
+        let mdmT = { sc_b:0, sc_g:0, st_b:0, st_g:0, obc_b:0, obc_g:0, gen_b:0, gen_g:0, tot_b:0, tot_g:0, grand:0 };
+
+        rows.forEach(row => {
+            let dateText = row.getAttribute("data-date") || "";
+            let day = parseInt(dateText.split("-")[0]) || 1;
+
+            let isVisible = false;
+            if (filterValue === "1-15" && day >= 1 && day <= 15) isVisible = true;
+            else if (filterValue === "16-31" && day >= 16 && day <= 31) isVisible = true;
+            else if (filterValue === "all") isVisible = true;
+
+            if (isVisible) {
+                row.style.display = "";
+                mdmT.sc_b += parseInt(row.getAttribute("data-sc-b"))||0;
+                mdmT.sc_g += parseInt(row.getAttribute("data-sc-g"))||0;
+                mdmT.st_b += parseInt(row.getAttribute("data-st-b"))||0;
+                mdmT.st_g += parseInt(row.getAttribute("data-st-g"))||0;
+                mdmT.obc_b += parseInt(row.getAttribute("data-obc-b"))||0;
+                mdmT.obc_g += parseInt(row.getAttribute("data-obc-g"))||0;
+                mdmT.gen_b += parseInt(row.getAttribute("data-gen-b"))||0;
+                mdmT.gen_g += parseInt(row.getAttribute("data-gen-g"))||0;
+                mdmT.tot_b += parseInt(row.getAttribute("data-tot-b"))||0;
+                mdmT.tot_g += parseInt(row.getAttribute("data-tot-g"))||0;
+                mdmT.grand += parseInt(row.getAttribute("data-grand"))||0;
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        let prefixes = ["mdm-total", "ben-total"];
+        prefixes.forEach(p => {
+            document.getElementById(`${p}_sc_b`).innerText = mdmT.sc_b / 2;
+            document.getElementById(`${p}_sc_g`).innerText = mdmT.sc_g / 2;
+            document.getElementById(`${p}_st_b`).innerText = mdmT.st_b / 2;
+            document.getElementById(`${p}_st_g`).innerText = mdmT.st_g / 2;
+            document.getElementById(`${p}_obc_b`).innerText = mdmT.obc_b / 2;
+            document.getElementById(`${p}_obc_g`).innerText = mdmT.obc_g / 2;
+            document.getElementById(`${p}_gen_b`).innerText = mdmT.gen_b / 2;
+            document.getElementById(`${p}_gen_g`).innerText = mdmT.gen_g / 2;
+            document.getElementById(`${p}_tot_b`).innerText = mdmT.tot_b / 2;
+            document.getElementById(`${p}_tot_g`).innerText = mdmT.tot_g / 2;
+            document.getElementById(`${p}_grand`).innerText = mdmT.grand / 2;
+        });
+    }
+
+    function exportToExcel() {
+        let html = document.getElementById("printArea").outerHTML;
+        let url = 'data:application/vnd.ms-excel;charset=utf-8,' + encodeURIComponent(html);
+        let link = document.createElement('a');
+        link.download = `Balvatika_BV_Report_${document.getElementById("reportMonthPicker").value}.xls`;
+        link.href = url;
+        link.click();
+    }
+
+    window.onload = loadBalvatikaLiveReport;
+</script>
+
+</body>
+</html>

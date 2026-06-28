@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAT ગુણ સ્લીપ પત્રક</title>
+    <style>
+        :root {
+            --primary-color: #184e77;
+            --secondary-color: #1e6091;
+            --accent-color: #4facfe;
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --border-color: #dcdde1;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .main-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            margin: 25px 0 15px 0;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 8px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        select, input[type="date"] {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            outline: none;
+            background-color: #fff;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+
+        select:focus, input[type="date"]:focus {
+            border-color: var(--accent-color);
+        }
+
+        .table-container {
+            margin-top: 25px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: #fff;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 10px 6px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .student-name-col {
+            text-align: left;
+            padding-left: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            min-width: 220px;
+        }
+
+        .q-input {
+            width: 65px;
+            padding: 8px 4px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .q-input:focus {
+            border-color: var(--accent-color);
+            background-color: #edf2f7;
+            box-shadow: 0 0 5px rgba(79, 172, 254, 0.4);
+        }
+
+        .q-input::-webkit-outer-spin-button,
+        .q-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .q-input {
+            appearance: textfield;
+        }
+
+        .total-badge {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .btn-container {
+            margin-top: 35px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-print {
+            background-color: #2a9d8f;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background-color: #1e7167;
+        }
+
+        /* પ્રિન્ટ કરતી વખતનું સેટિંગ */
+        .print-route-info {
+            display: none;
+        }
+
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; padding: 0; max-width: 100%; }
+            .btn-container, .grid-4, .section-title:first-of-type { display: none !important; }
+            .main-title { border-bottom: 2px solid #000; color: #000; }
+            th { background-color: #f2f2f2 !important; color: #000 !important; border: 1px solid #000; }
+            td { border: 1px solid #000; }
+            .student-name-col { font-weight: bold; }
+            .q-input { border: none; background: transparent; pointer-events: none; color: #000; }
+            .print-route-info { display: block !important; margin-top: 15px; margin-bottom: 15px; font-size: 1.1rem; color: #000; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-title">
+        📋 PAT ગુણ સ્લીપ પત્રક (હાજીપુર પ્રાથમિક શાળા)
+    </div>
+    
+    <div class="print-route-info" id="printHeaderInfo"></div>
+    
+    <div class="section-title">વર્ગ, વિષય અને તારીખની વિગત</div>
+    <div class="grid-4">
+        <div class="form-group">
+            <label for="classSelect">ધોરણ (Class)</label>
+            <select id="classSelect" onchange="loadExcelStudentData()">
+                <option value="" selected>-- ધોરણ પસંદ કરો --</option>
+                <option value="6">ધોરણ 6</option>
+                <option value="7">ધોરણ 7</option>
+                <option value="8">ધોરણ 8</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="sectionSelect">વર્ગ (Section)</label>
+            <select id="sectionSelect" onchange="loadExcelStudentData()">
+                <option value="A">વર્ગ A</option>
+                <option value="B">વર્ગ B</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="subjectSelect">વિષય (Subject)</label>
+            <select id="subjectSelect" onchange="loadExcelStudentData()">
+                <option value="ગુજરાતી" selected>ગુજરાતી</option>
+                <option value="ગણિત">ગણિત</option>
+                <option value="વિજ્ઞાન">વિજ્ઞાન</option>
+                <option value="સામાજિક વિજ્ઞાન">સામાજિક વિજ્ઞાન</option>
+                <option value="અંગ્રેજી">અંગ્રેજી</option>
+                <option value="હિન્દી">હિન્દી</option>
+                <option value="સંસ્કૃત">સંસ્કૃત</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="examDate">પરીક્ષાની તારીખ (Date of Exam)</label>
+            <input type="date" id="examDate" onchange="loadExcelStudentData()">
+        </div>
+    </div>
+
+    <div class="section-title">વિદ્યાર્થીવાર પ્રશ્ન ગુણ એન્ટ્રી</div>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 60px;">રોલ નં</th>
+                    <th>વિદ્યાર્થીનું નામ</th>
+                    <th>પ્રશ્ન ૧</th>
+                    <th>પ્રશ્ન ૨</th>
+                    <th>પ્રશ્ન ૩</th>
+                    <th>પ્રશ્ન ૪</th>
+                    <th>પ્રશ્ન ૫</th>
+                    <th>પ્રશ્ન ૬</th>
+                    <th>પ્રશ્ન ૭</th>
+                    <th>પ્રશ્ન ૮</th>
+                    <th style="width: 100px;">કુલ ગુણ</th>
+                </tr>
+            </thead>
+            <tbody id="marksTableBody">
+                <tr>
+                    <td colspan="11" style="color: #7f8c8d; padding: 25px;">કૃપા કરીને ઉપરથી ધોરણ પસંદ કરો.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="btn-container">
+        <button type="button" class="btn btn-print" onclick="printPage()">🖨️ પત્રક પ્રિન્ટ કરો</button>
+        <button type="button" class="btn btn-submit" onclick="savePatMarks()">💾 ગુણ સેવ કરો</button>
+    </div>
+</div>
+
+<script>
+    const studentDatabase = {
+        "6_A": [
+            "AAKASH SOMAJI THAKOR", "AKASH DINESHJI THAKOR", "ANKITA MAHENDRABHAI DANTANI", 
+            "HITESH SHAILESHJI THAKOR", "JANAK ARVINDAJI THAKOR", "JANAKI MAHESHJI THAKOR", 
+            "JANAKI NARESHJI THAKOR", "JANAVI BALAVANTJI THAKOR", "JAY MUKESHJI THAKOR", 
+            "JENIL MANUJI THAKOR", "JIGNESH SAGARBHAI DANTANI", "MAHESH LALAJI THAKOR", 
+            "MANISHA MUKESHJI THAKOR", "MEHUL BHAGAVANJIJI THAKOR", "MOHAN BALADEVAJI THAKOR", 
+            "MUSKAN KAMELSHJI THAKOR", "NEHABEN GANESHJI THAKOR", "NEHABEN MELABHAI DANTANI", 
+            "RAJKUMAR MAHESHJI THAKOR", "RAJVEER JAGDISHJI THAKOR", "SAHIL RAJESHJI THAKOR", 
+            "SANJAYJI RAJUJI THAKOR", "SUHANA JIGARBHAI MIR", "TULSIBEN PRADHANJI THAKOR", 
+            "VIRAJ KANUJI THAKOR", "YOGESH SOMAJI THAKOR", "YUVRAJ VISHNUJI THAKOR",
+            "JIGNESH SAGARBHAI DANTANI", "MAHESH LALAJI THAKOR"
+        ],
+        "6_B": [
+            "AMIT JAGAJI THAKOR", "ASMITA BHOOPATJI THAKOR", "AVANI KANUJI THAKOR", 
+            "DHARMESH RAJUJI THAKOR", "DINESH PARABTAJI THAKOR", "HITESHA ANILBHAI DANTANI",
+            "JAGADISH MUKESHJI THAKOR", "JAGAJI AMARATJI THAKOR", "JAY RAMESHJI THAKOR",
+            "JAYESHJI MUKESHJI THAKOR", "KHODAJI BHARATJJI THAKOR", "KULDEEP ASHOKJI THAKOR",
+            "MANSUKHAJI RAJUJI THAKOR", "MANISHJI KALAJI THAKOR", "MAYUR DASHARATHAJI THAKOR",
+            "MAN VIRAMBHAI DANTANI", "MAYANK ARAVINDJI THAKOR", "MILAN CHANAJI THAKOR",
+            "MOHAMMADHARUN SALIMSHA FAKIR", "MOHAN BALADEVAJI THAKOR", "NANDANI BALADEVBHAI THAKOR",
+            "NEHABEN CHINTANBHAI RAVAL", "NEHABEN JAGADISJI THAKOR", "PUNAMBEN DHOLAJI THAKOR",
+            "RAJ MELABHAI DANTANI", "SAPANA VISHNUJI THAKOR", "SNEHA RAMESHJI THAKOR",
+            "SIDHHRAJ RANJITJI THAKOR", "SWATI VIJAYJI THAKOR", "UMANG RANCHODJI THAKOR",
+            "VIBHABEN DINESHBHAI DANTANI"
+        ],
+        "7_A": [
+            "ઠાકોર આશિક મહોતજી", "ઠાકોર હિતેશ લાલાજી", "ઠાકોર જનકજી અરવિંદજી", 
+            "ઠાકોર મીતકુમાર જશુજી", "ઠાકોર પૃથ્વીસિંહ જગાજી", "ઠાકોર સાહિલ વજેસિંગજી", 
+            "ઠાકોર આશિકજી સુરેશજી", "ઠાકોર હાર્દિક બચુજી", "ઠાકોર હિતેશ વિજયજી", 
+            "ઠાકોર કુલદિપ કાળાજી", "ઠાકોર જયદિપ  રાજુજી", "ઠાકોર સમીર વિપુલજી", 
+            "ઠાકોર સંજય પરબતજી", "ઠાકોર પરેશ શિવાજી", "ઠાકોર જેમિન નરેશજી", 
+            "દંતાણી આરાધ્યા હર્ષદભાઇ", "દંતાણી હેતલ પંકજભાઇ", "ઠાકોર ધર્મિષ્ઠાબેન દશરથજી", 
+            "ઠાકોર સુહાની ડાહ્યાજી ", "ઠાકોર રીયા બુધાજી", "ઠાકોર અંજના રામસંગજી", 
+            "ઠાકોર ભાવના ગગાજી", "ઠાકોર પૂર્વીબેન કાનાજી", "ઠાકોર રોશની શંભુજી", 
+            "ઠાકોર ઉષાબેન અશોકજી", "ઠાકોર માહી સોનાજી", "ઠાકોર સરોજ છનાજી", 
+            "દંતાણી કિજલ દિલિપભાઇ"
+        ],
+        "7_B": [
+            "AADIYTA MUKESHJI THAKOR", "ASHIK MAHESHJI THAKOR", "AYUSH VISHNUJI THAKOR",
+            "BHAVANA PRATAPJI THAKOR", "DILSHAN MAHENDRAJI THAKOR", "HETALBEN RAMESHBHAI DANTANI",
+            "KAJALBEN RAMESHBHAI DANTANI", "KAVITABEN RAJESHBHAI DANTANI", "KINJAL MUKESHJI THAKOR",
+            "KOMAL MANUJI THAKOR", "MANISHABEN CHANDUJI THAKOR", "MANISHABEN DASHARATHJI THAKOR",
+            "MITTALBEN MUKESHJI THAKOR", "MITTALBEN RAMESHJI THAKOR", "NEHABEN POPATJI THAKOR",
+            "NIDHIBEN JITENDRAJI THAKOR", "NIDHIBEN RAMESHJI THAKOR", "NIKITABEN KALAJI THAKOR",
+            "PAYALBEN BALDEVJI THAKOR", "PAYALBEN MANAJI THAKOR", "PINKYBEN POPATJI THAKOR",
+            "POOJABEN DILIPJI THAKOR", "PRIYANKABEN JIVANJI THAKOR", "SEJALBEN KALPESHBHAI DANTANI",
+            "SNEHABEN MANAGAJI THAKOR", "SUNITA DASHRATHJI THAKOR", "TUSHAR MANAHARJI THAKOR",
+            "VIKRAM KALAJI THAKOR", "VISHNUJI BALADEVJI THAKOR"
+        ],
+        "8_A": [
+            "વસંત વિષ્ણુજી ઠાકોર", "જૈમિનજી અમરતજી ઠાકોર", "હિતેશ પોપટજી ઠાકોર", 
+            "કૃષાર ગોવિંદજી ઠાકોર", "કરણ પરબતજી ઠાકોર", "જયેશ બળદેવજી ઠાકોર", 
+            "આર્યન શૈલેષભાઇ ઠાકોર", "જીગ્નેશજી બકાજી ઠાકોર", "સતીષ મુકેશજી ઠાકોર", 
+            "રાકેશ રમેશજી ઠાકોર", "ચિરાગ દિનેશજી ઠાકોર", "જગદીશ ભૂપતજી ઠાકોર", 
+            "મોહિતજી મેલાજી ઠાકોર", "ધવલ મહેશજી ઠાકોર", "કાર્તિક લાલાજી ઠાકોર", 
+            "કિરણ ભરતજી ઠાروર", "સમીર મૂકેશજી ઠાકોર", "ધવલ રૂપસંગજી ઠાકોર", 
+            "વિશાલ  દિનેશજી ઠાકોર", "આકાશ નટવરજી ઠાકોર", "રણજીતજી દિલિપજી ઠાકોર", 
+            "ચિરાગ રણજીતજી ઠાકોર", "ક્રિસ રણજીતભાઇ દંતાણી", "કેડીયા દેવ સંજયભાઇ", 
+            "રુદ્ર પરષોતમભાઇ પંડિત", "માહી જશવંતજી ઠાકોર", "દક્ષિકા મહેશજી ઠાકોર", 
+            "સપના અંબારામ ઠાકોર", "ઝલકબેન જીતેન્દ્રજી ઠાકોર"
+        ]
+    };
+
+    // પેજ લોડ થતા જ બાય-ડિફોલ્ટ આજની તારીખ સેટ થશે
+    window.onload = function() {
+        if(!document.getElementById('examDate').value) {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('examDate').value = today;
+        }
+    };
+
+    // તારીખ, ક્લાસ અને વિષય વાઈઝ ડેટા લોડ કરવાનું લોજીક
+    function loadExcelStudentData() {
+        const classVal = document.getElementById("classSelect").value;
+        const sectionVal = document.getElementById("sectionSelect").value;
+        const subjectVal = document.getElementById("subjectSelect").value;
+        const dateVal = document.getElementById("examDate").value;
+        const tbody = document.getElementById("marksTableBody");
+        
+        if (!classVal) {
+            tbody.innerHTML = `<tr><td colspan="11" style="color: #7f8c8d; padding: 25px;">કૃપા કરીને ઉપરથી ધોરણ પસંદ કરો.</td></tr>`;
+            updatePrintHeader();
+            return;
+        }
+
+        const classKey = `${classVal}_${sectionVal}`;
+        const studentList = studentDatabase[classKey] || [];
+
+        if (studentList.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="11" style="color: #e74c3c; padding: 25px;">⚠️ આ વર્ગનો ડેટા એક્સેલ ફાઇલમાં ઉપલબ્ધ નથી!</td></tr>`;
+            return;
+        }
+
+        // તારીખ અને વિષય સાથેની યુનિક કી (Unique Storage Key)
+        const storageKey = `PAT_${dateVal}_${classKey}_${subjectVal}`;
+        const savedData = JSON.parse(localStorage.getItem(storageKey)) || {};
+
+        tbody.innerHTML = "";
+
+        studentList.forEach((studentName, index) => {
+            const rollNum = index + 1;
+            const tr = document.createElement("tr");
+            
+            let htmlContent = `
+                <td><b>${rollNum}</b></td>
+                <td class="student-name-col">${studentName}</td>
+            `;
+            
+            let rowSum = 0;
+            for (let q = 1; q <= 8; q++) {
+                const savedValue = savedData[`R${rollNum}_Q${q}`] !== undefined ? savedData[`R${rollNum}_Q${q}`] : "";
+                if(savedValue !== "") rowSum += parseFloat(savedValue);
+
+                htmlContent += `
+                    <td>
+                        <input type="number" 
+                               class="q-input" 
+                               data-row="${rollNum}" 
+                               data-col="${q}" 
+                               min="0" 
+                               max="25" 
+                               value="${savedValue}"
+                               oninput="calculateRowTotal(${rollNum})"
+                               onkeydown="handleNavigation(event, ${rollNum}, ${q}, ${studentList.length})">
+                    </td>`;
+            }
+            
+            htmlContent += `<td><span class="total-badge" id="total_${rollNum}">${rowSum}</span></td>`;
+            tr.innerHTML = htmlContent;
+            tbody.appendChild(tr);
+        });
+
+        updatePrintHeader();
+    }
+
+    function calculateRowTotal(rowNum) {
+        const rowInputs = document.querySelectorAll(`input[data-row="${rowNum}"]`);
+        let sum = 0;
+        rowInputs.forEach(input => {
+            let val = parseFloat(input.value);
+            if (!isNaN(val)) sum += val;
+        });
+        document.getElementById(`total_${rowNum}`).innerText = sum;
+    }
+
+    // તારીખ અને વિષય વાઈઝ સેવ કરવાનું નવું લોજીક
+    function savePatMarks() {
+        const classVal = document.getElementById("classSelect").value;
+        const sectionVal = document.getElementById("sectionSelect").value;
+        const subjectVal = document.getElementById("subjectSelect").value;
+        const dateVal = document.getElementById("examDate").value;
+
+        if(!classVal || !dateVal) {
+            alert("❌ કૃપા કરીને ધોરણ અને તારીખ પસંદ કરો!");
+            return;
+        }
+
+        const classKey = `${classVal}_${sectionVal}`;
+        const storageKey = `PAT_${dateVal}_${classKey}_${subjectVal}`;
+        
+        const dataToSave = {};
+        const inputs = document.querySelectorAll(".q-input");
+        
+        inputs.forEach(input => {
+            const row = input.getAttribute("data-row");
+            const col = input.getAttribute("data-col");
+            if(input.value !== "") {
+                dataToSave[`R${row}_Q${col}`] = input.value;
+            }
+        });
+
+        localStorage.setItem(storageKey, JSON.stringify(dataToSave));
+        
+        let d = dateVal.split("-");
+        alert(`✅ સફળતાપૂર્વક સેવ થયું!\nતારીખ: ${d[2]}-${d[1]}-${d[0]} | ધોરણ: ${classVal}-${sectionVal} | વિષય: ${subjectVal}`);
+    }
+
+    // પ્રિન્ટ હેડર અપડેટ ફંક્શન
+    function updatePrintHeader() {
+        const classVal = document.getElementById("classSelect").value;
+        const sectionVal = document.getElementById("sectionSelect").value;
+        const subjectVal = document.getElementById("subjectSelect").value;
+        const dateVal = document.getElementById("examDate").value;
+        
+        let formattedDate = "";
+        if(dateVal) {
+            const d = dateVal.split("-");
+            formattedDate = `${d[2]}-${d[1]}-${d[0]}`;
+        }
+
+        const headerDiv = document.getElementById("printHeaderInfo");
+        if(classVal) {
+            headerDiv.innerHTML = `<b>ધોરણ:</b> ${classVal}-${sectionVal} &nbsp;&nbsp;|&nbsp;&nbsp; <b>વિષય:</b> ${subjectVal} &nbsp;&nbsp;|&nbsp;&nbsp; <b>પરીક્ષા તારીખ:</b> ${formattedDate}`;
+        } else {
+            headerDiv.innerHTML = "";
+        }
+    }
+
+    function handleNavigation(event, row, col, maxRows) {
+        let nextRow = row;
+        let nextCol = col;
+
+        if (event.key === "ArrowRight" || event.key === "Enter") {
+            event.preventDefault();
+            if (col < 8) {
+                nextCol++;
+            } else if (row < maxRows) {
+                nextRow++;
+                nextCol = 1;
+            }
+        } else if (event.key === "ArrowLeft") {
+            if (col > 1) {
+                nextCol--;
+            } else if (row > 1) {
+                nextRow--;
+                nextCol = 8;
+            }
+        } else if (event.key === "ArrowDown") {
+            event.preventDefault();
+            if (row < maxRows) nextRow++;
+        } else if (event.key === "ArrowUp") {
+            event.preventDefault();
+            if (row > 1) nextRow--;
+        }
+
+        const nextInput = document.querySelector(`input[data-row="${nextRow}"][data-col="${nextCol}"]`);
+        if (nextInput) nextInput.focus();
+    }
+
+    function printPage() {
+        updatePrintHeader();
+        window.print();
+    }
+</script>
+
+</body>
+</html>

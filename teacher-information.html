@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Information - Select & Show</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(240,255,252,0.90), rgba(225,245,255,0.90));
+            background-attachment: fixed;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid rgba(24, 78, 119, 0.1);
+            padding-bottom: 15px;
+        }
+
+        .header-area h2 {
+            color: #184e77;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: linear-gradient(45deg, #00c6fb, #4facfe);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(0, 198, 251, 0.3);
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* FILTER SECTION (SELECT BOX) */
+        .filter-section {
+            margin-bottom: 25px;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-section label {
+            display: block;
+            color: #184e77;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .teacher-select {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border-radius: 12px;
+            border: 2px solid #a2d2ff;
+            color: #333;
+            outline: none;
+            background-color: #f8fdff;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .teacher-select:focus {
+            border-color: #4facfe;
+            box-shadow: 0 0 10px rgba(79, 172, 254, 0.2);
+        }
+
+        /* DETAIL DISPLAY CARD */
+        .detail-display {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            display: none;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #184e77;
+            font-size: 14px;
+        }
+
+        .detail-value {
+            color: #333;
+            text-align: right;
+            max-width: 60%;
+            font-size: 14px;
+            word-break: break-all;
+        }
+
+        .no-data-msg {
+            text-align: center;
+            padding: 30px;
+            color: #718096;
+            font-size: 15px;
+            font-weight: 500;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-area">
+        <h2><span>👩‍🏫</span> શિક્ષક વિગત પ્રોફાઇલ (Teacher Profile)</h2>
+        <a href="information.html" class="back-btn">⬅ Back</a>
+    </div>
+
+    <div class="filter-section">
+        <label for="infoPageDropdown">🔍 શિક્ષકનું નામ પસંદ કરો:</label>
+        <select id="infoPageDropdown" class="teacher-select" onchange="displaySelectedTeacher(this.value)" disabled>
+            <option value="">-- લોડ થઈ રહ્યું છે... --</option>
+        </select>
+    </div>
+
+    <div id="statusMsg" class="no-data-msg">💡 કૃપા કરીને ઉપરના લિસ્ટમાંથી શિક્ષકનું નામ પસંદ કરો.</div>
+
+    <div id="profileCard" class="detail-display"></div>
+</div>
+
+<script>
+    let localTeachersData = [];
+    let nameColumnKey = "";
+
+    window.onload = function() {
+        const dropdown = document.getElementById("infoPageDropdown");
+        const statusMsg = document.getElementById("statusMsg");
+
+        // 📥 લોકલ સ્ટોરેજમાંથી ડેટા મેળવવો (તમારા કોડ મુજબ)
+        let rawData = localStorage.getItem("TeachersDB") || localStorage.getItem("teachersData") || localStorage.getItem("hajipur_teachers_data");
+        
+        if (!rawData) {
+            let dbSettings = JSON.parse(localStorage.getItem("SchoolSettingsDB")) || {};
+            if (dbSettings.teachers) rawData = JSON.stringify(dbSettings.teachers);
+        }
+
+        if (rawData) {
+            localTeachersData = JSON.parse(rawData);
+
+            if (localTeachersData && localTeachersData.length > 0) {
+                // એક્સેલની પહેલી કોલમ એટલે કે નામની કોલમ (જેમ કે Staff_Name) ઓટોમેટીક પકડવા માટે
+                const firstRowKeys = Object.keys(localTeachersData[0]);
+                
+                // જો એક્સેલમાં 'Staff_Name' કોલમ હોય તો એ લો, નહીતર પહેલી કોલમને નામ તરીકે ગણો
+                nameColumnKey = firstRowKeys.includes("Staff_Name") ? "Staff_Name" : firstRowKeys[0];
+
+                // ડ્રોપડાઉન ખાલી કરીને નામો ઉમેરવા
+                dropdown.innerHTML = '<option value="">-- નામ પસંદ કરો --</option>';
+                localTeachersData.forEach((teacher, index) => {
+                    let tName = teacher[nameColumnKey] || `શિક્ષક ${index + 1}`;
+                    let option = document.createElement("option");
+                    option.value = index;
+                    option.text = tName;
+                    dropdown.appendChild(option);
+                });
+
+                dropdown.disabled = false;
+            } else {
+                statusMsg.innerHTML = "❌ ફાઇલમાં કોઈ શિક્ષકોનો ડેટા મળ્યો નથી.";
+            }
+        } else {
+            statusMsg.innerHTML = "⚠️ બ્રાઉઝર મેમરી ખાલી છે. પહેલા પેજ પર જઈને એક્સેલ ફાઇલ અપલોડ કરો.";
+        }
+    };
+
+    // 👁️ પસંદ કરેલા શિક્ષકનો બધો જ ડેટા નીચે કાર્ડમાં બતાવવાનું ફંક્શન
+    function displaySelectedTeacher(index) {
+        const profileCard = document.getElementById("profileCard");
+        const statusMsg = document.getElementById("statusMsg");
+
+        // જો કોઈ નામ સિલેક્ટ ન કર્યું હોય તો કાર્ડ છુપાવો
+        if (index === "") {
+            profileCard.style.display = "none";
+            statusMsg.style.display = "block";
+            return;
+        }
+
+        const selectedTeacher = localTeachersData[index];
+        statusMsg.style.display = "none"; // મેસેજ છુપાવો
+        profileCard.innerHTML = ""; // જૂનો ડેટા સાફ કરો
+
+        let cardHtml = "";
+        
+        // એક્સેલની જેટલી પણ કોલમ (Columns) હશે, તે બધી જ અહીં લિસ્ટ સ્વરૂપે ઓટોમેટીક આવી જશે
+        for (let key in selectedTeacher) {
+            // જો એક્સેલ સેલ ખાલી હોય તો '-' બતાવો
+            let value = selectedTeacher[key] !== undefined && selectedTeacher[key] !== null ? selectedTeacher[key] : '-';
+            
+            cardHtml += `
+                <div class="detail-row">
+                    <div class="detail-label">${key.replace(/_/g, ' ')}</div>
+                    <div class="detail-value"><b>${value}</b></div>
+                </div>
+            `;
+        }
+
+        profileCard.innerHTML = cardHtml;
+        profileCard.style.display = "block"; // પ્રોફાઇલ કાર્ડ બતાવો
+    }
+</script>
+
+</body>
+</html>

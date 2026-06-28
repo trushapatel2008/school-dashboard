@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>માહિતી</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* BODY */
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(240,255,252,0.90), rgba(225,245,255,0.90));
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* CONTAINER */
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* LOGO */
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .logo img {
+            width: 140px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* MENU */
+        .menu {
+            flex: 1;
+        }
+        .menu a {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.45);
+            color: #184e77;
+            text-decoration: none;
+            padding: 14px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            font-weight: 500;
+        }
+        .menu a:hover {
+            background: linear-gradient(45deg, #4facfe, #00c6fb);
+            color: white;
+            transform: translateX(6px);
+        }
+
+        /* LOGOUT */
+        .logout-link {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 14px;
+            text-decoration: none;
+            color: white;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            font-weight: bold;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            padding: 30px;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+        .header h1 {
+            color: #184e77;
+            font-size: 38px;
+        }
+        .header p {
+            color: #355070;
+            margin-top: 5px;
+        }
+
+        /* ABOUT BUTTON */
+        .about-btn {
+            padding: 14px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            background: linear-gradient(45deg, #4f46e5, #4338ca);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+            transition: 0.3s;
+        }
+        .about-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5);
+        }
+
+        /* CLASS SECTION */
+        .class-section {
+            margin-top: 20px;
+        }
+
+        /* TITLE */
+        .class-title {
+            color: #184e77;
+            font-size: 38px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* GRID */
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* CLASS CARD */
+        .class-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            border-radius: 22px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .class-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.60);
+        }
+
+        /* CLASS TITLE */
+        .class-card h3 {
+            color: #0077b6;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* SUBCLASS */
+        .subclasses {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        /* BUTTONS */
+        .subclasses a {
+            padding: 10px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.65);
+            color: #184e77;
+            font-weight: 600;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            text-align: center;
+            width: 100%;
+        }
+        .subclasses a:hover {
+            background: linear-gradient(45deg, #4facfe, #00c6fb);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* EXCEL UPLOAD BOX */
+        .excel-box {
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px dashed #a2d2ff;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .excel-box label {
+            display: block;
+            font-size: 13px;
+            color: #184e77;
+            font-weight: 600;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .excel-box input[type="file"] {
+            width: 100%;
+            font-size: 12px;
+        }
+        
+        /* ઓટો સ્ટેટસ માટે સ્ટાઇલ */
+        .status-msg {
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+        .success { color: #16a34a; }
+        .error { color: #dc2626; }
+
+        /* BACK BUTTON */
+        .back-btn {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 14px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            background: linear-gradient(45deg, #4facfe, #00c6fb);
+            color: white;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 198, 251, 0.3);
+        }
+
+        /* MOBILE */
+        @media(max-width:768px){
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .class-title { font-size: 28px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+        <div class="logo">
+            <img src="static/images/logo.jpg" onerror="this.src='https://placehold.co/140x140?text=SCHOOL+LOGO'" alt="School Logo">
+        </div>
+
+        <div class="menu">
+            <a href="school-information.html">શાળા પરિચય</a>
+            <a href="attendance.html">દૈનિક હાજરી</a>
+            <a href="mdm.html">મધ્યાહન ભોજન યોજના</a>
+            <a href="information.html">માહિતી</a>
+            <a href="report.html">પત્રક</a>
+            <a href="#">પ્રવેશોત્સવ</a>
+            <a href="#">જી.આર. રજીસ્ટર</a>
+            <a href="#">તાલીમ માહિતી</a>
+            <a href="#">S.M.C.</a>
+            <a href="gallery.html">કાર્યક્રમ ફોટો ફાઇલ</a>
+            <a href="#">સેટિંગ્સ</a>
+        </div>
+
+        <a href="index.html" class="logout-link">🚪 લોગ આઉટ</a>
+    </div>
+
+    <div class="main">
+
+        <div class="header">
+            <div>
+                <h1>Welcome 👋</h1>
+                <p>હાજીપુર પ્રાથમિક શાળા</p>
+            </div>
+            <a href="about.html" class="about-btn">About Us</a>
+        </div>
+
+        <div class="class-section">
+            <h2 class="class-title">📚 માહિતી</h2>
+
+            <div class="class-grid">
+
+                <div class="class-card">
+                    <div>
+                        <h3>શિક્ષકની માહિતી</h3>
+                        <div class="subclasses">
+                            <a href="teacher-information.html">Teachers</a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+
+                <div class="class-card">
+                    <div>
+                        <h3>વિદ્યાર્થી માહિતી</h3>
+                        <div class="subclasses">
+                            <a href="student-detail.html">Students</a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+
+            </div>
+        </div>
+
+        <a href="home.html" class="back-btn">⬅ Back To Dashboard</a>
+    </div>
+</div>
+
+<script>
+    // 💾 પેજ લોડ થતા જ ચેક કરશે કે અગાઉ કોઈ ફાઈલ કાયમી સેવ કરેલી છે કે નહીં
+    window.onload = function() {
+        const savedTeacherFile = localStorage.getItem("LastTeacherFileName");
+        if(savedTeacherFile) {
+            document.getElementById("teacherStatus").className = "status-msg success";
+            document.getElementById("teacherStatus").innerText = `💾 કાયમી લિંક સેટ છે: ${savedTeacherFile}`;
+        }
+
+        const savedStudentFile = localStorage.getItem("LastStudentFileName");
+        if(savedStudentFile) {
+            document.getElementById("studentStatus").className = "status-msg success";
+            document.getElementById("studentStatus").innerText = `💾 કાયમી લિંક સેટ છે: ${savedStudentFile}`;
+        }
+    };
+
+    // ૧. ઓટોમેટિક શિક્ષકોની એક્સેલ રીડ કરવાનું ફંક્શન
+    function autoUploadTeachers(input) {
+        const status = document.getElementById("teacherStatus");
+        if (!input.files.length) return;
+
+        const filename = input.files[0].name;
+        status.className = "status-msg";
+        status.style.color = "#184e77";
+        status.innerText = "⏳ પ્રોસેસિંગ થઈ રહ્યું છે...";
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+
+                if (jsonData.length === 0) {
+                    status.className = "status-msg error";
+                    status.innerText = "❌ ફાઈલ ખાલી છે!";
+                    return;
+                }
+
+                let dbSettings = JSON.parse(localStorage.getItem("SchoolSettingsDB")) || {};
+                dbSettings.teachers = jsonData;
+                localStorage.setItem("SchoolSettingsDB", JSON.stringify(dbSettings));
+                
+                localStorage.setItem("TeachersDB", JSON.stringify(jsonData));
+                localStorage.setItem("teachersData", JSON.stringify(jsonData));
+                
+                // 🔒 ફાઈલનું નામ કાયમી સ્ટોર કરી દીધું
+                localStorage.setItem("LastTeacherFileName", filename);
+
+                status.className = "status-msg success";
+                status.innerText = `✅ સક્સેસ! ${jsonData.length} શિક્ષકોનો ડેટા કાયમી સેવ થયો.`;
+            } catch (err) {
+                status.className = "status-msg error";
+                status.innerText = "❌ ફાઈલ રીડ કરવામાં ભૂલ આવી!";
+                console.error(err);
+            }
+        };
+        reader.readAsArrayBuffer(input.files[0]);
+    }
+
+    // ૨. ઓટોમેટિક વિદ્યાર્થીઓની એક્સેલ રીડ કરવાનું ફંક્શન
+    function autoUploadStudents(input) {
+        const status = document.getElementById("studentStatus");
+        if (!input.files.length) return;
+
+        const filename = input.files[0].name;
+        status.className = "status-msg";
+        status.style.color = "#184e77";
+        status.innerText = "⏳ પ્રોસેસિંગ થઈ રહ્યું છે...";
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+
+                if (jsonData.length === 0) {
+                    status.className = "status-msg error";
+                    status.innerText = "❌ ફાઈલ ખાલી છે!";
+                    return;
+                }
+
+                let dbSettings = JSON.parse(localStorage.getItem("SchoolSettingsDB")) || {};
+                if (!dbSettings.students) dbSettings.students = {};
+
+                jsonData.forEach(row => {
+                    let className = row.Class || row.class || row["ધોરણ"] || row["Class_Name"];
+                    if (className) {
+                        dbSettings.students[className.toString().trim()] = {
+                            sc_boy: row.SC_Boy || 0,
+                            sc_girl: row.SC_Girl || 0,
+                            st_boy: row.ST_Boy || 0,
+                            st_girl: row.ST_Girl || 0,
+                            obc_boy: row.OBC_Boy || 0,
+                            obc_girl: row.OBC_Girl || 0,
+                            general_boy: row.GEN_Boy || row.General_Boy || 0,
+                            general_girl: row.GEN_Girl || row.General_Girl || 0
+                        };
+                    }
+                });
+                localStorage.setItem("SchoolSettingsDB", JSON.stringify(dbSettings));
+
+                localStorage.setItem("StudentsDB", JSON.stringify(jsonData));
+                localStorage.setItem("studentsData", JSON.stringify(jsonData));
+                
+                // 🔒 ફાઈલનું નામ કાયમી સ્ટોર કરી દીધું
+                localStorage.setItem("LastStudentFileName", filename);
+
+                status.className = "status-msg success";
+                status.innerText = `✅ સક્સેસ! વિદ્યાર્થીઓનો ડેટા ઓટો-અપડેટ થઈ ગયો.`;
+            } catch (err) {
+                status.className = "status-msg error";
+                status.innerText = "❌ ફાઈલ પ્રોસેસ કરવામાં ભૂલ છે!";
+                console.error(err);
+            }
+        };
+        reader.readAsArrayBuffer(input.files[0]);
+    }
+</script>
+
+</body>
+</html>

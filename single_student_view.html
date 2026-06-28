@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <title>પ્રોફાઇલ: {{ student.name }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{ margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body{ min-height:100vh; background: linear-gradient(rgba(240,255,252,0.90), rgba(225,245,255,0.90)); padding:30px; display: flex; flex-direction: column; align-items: center; }
+        .profile-card { max-width: 600px; width: 100%; background:rgba(255,255,255,0.6); backdrop-filter:blur(12px); border-radius:25px; padding:35px; box-shadow:0 8px 30px rgba(0,0,0,0.1); border:1px solid rgba(255,255,255,0.25); margin-top: 20px; }
+        h2 { color: #0077b6; margin-bottom: 25px; border-bottom: 2px solid #4facfe; padding-bottom: 10px; }
+        .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .label { font-weight: 600; color: #184e77; }
+        .value { color: #333; font-weight: 500; text-align: right; }
+        .back-btn{ margin-bottom: 20px; padding:12px 26px; border-radius:40px; text-decoration:none; color:white; font-weight:600; background: linear-gradient(45deg, #4facfe, #00c6fb); transition:0.3s; }
+    </style>
+</head>
+<body>
+    <a href="/class/{{ student.class_name }}" class="back-btn">⬅ લિસ્ટ પર પાછા જાઓ</a>
+
+    <div class="profile-card">
+        <h2>🎓 વિદ્યાર્થી લાઈવ પ્રોફાઇલ</h2>
+        <div class="info-row"><span class="label">પૂરું નામ:</span><span class="value">{{ student.name }}</span></div>
+        <div class="info-row"><span class="label">ધોરણ / વર્ગ:</span><span class="value">{{ student.class_name }}</span></div>
+        <div class="info-row"><span class="label">જી.આર. નંબર:</span><span class="value">{{ student.gr_no }}</span></div>
+        <div class="info-row"><span class="label">પિતાનું નામ:</span><span class="value">{{ student.father_name }}</span></div>
+        <div class="info-row"><span class="label">જન્મ તારીખ:</span><span class="value">{{ student.dob }}</span></div>
+        <div class="info-row"><span class="label">જાતિ:</span><span class="value">{{ student.gender }}</span></div>
+        <div class="info-row"><span class="label">કેટેગરી:</span><span class="value">{{ student.category }}</span></div>
+        <div class="info-row"><span class="label">મોબાઈલ નંબર:</span><span class="value">{{ student.mobile }}</span></div>
+        <div class="info-row"><span class="label">આધાર નંબર:</span><span class="value">{{ student.aadhaar }}</span></div>
+        <div class="info-row"><span class="label">બેંક ખાતું:</span><span class="value">{{ student.bank_account }}</span></div>
+        <div class="info-row"><span class="label">સરનામું:</span><span class="value">{{ student.address }}</span></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>બાલવાટિકા માં નવીન પ્રવેશપાત્ર બાળકોની યાદી</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Arial Unicode MS', 'Hind Vadodara', sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        .container { 
+            width: 1200px; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            border: 2px solid #ff4a83; 
+        }
+        
+        /* 🖨️ એક્શન કંટ્રોલ બટન્સ */
+        .top-actions { width: 1200px; display: flex; justify-content: flex-end; margin-bottom: 15px; gap: 10px; }
+        .btn-print { background: green; color: white; padding: 8px 24px; font-size: 14px; font-weight: bold; border-radius: 20px; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(37, 117, 252, 0.3); }
+        .btn-back { background: linear-gradient(45deg,#4facfe,#00c6fb); color: white; padding: 8px 22px; font-size: 14px; font-weight: bold; border-radius: 20px; text-decoration: none; box-shadow: 0 4px 10px rgba(0, 176, 255, 0.3); }
+
+        /* 👑 હેડર સેક્શન (એકદમ પ્રોફેશનલ અને સેન્ટર) */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #bdc3c7;
+            padding-bottom: 15px;
+        }
+        .header-center { flex-grow: 1; padding: 0 20px; text-align: center; }
+        .student-img { height: 100px; width: auto; object-fit: contain; }
+        .logo-img { height: 65px; object-fit: contain; margin: 5px auto; display: block; }
+
+        .top-sub { font-size: 20px; font-weight: bold; color: #ff5722; margin: 0 0 5px 0; text-align: center; }
+        .main-title { font-size: 34px; font-weight: bold; color: #1f4e78; margin: 5px 0; text-align: center; }
+        .village-info { font-size: 13px; font-weight: bold; color: #7f6000; margin: 5px 0; text-align: center; line-height: 1.4; }
+        .festival-title { font-size: 20px; font-weight: bold; color: #002060; margin: 8px 0; text-align: center; }
+        .page-subtitle { font-size: 17px; font-weight: bold; color: #c00000; margin: 12px 0 5px 0; text-align: center; }
+
+        /* ✏️ ઇનપુટ ફોર્મ બોક્સ */
+        .form-box { background-color: #fdf2f4; border: 1px solid #f9cbd7; padding: 18px; border-radius: 6px; margin-bottom: 25px; }
+        .form-box h4 { margin-top: 0; color: #333; font-size: 15px; margin-bottom: 12px; }
+        .form-grid { display: grid; grid-template-columns: 80px 2fr 1.2fr 1fr 1fr; gap: 10px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-size: 12.5px; font-weight: bold; margin-bottom: 5px; color: #34495e; }
+        .form-group input { padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 13.5px; font-weight: bold; }
+        .btn-row { margin-top: 15px; text-align: right; }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 13.5px; }
+        .btn-save { background-color: #27ae60; color: white; }
+        .btn-cancel { background-color: #7f8c8d; color: white; margin-left: 5px; }
+        .loading { text-align: center; font-weight: bold; color: #e67e22; padding: 10px 0; font-size: 14px; }
+        
+        /* 📊 Google Sheet સ્ટાઈલ પ્યોર ટેબલ */
+        .table-responsive { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 5px; }
+        th, td { border: 1.5px solid #000; padding: 10px 8px; font-weight: bold; vertical-align: middle; }
+        th { background-color: #ffffff; color: #000; text-align: center; font-size: 15.5px; }
+        td { color: #000; text-align: center; }
+        
+        /* કોલમ સાઈઝ ફિક્સિંગ */
+        .col-sr { width: 60px; }
+        .col-name { width: 360px; text-align: left !important; padding-left: 15px !important; }
+        .col-dob { width: 140px; }
+        .col-caste { width: 130px; }
+        .col-gender { width: 130px; }
+        .col-action { width: 100px; }
+
+        /* 🖨️ પ્રિન્ટ લેઆઉટ સેટિંગ્સ */
+        @media print {
+            @page { margin: 8mm 10mm; size: A4 portrait; }
+            body { background-color: white; padding: 0; margin: 0; }
+            .top-actions, .form-box, .col-action, .action-cell { display: none !important; } 
+            .container { box-shadow: none; padding: 0; width: 95%; border: 2px solid #ff4a8300 !important; }
+            th { background-color: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            th, td { padding: 8px 5px; font-size: 14px; border: 1.5px solid #000 !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-actions">
+    <button onclick="window.print()" class="btn-print">🖨️ Print</button>
+    <a href="praveshotsav-file.html" class="btn-back">⬅ Back</a>
+</div>
+
+<div class="container">
+    
+    <div class="header-container">
+        <img src="https://cdn-icons-png.flaticon.com/512/3468/3468095.png" class="student-img" alt="Students">
+        
+        <div class="header-center">
+            <div class="top-sub">સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</div>
+            <img src="https://samagrashiksha.ssagujarat.org/assets/images/logo.png" class="logo-img" onerror="this.style.display='none'" alt="SS Logo">
+            <div class="main-title">હાજીપુર પ્રાથમિક શાળા</div>
+            <div class="village-info">મ:- હાજીપુર પ્રાથમિક શાળા , તાલુકો:- કાલોલ , જીલ્લો:- ગાંધીનગર , સી.આર.સી.:- ભોયણ મોટી , ડાયસ કોડ:- 240603036</div>
+            <div class="festival-title">કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span id="lblAcademicYear">2026-27</span></div>
+            <div class="page-subtitle">※ બાલવાટિકા માં નવીન પ્રવેશપાત્ર બાળકોની યાદી ※</div>
+        </div>
+        
+        <img src="https://cdn-icons-png.flaticon.com/512/3468/3468095.png" class="student-img" alt="Students">
+    </div>
+
+    <div class="form-box">
+        <h4>✏️ બાળકનો ડેટા ઉમેરો અથવા બદલો</h4>
+        <div id="loadingStatus" class="loading" style="display:none;">ગૂગલ શીટમાં ડેટા સેવ થઈ રહ્યો છે...</div>
+        <form id="studentForm">
+            <div class="form-grid">
+                <div class="form-group"><label>ક્રમ</label><input type="number" id="studentSr" required></div>
+                <div class="form-group"><label>વિદ્યાર્થીનું નામ</label><input type="text" id="studentName" required></div>
+                <div class="form-group"><label>જન્મ તારીખ</label><input type="text" id="studentDob" placeholder="DD-MM-YYYY" required></div>
+                <div class="form-group"><label>જ્ઞાતિ</label><input type="text" id="studentCaste"></div>
+                <div class="form-group"><label>જાતિ (કુમાર/કન્યા)</label><input type="text" id="studentGender" placeholder="કુમાર/કન્યા"></div>
+            </div>
+            <div class="btn-row">
+                <button type="submit" class="btn btn-save" id="btnSubmit">💾 સેવ કરો</button>
+                <button type="button" class="btn btn-cancel" onclick="resetForm()">સાફ કરો</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-sr">ક્રમ</th>
+                    <th class="col-name">વિદ્યાર્થીનું નામ</th>
+                    <th class="col-dob">જન્મ તારીખ</th>
+                    <th class="col-caste">જ્ઞાતિ</th>
+                    <th class="col-gender">જાતિ<br>(કુમાર/કન્યા)</th>
+                    <th class="col-action">એક્શન</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+                <tr><td colspan="6" class="loading">ગૂગલ શીટમાંથી ડેટા લોડ થઈ રહ્યો છે...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // 🔗 તમારી ગુગલ શીટની વેબ એપ લીંક અહીં જ રહેવા દેવી
+    const API_URL = "https://script.google.com/macros/s/AKfycbytkzR0J60Ntdn1oHSAqP-08g302jyEC5PchhrYm3a0ZboGbhBk_L8A9GucKnPvTbab/exec"; 
+
+    window.onload = function() {
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth(); 
+        
+        let academicYear = "";
+        if (currentMonth >= 5) { 
+            academicYear = currentYear + "-" + String(currentYear + 1).slice(-2);
+        } else {
+            academicYear = (currentYear - 1) + "-" + String(currentYear).slice(-2);
+        }
+        document.getElementById("lblAcademicYear").innerText = academicYear;
+        loadData();
+    };
+
+    function loadData() {
+        const oldScript = document.getElementById('jsonpScript');
+        if(oldScript) oldScript.remove(); 
+        const script = document.createElement('script');
+        script.id = 'jsonpScript';
+        script.src = API_URL + "?callback=handleResponse&_ts=" + new Date().getTime(); 
+        document.body.appendChild(script);
+    }
+
+    function formatDateString(dateStr) {
+        if (!dateStr) return '--';
+        if (dateStr.includes("GMT") || !isNaN(Date.parse(dateStr)) && isNaN(dateStr)) {
+            try {
+                const d = new Date(dateStr);
+                if (!isNaN(d.getTime())) {
+                    const day = String(d.getDate()).padStart(2, '0');
+                    const month = String(d.getMonth() + 1).padStart(2, '0');
+                    const year = d.getFullYear();
+                    return `${day}-${month}-${year}`;
+                }
+            } catch (e) { console.error(e); }
+        }
+        return dateStr;
+    }
+
+    window.handleResponse = function(data) {
+        const tableBody = document.getElementById('studentTableBody');
+        tableBody.innerHTML = '';
+        if (!data || data.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan='6' style='padding:20px;'>કોઈ ડેટા ઉપલબ્ધ નથી.</td></tr>`;
+            return;
+        }
+
+        data.forEach((student) => {
+            let val = function(field) {
+                return student[field] !== undefined && student[field] !== null ? String(student[field]).trim() : '';
+            };
+
+            let sr = val("ક્રમ") || val("sr");
+            let name = val("વિદ્યાર્થીનું નામ") || val("name");
+            let dob = formatDateString(val("જન્મ તારીખ") || val("dob"));
+            let caste = val("જ્ઞાતિ") || val("caste");
+            let gender = val("જાતિ") || val("gender");
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="col-sr">${sr || '--'}</td>
+                <td class="col-name">${name || '--'}</td>
+                <td class="col-dob">${dob}</td>
+                <td class="col-caste">${caste || '--'}</td>
+                <td class="col-gender">${gender || '--'}</td>
+                <td class="col-action action-cell">
+                    <button type="button" class="btn" style="background:#3498db; color:white; padding:3px 10px; font-size:12px;" 
+                    onclick="editStudent('${sr}','${name}','${dob}','${caste}','${gender}')">બદલો</button>
+                </td>
+            `;
+            tableBody.appendChild(tr);
+        });
+    };
+
+    document.getElementById('studentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        showLoading(true);
+
+        const payload = {
+            "api_type": "balvatika", 
+            "ક્રમ": document.getElementById('studentSr').value,
+            "sr": document.getElementById('studentSr').value,
+            "વિદ્યાર્થીનું નામ": document.getElementById('studentName').value,
+            "name": document.getElementById('studentName').value,
+            "જન્મ તારીખ": document.getElementById('studentDob').value,
+            "dob": document.getElementById('studentDob').value,
+            "જ્ઞાતિ": document.getElementById('studentCaste').value,
+            "caste": document.getElementById('studentCaste').value,
+            "જાતિ": document.getElementById('studentGender').value,
+            "gender": document.getElementById('studentGender').value
+        };
+
+        fetch(API_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(payload)
+        }).then(() => {
+            setTimeout(() => { 
+                showLoading(false); 
+                resetForm(); 
+                loadData(); 
+            }, 1500);
+        });
+    });
+
+    function editStudent(sr, name, dob, caste, gender) {
+        document.getElementById('studentSr').value = sr;
+        document.getElementById('studentName').value = name;
+        document.getElementById('studentDob').value = dob;
+        document.getElementById('studentCaste').value = caste;
+        document.getElementById('studentGender').value = gender;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetForm() { document.getElementById('studentForm').reset(); }
+    function showLoading(status) { document.getElementById('loadingStatus').style.display = status ? "block" : "none"; }
+</script>
+</body>
+</html>

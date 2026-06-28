@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="gu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>દૈનિક હાજરી પત્રક - હાજીપુર પ્રાથમિક શાળા</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* RESET & BASE */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body { 
+            min-height: 100vh; 
+            background: linear-gradient(rgba(240,255,252,0.90), rgba(225,245,255,0.90)); 
+            background-attachment: fixed; 
+            overflow-x: hidden; 
+        }
+
+        .container { display: flex; min-height: 100vh; }
+
+        /* SIDEBAR (GLASS EFFECT) */
+        .sidebar { 
+            width: 280px; 
+            background: rgba(255, 255, 255, 0.35); 
+            backdrop-filter: blur(15px); 
+            border-right: 1px solid rgba(255, 255, 255, 0.25); 
+            padding: 20px; 
+            box-shadow: 0 0 20px rgba(0,0,0,0.08); 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        .logo { text-align: center; margin-bottom: 25px; }
+        .logo img { width: 140px; height: auto; object-fit: contain; border-radius: 10px; }
+
+        .menu { flex: 1; }
+        .menu a { 
+            display: flex; 
+            align-items: center; 
+            background: rgba(255, 255, 255, 0.45); 
+            color: #184e77; 
+            text-decoration: none; 
+            padding: 14px; 
+            margin-bottom: 12px; 
+            border-radius: 12px; 
+            transition: 0.3s; 
+            border: 1px solid rgba(255, 255, 255, 0.25); 
+            font-weight: 500; 
+        }
+        .menu a:hover, .menu a.active { 
+            background: linear-gradient(45deg, #4facfe, #00c6fb); 
+            color: white; 
+            transform: translateX(6px); 
+        }
+
+        .logout-link { 
+            margin-top: 20px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 14px; 
+            text-decoration: none; 
+            color: white; 
+            border-radius: 12px; 
+            background: linear-gradient(45deg, #ff416c, #ff4b2b); 
+            font-weight: bold; 
+        }
+
+        /* MAIN SECTION */
+        .main { flex: 1; padding: 30px; }
+
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; }
+        .header h1 { color: #184e77; font-size: 36px; }
+        .header p { color: #355070; margin-top: 5px; }
+
+        .about-btn, .back-btn, .submit-btn { 
+            padding: 14px 24px; 
+            border-radius: 40px; 
+            text-decoration: none; 
+            color: white; 
+            font-size: 16px; 
+            font-weight: 600; 
+            background: linear-gradient(45deg, #4f46e5, #4338ca); 
+            box-shadow: 0 5px 15px rgba(79,70,229,0.4); 
+            transition: 0.3s; 
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+        }
+        .about-btn:hover, .back-btn:hover, .submit-btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(79,70,229,0.5); 
+        }
+
+        /* DATE PICKER & BADGES */
+        .date-selection-box {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(24, 78, 119, 0.2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .date-selection-box label { font-weight: 700; color: #184e77; }
+        .date-selection-box input { padding: 8px 15px; border-radius: 8px; border: 1px solid #ccc; font-weight: 600; color: #184e77; }
+
+        .class-summary-badge {
+            background: linear-gradient(45deg, #184e77, #1a5276);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* VIEW PANEL BLOCKS */
+        .report-view, .form-view, .history-view { 
+            background: rgba(255, 255, 255, 0.45); 
+            backdrop-filter: blur(12px); 
+            border-radius: 22px; 
+            padding: 25px; 
+            border: 1px solid rgba(255, 255, 255, 0.25); 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
+            margin-bottom: 30px;
+        }
+
+        .section-title { color: #184e77; font-size: 26px; margin-bottom: 25px; font-weight: 700; }
+
+        /* MAIN DATA TABLES */
+        .main-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .main-table th { background: #1a5276; color: white; padding: 14px; font-size: 16px; font-weight: 600; text-align: center; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .main-table td { padding: 12px; border: 1px solid rgba(24, 78, 119, 0.15); text-align: center; font-weight: 600; font-size: 15px; color: #184e77; }
+
+        .txt-present { color: #10b981; background: rgba(240, 253, 244, 0.7); }
+        .txt-absent { color: #ef4444; background: rgba(254, 242, 242, 0.7); }
+        
+        .row-gender-head { font-weight: 700; font-size: 16px; background: rgba(24, 78, 119, 0.02); }
+        .row-subtotal-boys { background: #e0f2fe; font-weight: 700; color: #0369a1; }
+        .row-subtotal-girls { background: #fce7f3; font-weight: 700; color: #be185d; }
+        .row-grand-total { background: #dcfce7; font-weight: 800; font-size: 16px; color: #15803d; }
+
+        /* INPUT ROW SYSTEM */
+        .form-container-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 25px; margin-bottom: 25px; }
+        .gender-section { background: rgba(255, 255, 255, 0.7); border-radius: 16px; padding: 20px; border: 1px solid rgba(24, 78, 119, 0.15); }
+        .gender-section h4 { color: #1a5276; font-size: 18px; margin-bottom: 15px; border-bottom: 2px solid rgba(24, 78, 119, 0.1); padding-bottom: 8px; }
+        
+        .input-row-header { display: flex; justify-content: space-between; font-weight: 600; font-size: 13px; color: #555; margin-bottom: 5px; }
+        .input-row-header span { width: 45%; text-align: center; }
+
+        .form-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .form-row label { width: 90px; font-weight: 600; color: #184e77; font-size: 14px; }
+        .form-row input { width: 45%; padding: 10px; border: 1px solid rgba(24, 78, 119, 0.2); border-radius: 8px; text-align: center; font-weight: bold; }
+
+        /* DASHBOARD GRID */
+        .class-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; margin-top: 20px; }
+        .class-card { background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(12px); border-radius: 22px; padding: 25px; border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: 0.3s; text-align: center; }
+        .class-card:hover { transform: translateY(-8px); background: rgba(255, 255, 255, 0.60); }
+        .class-card h3 { color: #0077b6; font-size: 28px; margin-bottom: 20px; font-weight: 700; }
+
+        .subclasses { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .subclasses a { padding: 10px 22px; border-radius: 12px; text-decoration: none; background: rgba(255, 255, 255, 0.65); color: #184e77; font-weight: 600; transition: 0.3s; border: 1px solid rgba(255, 255, 255, 0.25); cursor: pointer; }
+        .subclasses a:hover { background: linear-gradient(45deg, #4facfe, #00c6fb); color: white; }
+
+        @media(max-width: 768px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="sidebar">
+            <div class="logo">
+                <img src="static/images/logo.jpg" onerror="this.src='https://placehold.co/140x140?text=SCHOOL+LOGO'" alt="School Logo">
+            </div>
+            <div class="menu">
+                <a href="school-information.html">શાળા પરિચય</a>
+                <a href="attendance.html" class="active">દૈનિક હાજરી</a>
+                <a href="mdm.html">મધ્યાહન ભોજન યોજના</a>
+                <a href="information.html">માહિતી</a>
+                <a href="report.html">પત્રક</a>
+                <a href="praveshotsav.html">પ્રવેશોત્સવ</a>
+                <a href="gr-register.html">જી.આર. રજીસ્ટર</a>
+                <a href="training.html">તાલીમ માહિતી</a>
+                <a href="smc.html">S.M.C.</a>
+                <a href="gallery.html">કાર્યક્રમ ફોટો ફાઇલ</a>
+                <a href="settings.html">સેટિંગ્સ</a>
+            </div>
+            <a href="index.html" class="logout-link">🚪 લોગ આઉટ</a>
+        </div>
+
+        <div class="main">
+
+            <div id="reportSection" style="display: none;">
+                <div class="header">
+                    <div>
+                        <h1 id="reportTitle">વર્ગ રિપોર્ટ 📊</h1>
+                        <p>હાજીપુર પ્રાથમિક શાળા - પર્મેનન્ટ ઓલ ડે સ્ટોરેજ સિસ્ટમ</p>
+                    </div>
+                    <button onclick="hideReport()" class="about-btn" style="background: linear-gradient(45deg, #4facfe, #00c6fb);">← Back to Module</button>
+                </div>
+
+                <div class="date-selection-box">
+                    <label>📅 હાજરી પત્રકની તારીખ:</label>
+                    <input type="date" id="attendanceDate" onchange="loadDateSpecificData()">
+                </div>
+
+                <br>
+
+                <div class="class-summary-badge">
+                    🏫 વર્ગમાં કુલ વિદ્યાર્થીઓ (Total): &nbsp; <span id="topClassTotal">0</span>
+                </div>
+
+                <div class="report-view">
+                    <h3 style="color: #184e77; margin-bottom: 15px;">📊 લાઈવ એટેન્ડન્સ શીટ</h3>
+                    <table class="main-table">
+                        <thead>
+                            <tr>
+                                <th>વિગત</th>
+                                <th>કેટેગરી</th>
+                                <th>હાજર (Present)</th>
+                                <th>ગેરહાજર (Absent)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="row-gender-head">
+                                <td rowspan="4">કુમાર (Boys)</td>
+                                <td>OBC</td>
+                                <td class="txt-present" id="b_obc_p_cell">0</td>
+                                <td class="txt-absent" id="b_obc_a_cell">0</td>
+                            </tr>
+                            <tr class="row-gender-head">
+                                <td>SC</td>
+                                <td class="txt-present" id="b_sc_p_cell">0</td>
+                                <td class="txt-absent" id="b_sc_a_cell">0</td>
+                            </tr>
+                            <tr class="row-gender-head">
+                                <td>ST</td>
+                                <td class="txt-present" id="b_st_p_cell">0</td>
+                                <td class="txt-absent" id="b_st_a_cell">0</td>
+                            </tr>
+                            <tr class="row-gender-head" style="border-bottom: 2px solid #0284c7;">
+                                <td>general</td>
+                                <td class="txt-present" id="b_gen_p_cell">0</td>
+                                <td class="txt-absent" id="b_gen_a_cell">0</td>
+                            </tr>
+                            <tr class="row-subtotal-boys">
+                                <td colspan="2">Total (કુમાર કુલ)</td>
+                                <td id="boysPresentSum">0</td>
+                                <td id="boysAbsentSum">0</td>
+                            </tr>
+
+                            <tr class="row-gender-head">
+                                <td rowspan="4">કન્યા (Girls)</td>
+                                <td>OBC</td>
+                                <td class="txt-present" id="g_obc_p_cell">0</td>
+                                <td class="txt-absent" id="g_obc_a_cell">0</td>
+                            </tr>
+                            <tr class="row-gender-head">
+                                <td>SC</td>
+                                <td class="txt-present" id="g_sc_p_cell">0</td>
+                                <td class="txt-absent" id="g_sc_a_cell">0</td>
+                            </tr>
+                            <tr class="row-gender-head">
+                                <td>ST</td>
+                                <td class="txt-present" id="g_st_p_cell">0</td>
+                                <td class="txt-absent" id="g_st_a_cell">0</td>
+                            </tr>
+                            <tr class="row-gender-head" style="border-bottom: 2px solid #db2777;">
+                                <td>general</td>
+                                <td class="txt-present" id="g_gen_p_cell">0</td>
+                                <td class="txt-absent" id="g_gen_a_cell">0</td>
+                            </tr>
+                            <tr class="row-subtotal-girls">
+                                <td colspan="2">total (કન્યા કુલ)</td>
+                                <td id="girlsPresentSum">0</td>
+                                <td id="girlsAbsentSum">0</td>
+                            </tr>
+
+                            <tr class="row-grand-total">
+                                <td colspan="2">grand total</td>
+                                <td id="grandPresentSum">0</td>
+                                <td id="grandAbsentSum">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-view">
+                    <h3 style="color: #184e77; margin-bottom: 20px;">✍️ મેન્યુઅલ ડેટા એન્ટ્રી ફોર્મ</h3>
+                    <form id="attendanceForm" onsubmit="saveDailyData(event)">
+                        <div class="form-container-grid">
+                            <div class="gender-section">
+                                <h4>👦 કુમાર ઇનપુટ</h4>
+                                <div class="input-row-header">
+                                    <label style="width:90px;"></label>
+                                    <span>હાજર</span>
+                                    <span>ગેરહાજર</span>
+                                </div>
+                                <div class="form-row"><label>OBC</label><input type="number" id="b_obc_p" min="0" value="0" required><input type="number" id="b_obc_a" min="0" value="0" required></div>
+                                <div class="form-row"><label>SC</label><input type="number" id="b_sc_p" min="0" value="0" required><input type="number" id="b_sc_a" min="0" value="0" required></div>
+                                <div class="form-row"><label>ST</label><input type="number" id="b_st_p" min="0" value="0" required><input type="number" id="b_st_a" min="0" value="0" required></div>
+                                <div class="form-row"><label>General</label><input type="number" id="b_gen_p" min="0" value="0" required><input type="number" id="b_gen_a" min="0" value="0" required></div>
+                            </div>
+
+                            <div class="gender-section">
+                                <h4>👧 કન્યા ઇનપુટ</h4>
+                                <div class="input-row-header">
+                                    <label style="width:90px;"></label>
+                                    <span>હાજર</span>
+                                    <span>ગેરહાજર</span>
+                                </div>
+                                <div class="form-row"><label>OBC</label><input type="number" id="g_obc_p" min="0" value="0" required><input type="number" id="g_obc_a" min="0" value="0" required></div>
+                                <div class="form-row"><label>SC</label><input type="number" id="g_sc_p" min="0" value="0" required><input type="number" id="g_sc_a" min="0" value="0" required></div>
+                                <div class="form-row"><label>ST</label><input type="number" id="g_st_p" min="0" value="0" required><input type="number" id="g_st_a" min="0" value="0" required></div>
+                                <div class="form-row"><label>General</label><input type="number" id="g_gen_p" min="0" value="0" required><input type="number" id="g_gen_a" min="0" value="0" required></div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn" style="background: linear-gradient(45deg, #10b981, #059669);">💾 આ તારીખનો ડેટા સ્ટોર કરો</button>
+                    </form>
+                </div>
+
+                <div class="history-view">
+                    <h3 style="color: #184e77; margin-bottom: 15px;">📜 ઓલ ડે સેવ થયેલ હિસ્ટ્રી લોગ (ગમે ત્યારે જુઓ)</h3>
+                    <table class="main-table" style="margin-top: 10px;">
+                        <thead>
+                            <tr style="background: #34495e;">
+                                <th>તારીખ (Date)</th>
+                                <th>કુલ હાજર</th>
+                                <th>કુલ ગેરહાજર</th>
+                                <th>કુલ વિદ્યાર્થીઓ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <tr>
+                                <td colspan="4" style="color: #7f8c8d;">કોઈ રેકોર્ડ મળેલ નથી.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="moduleSection">
+                <div class="header">
+                    <div>
+                        <h1>નમસ્તે 👋</h1>
+                        <p>હાજીપુર પ્રાથમિક શાળા - હાજરી મોડ્યુલ</p>
+                    </div>
+                    <a href="about.html" class="about-btn">About Us</a>
+                </div>
+
+                <h2 class="section-title">📚 દૈનિક હાજરી વર્ગ સિલેક્શન</h2>
+                <div class="class-grid" id="classGridContainer">
+                    </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ઓટોમેટિક તારીખ સેટ કરવી (આજની તારીખ ડિફોલ્ટ આવશે)
+        document.getElementById('attendanceDate').valueAsDate = new Date();
+
+        const schoolClasses = ["બાળવાટિકા", "ધોરણ 1-A", "ધોરણ 1-B", "ધોરણ 2-A", "ધોરણ 2-B", "ધોરણ 3-A", "ધોરણ 3-B", "ધોરણ 4-A", "ધોરણ 4-B", "ધોરણ 5-A", "ધોરણ 5-B", "ધોરણ 6-A", "ધોરણ 6-B", "ધોરણ 7-A", "ધોરણ 7-B", "ધોરણ 8-A", "ધોરણ 8-B"];
+
+        // ડેશબોર્ડ ગ્રીડ જનરેટ કરવી
+        const grid = document.getElementById("classGridContainer");
+        schoolClasses.forEach(cls => {
+            grid.innerHTML += `
+                <div class="class-card">
+                    <h3>${cls.replace('-',' ')}</h3>
+                    <div class="subclasses">
+                        <a onclick="showReport('${cls}')">ઓપન પત્રક</a>
+                    </div>
+                </div>`;
+        });
+
+        function showReport(className) {
+            document.getElementById("moduleSection").style.display = "none";
+            document.getElementById("reportSection").style.display = "block";
+            document.getElementById("reportTitle").innerText = className + " રિપોર્ટ પત્રક 📊";
+            document.getElementById("attendanceForm").setAttribute("data-active-class", className);
+            
+            loadDateSpecificData();
+        }
+
+        // લાઈવ સ્ટોરેજ ડેટા રીડ કરવો (તારીખ + ક્લાસ પ્રમાણે)
+        function loadDateSpecificData() {
+            let className = document.getElementById("attendanceForm").getAttribute("data-active-class");
+            let selectedDate = document.getElementById("attendanceDate").value;
+            
+            if(!selectedDate) return;
+
+            // LocalStorage માંથી ડેટા લાવવો
+            let database = JSON.parse(localStorage.getItem("SchoolAttendanceDB")) || {};
+            let key = `${selectedDate}_${className}`;
+            
+            let data = database[key];
+
+            // જો કોઈ રેકોર્ડ ના હોય તો બ્લેન્ક 0 સેટ કરવા
+            if (!data) {
+                data = {
+                    b_obc_p: 0, b_obc_a: 0, b_sc_p: 0, b_sc_a: 0, b_st_p: 0, b_st_a: 0, b_gen_p: 0, b_gen_a: 0,
+                    g_obc_p: 0, g_obc_a: 0, g_sc_p: 0, g_sc_a: 0, g_st_p: 0, g_st_a: 0, g_gen_p: 0, g_gen_a: 0
+                };
+            }
+
+            // ફોર્મ ઇનપુટ્સમાં ડેટા લોડ કરવો
+            Object.keys(data).forEach(id => {
+                if(document.getElementById(id)) document.getElementById(id).value = data[id];
+            });
+
+            // ટેબલ અપડેટ કરવું
+            renderCalculatedTable(data);
+            renderHistoryLog(className);
+        }
+
+        function renderCalculatedTable(data) {
+            // કુમાર કોષ્ટક સેલ બાઈન્ડિંગ
+            document.getElementById("b_obc_p_cell").innerText = data.b_obc_p; document.getElementById("b_obc_a_cell").innerText = data.b_obc_a;
+            document.getElementById("b_sc_p_cell").innerText = data.b_sc_p;   document.getElementById("b_sc_a_cell").innerText = data.b_sc_a;
+            document.getElementById("b_st_p_cell").innerText = data.b_st_p;   document.getElementById("b_st_a_cell").innerText = data.b_st_a;
+            document.getElementById("b_gen_p_cell").innerText = data.b_gen_p; document.getElementById("b_gen_a_cell").innerText = data.b_gen_a;
+
+            // કન્યા કોષ્ટક સેલ બાઈન્ડિંગ
+            document.getElementById("g_obc_p_cell").innerText = data.g_obc_p; document.getElementById("g_obc_a_cell").innerText = data.g_obc_a;
+            document.getElementById("g_sc_p_cell").innerText = data.g_sc_p;   document.getElementById("g_sc_a_cell").innerText = data.g_sc_a;
+            document.getElementById("g_st_p_cell").innerText = data.g_st_p;   document.getElementById("g_st_a_cell").innerText = data.g_st_a;
+            document.getElementById("g_gen_p_cell").innerText = data.g_gen_p; document.getElementById("g_gen_a_cell").innerText = data.g_gen_a;
+
+            // કેલ્ક્યુલેશન
+            let boysP = data.b_obc_p + data.b_sc_p + data.b_st_p + data.b_gen_p;
+            let boysA = data.b_obc_a + data.b_sc_a + data.b_st_a + data.b_gen_a;
+            document.getElementById("boysPresentSum").innerText = boysP;
+            document.getElementById("boysAbsentSum").innerText = boysA;
+
+            let girlsP = data.g_obc_p + data.g_sc_p + data.g_st_p + data.g_gen_p;
+            let girlsA = data.g_obc_a + data.g_sc_a + data.g_st_a + data.g_gen_a;
+            document.getElementById("girlsPresentSum").innerText = girlsP;
+            document.getElementById("girlsAbsentSum").innerText = girlsA;
+
+            let totalP = boysP + girlsP;
+            let totalA = boysA + girlsA;
+            document.getElementById("grandPresentSum").innerText = totalP;
+            document.getElementById("grandAbsentSum").innerText = totalA;
+
+            let totalClassStudents = totalP + totalA;
+            document.getElementById("topClassTotal").innerText = totalClassStudents;
+        }
+
+        // ડેટા લોકલ સ્ટોરેજમાં સેવ કરવો
+        function saveDailyData(event) {
+            event.preventDefault();
+            let className = document.getElementById("attendanceForm").getAttribute("data-active-class");
+            let selectedDate = document.getElementById("attendanceDate").value;
+
+            if(!selectedDate) {
+                alert("❌ કૃપા કરીને પહેલા તારીખ પસંદ કરો!");
+                return;
+            }
+
+            let database = JSON.parse(localStorage.getItem("SchoolAttendanceDB")) || {};
+            let key = `${selectedDate}_${className}`;
+
+            database[key] = {
+                b_obc_p: parseInt(document.getElementById("b_obc_p").value) || 0,
+                b_obc_a: parseInt(document.getElementById("b_obc_a").value) || 0,
+                b_sc_p: parseInt(document.getElementById("b_sc_p").value) || 0,
+                b_sc_a: parseInt(document.getElementById("b_sc_a").value) || 0,
+                b_st_p: parseInt(document.getElementById("b_st_p").value) || 0,
+                b_st_a: parseInt(document.getElementById("b_st_a").value) || 0,
+                b_gen_p: parseInt(document.getElementById("b_gen_p").value) || 0,
+                b_gen_a: parseInt(document.getElementById("b_gen_a").value) || 0,
+
+                g_obc_p: parseInt(document.getElementById("g_obc_p").value) || 0,
+                g_obc_a: parseInt(document.getElementById("g_obc_a").value) || 0,
+                g_sc_p: parseInt(document.getElementById("g_sc_p").value) || 0,
+                g_sc_a: parseInt(document.getElementById("g_sc_a").value) || 0,
+                g_st_p: parseInt(document.getElementById("g_st_p").value) || 0,
+                g_st_a: parseInt(document.getElementById("g_st_a").value) || 0,
+                g_gen_p: parseInt(document.getElementById("g_gen_p").value) || 0,
+                g_gen_a: parseInt(document.getElementById("g_gen_a").value) || 0
+            };
+
+            localStorage.setItem("SchoolAttendanceDB", JSON.stringify(database));
+            renderCalculatedTable(database[key]);
+            renderHistoryLog(className);
+            alert(`✅ ડેટા સ્ટોર થઈ ગયો છે!\nતારીખ: ${selectedDate}\nવર્ગ: ${className}`);
+        }
+
+        // હિસ્ટ્રી લોગ કોષ્ટક અપડેટ કરવું
+        function renderHistoryLog(className) {
+            let database = JSON.parse(localStorage.getItem("SchoolAttendanceDB")) || {};
+            let tbody = document.getElementById("historyTableBody");
+            tbody.innerHTML = "";
+
+            let foundRecords = 0;
+
+            // તમામ સ્ટોર થયેલા ડેટામાંથી આ વર્ગનો ડેટા ફિલ્ટર કરવો
+            Object.keys(database).sort().reverse().forEach(key => {
+                if (key.includes(`_${className}`)) {
+                    let dateStr = key.split("_")[0];
+                    let data = database[key];
+                    
+                    let pSum = data.b_obc_p + data.b_sc_p + data.b_st_p + data.b_gen_p + data.g_obc_p + data.g_sc_p + data.g_st_p + data.g_gen_p;
+                    let aSum = data.b_obc_a + data.b_sc_a + data.b_st_a + data.b_gen_a + data.g_obc_a + data.g_sc_a + data.g_st_a + data.g_gen_a;
+                    
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><strong>📅 ${dateStr}</strong></td>
+                            <td class="txt-present">${pSum}</td>
+                            <td class="txt-absent">${aSum}</td>
+                            <td style="background:#f4f6f7;">${pSum + aSum}</td>
+                        </tr>`;
+                    foundRecords++;
+                }
+            });
+
+            if (foundRecords === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="color: #7f8c8d;">આ વર્ગ માટે હજી સુધી કોઈ ડેટા સેવ કરાયો નથી.</td></tr>`;
+            }
+        }
+
+        function hideReport() {
+            document.getElementById("reportSection").style.display = "none";
+            document.getElementById("moduleSection").style.display = "block";
+        }
+    </script>
+</body>
+</html>
