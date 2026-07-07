@@ -107,13 +107,40 @@
             background: #fff;
             color: #000;
             box-sizing: border-box;
+            position: relative;
         }
+
+        /* 📸 ફોટો માટેનું સ્ક્વેર બોક્સ (હાલમાં ડિફોલ્ટ છુપાવેલું) */
+        /* 📸 ફોટો બોક્સને થોડું ઉપર અને જમણી બાજુ પરફેક્ટ સેટ કરવા માટે */
+.photo-box {
+    position: absolute;
+    top: 10px;       /* 40px માંથી ઘટાડીને 20px કર્યું જેથી બોક્સ ઉપર ચઢી જાય */
+    right: 35px;     /* જમણી બાજુથી પરફેક્ટ માર્જિન */
+    width: 132px;
+    height: 170px;
+    border: 2px dashed #000000;
+    display: none;   /* જાવાસ્ક્રિપ્ટથી કંટ્રોલ થશે */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #444;
+    background-color: #fafafa;
+}
 
         .gov-sub-header { text-align: center; font-weight: bold; font-size: 1.25rem; margin-bottom: 15px; }
         .cert-header { text-align: center; margin-bottom: 20px; }
         .cert-header h1 { margin: 0; font-size: 2rem; }
         .cert-header p { margin: 5px 0 0 0; font-size: 1.15rem; }
-        .cert-meta { display: flex; justify-content: space-between; margin-bottom: 30px; font-size: 1.2rem; }
+        
+        /* ફોટો હોય ત્યારે હેડિંગ એડજસ્ટ કરવા માટેનો ક્લાસ */
+        /* ફોટો હોય ત્યારે હેડિંગ ડાબી બાજુ ખસેડવા માટે */
+.cert-header.has-photo, .gov-sub-header.has-photo {
+    padding-right: 140px; /* 120px માંથી વધારીને 140px કર્યું */
+}
+
+        .cert-meta { display: flex; justify-content: space-between; margin-bottom: 30px; font-size: 1.2rem; margin-top: 20px; }
         .cert-title { text-align: center; margin: 25px 0; }
         .cert-title span { border: 1px solid #000; padding: 6px 30px; font-weight: bold; font-size: 1.4rem; background: #f9f9f9; }
         .cert-body { font-size: 1.3rem; line-height: 2.3; text-align: justify; margin-bottom: 60px; }
@@ -135,46 +162,30 @@
         .btn-view { background-color: #00bcd4; color: white; margin-right: 5px; }
         .btn-delete { background-color: #ff5252; color: white; }
 
-        
-/* BACK BUTTON */
+        /* BACK BUTTON */
+        .back-btn{
+            display:inline-block;
+            margin-top:35px;
+            padding:14px 28px;
+            border-radius:40px;
+            text-decoration:none;
+            background: linear-gradient(45deg, #4facfe, #00c6fb);
+            color:white;
+            font-weight:600;
+            transition:0.3s;
+        }
 
-.back-btn{
+        .back-btn:hover{
+            transform:translateY(-3px);
+            box-shadow:0 8px 20px rgba(0,198,251,0.3);
+        }
 
-    display:inline-block;
-
-    margin-top:35px;
-
-    padding:14px 28px;
-
-    border-radius:40px;
-
-    text-decoration:none;
-
-    background:
-    linear-gradient(
-    45deg,
-    #4facfe,
-    #00c6fb
-    );
-
-    color:white;
-
-    font-weight:600;
-
-    transition:0.3s;
-}
-
-.back-btn:hover{
-
-    transform:translateY(-3px);
-
-    box-shadow:0 8px 20px rgba(0,198,251,0.3);
-}
         @media print {
-            .selection-grid, .form-card-section, .btn-container, .table-section, .form-title-main { display: none !important; }
+            .selection-grid, .form-card-section, .btn-container, .table-section, .form-title-main, .back-btn { display: none !important; }
             body { background: #fff; padding: 0; margin: 0; }
             .main-card { box-shadow: none; padding: 0; margin: 0; }
-            .certificate-preview { border: 2px solid #000; padding: 30px; margin: 0 auto; width: 92% !important; box-sizing: border-box; }
+            .certificate-preview { border: 2px solid #000; padding: 30px; margin: 0 auto; width: 95% !important; box-sizing: border-box; }
+            .photo-box { border: 2px solid #000 !important; top: 0px !important; right: 20px !important; }
             .stamp-box { color: #1d4ed8 !important; border-color: #1d4ed8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
     </style>
@@ -183,7 +194,6 @@
 
 <div class="container">
     
-    <!-- ટેબ સેકશન -->
     <div class="selection-grid">
         <div class="select-card active" id="btnJanma" onclick="switchType('janma')">
             <h2>📅 જન્મ તારીખનો દાખલો</h2>
@@ -195,7 +205,6 @@
         </div>
     </div>
 
-    <!-- ઇનપુટ કાર્ડ -->
     <div class="main-card">
         <div class="form-card-section">
             <h3 class="form-title-main" style="margin-top: 0; color: var(--primary-color); font-size: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">📝 વિદ્યાર્થીની વિગત અહી ટાઈપ કરો</h3>
@@ -241,7 +250,6 @@
         </div>
     </div>
 
-    <!-- 📊 સેવ કરેલા ડેટા બતાવવા માટેનું લાઈવ ટેબલ સેક્શન -->
     <div class="table-section">
         <h3 style="margin-top: 0; color: #14181b; font-size: 1.15rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">📊 સેવ કરેલા વિદ્યાર્થીઓનો ડેટાબેઝ</h3>
         <div style="overflow-x: auto;">
@@ -258,16 +266,17 @@
                     </tr>
                 </thead>
                 <tbody id="studentTableBody">
-                    <!-- સેવ કરેલો ડેટા અહીં જાવાસ્ક્રિપ્ટથી ઓટોમેટિક આવશે -->
-                </tbody>
+                    </tbody>
             </table>
         </div>
     </div>
 
-    <!-- 📄 લાઈવ સર્ટિફિકેટ પ્રીવ્યૂ એરિયા -->
     <div class="certificate-preview" id="certArea">
+        
+        <div class="photo-box" id="photoBoxContainer">અહીં વિદ્યાર્થીનો<br>પાસપોર્ટ સાઇઝ<br>ફોટો ચોંટાડવો</div>
+
         <div class="gov-sub-header" id="govHeaderLine">ગાંધીનગર શિક્ષણ સમિતિ-૨૦૧૩-૧૪</div>
-        <div class="cert-header">
+        <div class="cert-header" id="certHeaderContainer">
             <h1>હાજીપુર પ્રાથમિક શાળા</h1>
             <p>તા. કલોલ, જી. ગાંધીનગર</p>
         </div>
@@ -286,14 +295,8 @@
         </div>
         
     </div>
-                <!-- BUTTON -->
-
-                <a href="report.html"
-                    class="back-btn">
-
-                    ⬅ Back
-
-                </a>
+    
+    <a href="report.html" class="back-btn">⬅ Back</a>
 </div>
 
 <script>
@@ -301,7 +304,6 @@
     let studentList = [];
 
     window.onload = function() {
-        // લોકલ સ્ટોરેજમાંથી જૂનો સેવ કરેલો ડેટા લોડ કરવો
         if (localStorage.getItem('savedStudents')) {
             studentList = JSON.parse(localStorage.getItem('savedStudents'));
         }
@@ -329,20 +331,35 @@
         document.getElementById('lblGrNo').innerText = grNo;
         document.getElementById('lblJaNo').innerText = jaNo;
 
+        const photoBox = document.getElementById('photoBoxContainer');
+        const certHeader = document.getElementById('certHeaderContainer');
+        const govHeader = document.getElementById('govHeaderLine');
+
         if (currentType === 'janma') {
-            document.getElementById('govHeaderLine').style.display = 'block';
+            // 📅 જન્મ તારીખનો દાખલો સેટિંગ્સ (ફોટો છુપાવો)
+            photoBox.style.display = 'none';
+            certHeader.classList.remove('has-photo');
+            govHeader.classList.remove('has-photo');
+            
+            govHeader.style.display = 'block';
             document.getElementById('certTitleText').innerText = "દાખલો";
+            // ✅ અહીંથી 'Engineering-' કાઢીને લખાણ એકદમ ચોખ્ખું કરી દીધું છે
             document.getElementById('certBodyText').innerHTML = `
                 આથી દાખલો લખી આપવામાં આવે છે કે કુમાર / કુમારી શ્રી <div class="blank-line">${name}</div> 
                 સદર શાળાના ધોરણ <div class="blank-line">${sClass}</div> માં અભ્યાસ કરે છે/કરતા હતાં/કરતી હતી. 
-                શાળાના જનરલ રજીસ્ટર નં. <div class="blank-line">${grNo}</div> પ્રમાણે તેમની જન્મ તારીખ 
+                شાળાના જનરલ રજીસ્ટર નં. <div class="blank-line">${grNo}</div> પ્રમાણે તેમની જન્મ તારીખ 
                 <div class="blank-line">${dob}</div> શબ્દોમાં <div class="blank-line">${dobWords}</div> છે. 
-                તેમની ચાલ-ચલગત <div class="blank-line">સારી</div> છે. હું તેમની સફળતા ઇચ્છુ છું॰ 
+                શૈક્ષણિક રેકોર્ડ મુજબ તેમની ચાલ-ચલગત <div class="blank-line">સારી</div> છે. હું તેમની સફળતા ઇચ્છુ છું॰ 
                 તેમનો યુનિક આઈ ડી નંબર <div class="blank-line">${uid}</div> છે . <br><br>
                 સદર વિદ્યાર્થીની જાતિ શાળા દફતરે <div class="blank-line">${caste}</div> નોંધાયેલ છે.
             `;
         } else {
-            document.getElementById('govHeaderLine').style.display = 'none';
+            // 🎓 બોનફાઇડ સર્ટિફિકેટ સેટિંગ્સ (ફોટો બતાવો)
+            photoBox.style.display = 'flex';
+            certHeader.classList.add('has-photo');
+            govHeader.classList.add('has-photo');
+
+            govHeader.style.display = 'none';
             document.getElementById('certTitleText').innerText = "બોનફાઇડ સર્ટિફિકેટ";
             document.getElementById('certBodyText').innerHTML = `
                 આથી પ્રમાણપત્ર આપવામાં આવે છે કે વિદ્યાર્થી <div class="blank-line">${name}</div> 
@@ -355,7 +372,6 @@
         }
     }
 
-    // 💾 ડેટા સેવ કરવાનું ફંક્શન
     function saveStudentData() {
         const student = {
             id: Date.now(),
@@ -370,7 +386,6 @@
             type: currentType === 'janma' ? 'જન્મ તારીખ' : 'બોનફાઇડ'
         };
 
-        // જો સમાન GR નંબર હોય તો ડેટા અપડેટ થશે, નહીતર નવો એન્ટ્રી થશે
         const index = studentList.findIndex(s => s.grNo === student.grNo);
         if (index > -1) {
             studentList[index] = student;
@@ -383,7 +398,6 @@
         alert('🎉 ડેટા સફળતાપૂર્વક સેવ થઈ ગયો છે!');
     }
 
-    // 📊 ટેબલ લોડ કરવાનું ફંક્શન
     function renderTable() {
         const tbody = document.getElementById('studentTableBody');
         tbody.innerHTML = '';
@@ -411,7 +425,6 @@
         });
     }
 
-    // 🔍 ટેબલમાંથી ડેટા પાછો ફોર્મમાં લોડ કરવા
     function viewStudent(id) {
         const student = studentList.find(s => s.id === id);
         if(student) {
@@ -429,7 +442,6 @@
         }
     }
 
-    // ❌ વિદ્યાર્થીનો ડેટા ડીલીટ કરવા માટે
     function deleteStudent(id) {
         if(confirm('શું તમે ખરેખર આ વિદ્યાર્થીનો ડેટા ડીલીટ કરવા માંગો છો?')) {
             studentList = studentList.filter(s => s.id !== id);

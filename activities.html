@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>શાળામાં કરેલ સહ શૈક્ષણિક પ્રવૃત્તિઓ</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 20px; }
+        .main-container { max-width: 900px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 2px solid #3b2787; }
+        
+        /* નેવિગેશન બટનો */
+        .top-nav { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
+        .btn { padding: 8px 18px; font-size: 14px; font-weight: bold; border: none; border-radius: 20px; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-print { background-color: #008000; color: white; }
+        .btn-back { background-color: #3182ce; color: white; }
+        
+        /* હેડર સેક્શન */
+        .header-section { text-align: center; color: #0c4a60; margin-bottom: 20px; border-bottom: 2px dashed #3b2787; padding-bottom: 15px; }
+        .header-section h1 { font-size: 32px; margin: 5px 0; color: #d91b5c; font-weight: bold; }
+        .school-info { font-size: 14px; color: #0076a3; margin: 5px 0; font-weight: bold; }
+        .festival-title { font-size: 18px; color: #008000; font-weight: bold; margin-top: 5px; }
+        
+        .table-title { text-align: center; color: #cc0000; font-size: 21px; font-weight: bold; margin: 20px 0; line-height: 1.6; }
+        
+        /* સૂત્રો પેજ જેવું જ બે લિસ્ટ વાળું માળખું */
+        .content-wrapper { display: flex; gap: 40px; justify-content: space-between; margin-top: 20px; }
+        .activity-column { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+        
+        .activity-item { display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: bold; line-height: 1.4; }
+        .activity-item span.star { font-size: 20px; }
+
+        /* પ્રિન્ટ સેટિંગ્સ */
+        @media print { 
+            .top-nav { display: none !important; } 
+            body { padding: 0; background-color: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; } 
+            .main-container { box-shadow: none; border: none; padding: 10px; } 
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="top-nav">
+        <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
+        <a href="praveshotsav-file.html" class="btn btn-back">⬅️ Back</a>
+    </div>
+
+    <div class="header-section">
+        <p style="color: #ff6b35; font-weight: bold; margin: 0; font-size: 16px;">સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</p>
+        <h1>હાજીપુર પ્રાથમિક શાળા</h1>
+        <p class="school-info">ગામ:- હાજીપુર,  તાલુકો:- કલોલ,  જીલ્લો:- ગાંધીનગર,  સી.આર.સી:- ભોયણ મોટી,  ડાયસ કોડ:- 24060303601</p>
+        <p class="festival-title">કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span id="currentYearText">2026-27</span></p>
+    </div>
+
+    <div class="table-title">
+        ※ શાળામાં ગત વર્ષ <span id="lastYearText">2025-26</span> માં કરેલ સહ શૈક્ષણિક પ્રવૃત્તિઓ ※
+    </div>
+
+    <div class="content-wrapper">
+        
+        <div class="activity-column">
+            <div class="activity-item" style="color: #cc0000;"><span class="star" style="color: #ff9f1c;">★</span> <span>શાળા પ્રવેશોત્સવ</span></div>
+            <div class="activity-item" style="color: #008000;"><span class="star" style="color: #3b2787;">★</span> <span>વૃક્ષારોપણ</span></div>
+            <div class="activity-item" style="color: #ff6b35;"><span class="star" style="color: #008000;">★</span> <span>બાળમેળો</span></div>
+            <div class="activity-item" style="color: #2ec4b6;"><span class="star" style="color: #b300b3;">★</span> <span>સ્વચ્છતા અભિયાન</span></div>
+            <div class="activity-item" style="color: #0c4a60;"><span class="star" style="color: #ff9f1c;">★</span> <span>આજનો દીપક</span></div>
+            <div class="activity-item" style="color: #7209b7;"><span class="star" style="color: #2ec4b6;">★</span> <span>આજનું ગુલાબ</span></div>
+            <div class="activity-item" style="color: #38b000;"><span class="star" style="color: #ff6b35;">★</span> <span>અક્ષયપાત્ર</span></div>
+            <div class="activity-item" style="color: #f72585;"><span class="star" style="color: #3b2787;">★</span> <span>ખોયા પાયા</span></div>
+            <div class="activity-item" style="color: #03045e;"><span class="star" style="color: #008000;">★</span> <span>રામ દુકાન</span></div>
+            <div class="activity-item" style="color: #fb8500;"><span class="star" style="color: #cc0000;">★</span> <span>ગુણોત્સવ</span></div>
+            <div class="activity-item" style="color: #4a4e69;"><span class="star" style="color: #b300b3;">★</span> <span>સ્વાતંત્ર્ય પર્વની ઉજવણી</span></div>
+            <div class="activity-item" style="color: #007f5f;"><span class="star" style="color: #0056b3;">★</span> <span>રક્ષાબંધન પર્વની ઉજવણી</span></div>
+            <div class="activity-item" style="color: #0056b3;"><span class="star" style="color: #e63946;">★</span> <span>ગણિત વિજ્ઞાન પ્રદર્શન</span></div>
+            <div class="activity-item" style="color: #b300b3;"><span class="star" style="color: #ff6b35;">★</span> <span>રમતોત્સવ</span></div>
+            <div class="activity-item" style="color: #3b2787;"><span class="star" style="color: #cc0000;">★</span> <span>પતંગોત્સવ</span></div>
+            <div class="activity-item" style="color: #e63946;"><span class="star" style="color: #0056b3;">★</span> <span>પ્રજાસત્તાક દિન ઉજવણી</span></div>
+        </div>
+
+
+    </div>
+</div>
+<script>
+    function setupDynamicYears() {
+        let currentYear = new Date().getFullYear(); 
+        let nextYearShort = String(currentYear + 1).slice(-2); 
+        let lastYear = currentYear - 1; 
+        let currentYearShort = String(currentYear).slice(-2); 
+
+        document.getElementById("currentYearText").innerText = `${currentYear}-${nextYearShort}`;
+        document.getElementById("lastYearText").innerText = `${lastYear}-${currentYearShort}`;
+    }
+</script>
+</body>
+</html>

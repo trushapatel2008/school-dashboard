@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>બાલવાટિકા માં નવીન પ્રવેશપાત્ર બાળકોની યાદી</title>
+    <title>ધોરણ ૧ માં નવીન પ્રવેશપાત્ર બાળકોની યાદી</title>
     <style>
-        * { box-sizing: border-box; font-family: 'Arial Unicode MS', 'Hind Vadodara', sans-serif; }
+        * { box-sizing: border-box; font-family: 'Arial Unicode MS', sans-serif; }
         body { background-color: #f4f6f9; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         
         .container { 
@@ -14,7 +14,7 @@
             padding: 30px; 
             border-radius: 8px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            border: 2px solid #ff4a83; 
+
         }
         
         /* 🖨️ એક્શન કંટ્રોલ બટન્સ */
@@ -22,7 +22,7 @@
         .btn-print { background: green; color: white; padding: 8px 24px; font-size: 14px; font-weight: bold; border-radius: 20px; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(37, 117, 252, 0.3); }
         .btn-back { background: linear-gradient(45deg,#4facfe,#00c6fb); color: white; padding: 8px 22px; font-size: 14px; font-weight: bold; border-radius: 20px; text-decoration: none; box-shadow: 0 4px 10px rgba(0, 176, 255, 0.3); }
 
-        /* 👑 હેડર સેક્શન (એકદમ પ્રોફેશનલ અને સેન્ટર) */
+        /* 👑 હેડર સેક્શન */
         .header-container {
             display: flex;
             justify-content: space-between;
@@ -55,14 +55,13 @@
         .btn-cancel { background-color: #7f8c8d; color: white; margin-left: 5px; }
         .loading { text-align: center; font-weight: bold; color: #e67e22; padding: 10px 0; font-size: 14px; }
         
-        /* 📊 Google Sheet સ્ટાઈલ પ્યોર ટેબલ */
+        /* 📊 ટેબલ ડિઝાઇન */
         .table-responsive { width: 100%; overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 5px; }
         th, td { border: 1.5px solid #000; padding: 10px 8px; font-weight: bold; vertical-align: middle; }
         th { background-color: #ffffff; color: #000; text-align: center; font-size: 15.5px; }
         td { color: #000; text-align: center; }
         
-        /* કોલમ સાઈઝ ફિક્સિંગ */
         .col-sr { width: 60px; }
         .col-name { width: 360px; text-align: left !important; padding-left: 15px !important; }
         .col-dob { width: 140px; }
@@ -70,12 +69,12 @@
         .col-gender { width: 130px; }
         .col-action { width: 100px; }
 
-        /* 🖨️ પ્રિન્ટ લેઆઉટ સેટિંગ્સ */
+        /* 🖨️ પ્રિન્ટ સેટિંગ્સ */
         @media print {
             @page { margin: 8mm 10mm; size: A4 portrait; }
             body { background-color: white; padding: 0; margin: 0; }
             .top-actions, .form-box, .col-action, .action-cell { display: none !important; } 
-            .container { box-shadow: none; padding: 0; width: 95%; border: 2px solid #ff4a8300 !important; }
+            .container { box-shadow: none; padding: 0; width: 95%;  }
             th { background-color: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             th, td { padding: 8px 5px; font-size: 14px; border: 1.5px solid #000 !important; }
         }
@@ -91,7 +90,6 @@
 <div class="container">
     
     <div class="header-container">
-
         
         <div class="header-center">
             <div class="top-sub">સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</div>
@@ -99,14 +97,13 @@
             <div class="main-title">હાજીપુર પ્રાથમિક શાળા</div>
             <div class="village-info">ગામ:- હાજીપુર પ્રાથમિક શાળા , તાલુકો:- કાલોલ , જીલ્લો:- ગાંધીનગર , સી.આર.સી.:- ભોયણ મોટી , ડાયસ કોડ:- 24060303601</div>
             <div class="festival-title">કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span id="lblAcademicYear"></span></div>
-            <div class="page-subtitle">※ બાલવાટિકા માં નવીન પ્રવેશપાત્ર બાળકોની યાદી ※</div>
+            <div class="page-subtitle">※ ધોરણ ૧ માં નવીન પ્રવેશપાત્ર બાળકોની યાદી ※</div>
         </div>
         
-
     </div>
 
     <div class="form-box">
-        <h4>✏️ બાળકનો ડેટા ઉમેરો અથવા બદલો</h4>
+        <h4>✏️ બાળકનો ડેટા ઉમેરો અથવા બદલો (ધોરણ - ૧)</h4>
         <div id="loadingStatus" class="loading" style="display:none;">ગૂગલ શીટમાં ડેટા સેવ થઈ રહ્યો છે...</div>
         <form id="studentForm">
             <div class="form-grid">
@@ -143,8 +140,8 @@
 </div>
 
 <script>
-    // 🔗 તમારી ગુગલ શીટની વેબ એપ લીંક અહીં જ રહેવા દેવી
-    const API_URL = "https://script.google.com/macros/s/AKfycbytkzR0J60Ntdn1oHSAqP-08g302jyEC5PchhrYm3a0ZboGbhBk_L8A9GucKnPvTbab/exec"; 
+    // 🔗 તમારી ગુગલ શીટની વેબ એપ લીંક અહીં પેસ્ટ કરો
+    const API_URL = "https://script.google.com/macros/s/AKfycbw04SwGO3Rwg1OVkX-p14bTEjwjfABMuQyUMgpc5vHZRyr1G1-9JvueGMjmjsZMch3B/exec"; 
 
     window.onload = function() {
         const today = new Date();
@@ -199,11 +196,11 @@
                 return student[field] !== undefined && student[field] !== null ? String(student[field]).trim() : '';
             };
 
-            let sr = val("ક્રમ") || val("sr");
-            let name = val("વિદ્યાર્થીનું નામ") || val("name");
-            let dob = formatDateString(val("જન્મ તારીખ") || val("dob"));
-            let caste = val("જ્ઞાતિ") || val("caste");
-            let gender = val("જાતિ") || val("gender");
+            let sr = val("sr");
+            let name = val("name");
+            let dob = formatDateString(val("dob"));
+            let caste = val("caste");
+            let gender = val("gender");
 
             const tr = document.createElement('tr');
             tr.innerHTML = `
@@ -226,7 +223,6 @@
         showLoading(true);
 
         const payload = {
-            "api_type": "balvatika", 
             "ક્રમ": document.getElementById('studentSr').value,
             "sr": document.getElementById('studentSr').value,
             "વિદ્યાર્થીનું નામ": document.getElementById('studentName').value,

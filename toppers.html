@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>તેજસ્વી તારલાઓની યાદી - હાજીપુર પ્રાથમિક શાળા</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Arial Unicode MS', 'Hind Vadodara', sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        .container { 
+            width: 1200px; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            position: relative;
+        }
+        
+        /* 🖨️ એક્શન બટન્સ */
+        .top-actions { width: 1200px; display: flex; justify-content: flex-end; margin-bottom: 15px; gap: 10px; }
+        .btn-print { background: green; color: white; padding: 8px 24px; font-size: 14px; font-weight: bold; border-radius: 20px; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(37, 117, 252, 0.3); }
+        .btn-back { background: linear-gradient(45deg,#4facfe,#00c6fb); color: white; padding: 8px 22px; font-size: 14px; font-weight: bold; border-radius: 20px; text-decoration: none; box-shadow: 0 4px 10px rgba(0, 176, 255, 0.3); }
+
+        /* 👑 હેડર સેક્શન (ફોટો મુજબ) */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #bdc3c7;
+            padding-bottom: 10px;
+        }
+        .header-center { flex-grow: 1; padding: 0 20px; text-align: center; }
+        .badge-img { height: 90px; width: auto; object-fit: contain; }
+        .ss-logo { height: 60px; margin-bottom: 5px; }
+
+        .top-sub { font-size: 20px; font-weight: bold; color: #ff5722; margin: 0; }
+        .main-title { font-size: 34px; font-weight: bold; color: #4a148c; text-shadow: 2px 2px #dfcbf2; margin: 5px 0; }
+        .village-info { font-size: 13px; font-weight: bold; color: #1e88e5; margin: 5px 0; line-height: 1.4; }
+        .festival-title { font-size: 20px; font-weight: bold; color: #2e7d32; margin: 8px 0; }
+        
+        /* વિભાગના ટાઇટલ્સ */
+        .section-title { font-size: 18px; font-weight: bold; color: #d50000; text-align: center; margin-top: 10px; }
+        .section-subtitle { font-size: 17px; font-weight: bold; color: #1a237e; text-align: center; margin-bottom: 15px; }
+
+        /* ✏️ ઇનપુટ ફોર્મ */
+        .form-box { background-color: #ebf5fb; border: 1px solid #aed6f1; padding: 18px; border-radius: 6px; margin-bottom: 25px; }
+        .form-grid { display: grid; grid-template-columns: 80px 100px 2fr 100px 120px; gap: 10px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-size: 12.5px; font-weight: bold; margin-bottom: 5px; color: #34495e; }
+        .form-group input { padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 13.5px; font-weight: bold; }
+        .btn-row { margin-top: 15px; text-align: right; }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 13.5px; }
+        .btn-save { background-color: #27ae60; color: white; }
+        .btn-cancel { background-color: #7f8c8d; color: white; margin-left: 5px; }
+        .loading { text-align: center; font-weight: bold; color: #e67e22; padding: 10px 0; }
+        
+        /* 📊 Toppers Table */
+        table { width: 100%; border-collapse: collapse; font-size: 16px; margin-top: 5px; }
+        th, td { border: 1.5px solid #000; padding: 10px 8px; font-weight: bold; vertical-align: middle; text-align: center; }
+        th { background-color: #ffffff; color: #000; }
+        
+        .col-sr { width: 60px; }
+        .col-std { width: 100px; }
+        .col-name { width: 400px; text-align: left !important; padding-left: 15px !important; }
+        .col-rank { width: 100px; }
+        .col-per { width: 120px; }
+        .col-action { width: 100px; }
+
+        /* 🖼️ ફૂટર ઈમેજો */
+        .footer-graphics {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 15px;
+        }
+        .footer-img { height: 85px; object-fit: contain; }
+        .footer-center-text { text-align: center; font-weight: bold; color: #c00000; font-size: 14px; }
+
+        @media print {
+            @page { margin: 8mm 10mm; size: A4 portrait; }
+            body { background-color: white; padding: 0; margin: 0; }
+            .top-actions, .form-box, .col-action, .action-cell { display: none !important; } 
+            .container { box-shadow: none; padding: 0; width: 95%; }
+            th { background-color: #f5f5f5 !important; }
+            th, td { padding: 8px 5px; font-size: 14px; border: 1.5px solid #000 !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-actions">
+    <button onclick="window.print()" class="btn-print">🖨️ Print</button>
+    <a href="praveshotsav-file.html" class="btn-back">⬅ Back</a>
+</div>
+
+<div class="container">
+    
+    <div class="header-container">
+        
+        <div class="header-center">
+            <div class="top-sub">સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</div>
+            <img src="https://samagrashiksha.ssagujarat.org/assets/images/logo.png" class="ss-logo" onerror="this.style.display='none'" alt="SS Logo">
+            <div class="main-title">હાજીપુર પ્રાથમિક શાળા</div>
+            <div class="village-info">ગામ:- હાજીપુર પ્રાથમિક શાળા , તાલુકો:- કાલોલ , જીલ્લો:- ગાંધીનગર , સી.આર.સી.:- ભોયણ મોટી , ડાયસ કોડ:- 24060303601</div>
+            <div class="festival-title">કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span id="lblAcademicYear">2026-27</span></div>
+        </div>
+        
+    </div>
+
+    <div class="section-title">※ ગત વર્ષ <span id="lblAcademicYear">2026-27</span> માં વાર્ષિક પરીક્ષામાં ધો. 3 થી 8 માં ※</div>
+    <div class="section-subtitle">※ 1 થી 3 ક્રમાંક મેળવનાર બાળકોની યાદી ※</div>
+
+    <div class="form-box">
+        <h4>✏️ તેજસ્વી વિદ્યાર્થીનો ડેટા ઉમેરો/બદલો</h4>
+        <div id="loadingStatus" class="loading" style="display:none;">ગૂગલ શીટમાં સેવ થઈ રહ્યું છે...</div>
+        <form id="topperForm">
+            <div class="form-grid">
+                <div class="form-group"><label>ક્રમ</label><input type="number" id="tSr" required></div>
+                <div class="form-group"><label>ધોરણ</label><input type="text" id="tStd" required></div>
+                <div class="form-group"><label>વિદ્યાર્થીનું નામ</label><input type="text" id="tName" required></div>
+                <div class="form-group"><label>નંબર</label><input type="number" id="tRank" min="1" max="3" required></div>
+                <div class="form-group"><label>ટકા (%)</label><input type="text" id="tPer" required></div>
+            </div>
+            <div class="btn-row">
+                <button type="submit" class="btn btn-save" id="btnSubmit">💾 સેવ કરો</button>
+                <button type="button" class="btn btn-cancel" onclick="resetForm()">સાફ કરો</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-sr">ક્રમ</th>
+                    <th class="col-std">ધોરણ</th>
+                    <th class="col-name">વિદ્યાર્થીનું નામ</th>
+                    <th class="col-rank">નંબર</th>
+                    <th class="col-per">ટકા (%)</th>
+                    <th class="col-action">એક્શન</th>
+                </tr>
+            </thead>
+            <tbody id="topperTableBody">
+                <tr><td colspan="6" class="loading">ડેટા લોડ થઈ રહ્યો છે...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // 🔗 તમારી ગુગલ શીટની વેબ એપ લીંક અહીં મૂકવી
+    const API_URL = "https://script.google.com/macros/s/AKfycbx5aQN3FnmJ7IQZwGlGf3LaZb-UFzIJNhdfCbVwNUsRCffd3DX8M7QoXZFPPdp5rA-G/exec"; 
+
+    window.onload = function() {
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth(); 
+        let academicYear = currentMonth >= 5 ? currentYear + "-" + String(currentYear + 1).slice(-2) : (currentYear - 1) + "-" + String(currentYear).slice(-2);
+        document.getElementById("lblAcademicYear").innerText = academicYear;
+        loadData();
+    };
+
+    function loadData() {
+        const oldScript = document.getElementById('jsonpScript');
+        if(oldScript) oldScript.remove(); 
+        const script = document.createElement('script');
+        script.id = 'jsonpScript';
+        script.src = API_URL + "?api_type=toppers&callback=handleResponse&_ts=" + new Date().getTime(); 
+        document.body.appendChild(script);
+    }
+
+    window.handleResponse = function(data) {
+        const tableBody = document.getElementById('topperTableBody');
+        tableBody.innerHTML = '';
+        if (!data || data.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan='6' style='padding:20px;'>કોઈ ડેટા નથી.</td></tr>`;
+            return;
+        }
+
+        data.forEach((item) => {
+            let val = (f) => item[f] !== undefined ? String(item[f]).trim() : '';
+            let sr = val("sr") || val("ક્રમ");
+            let std = val("std") || val("ધોરણ");
+            let name = val("name") || val("વિદ્યાર્થીનું નામ");
+            let rank = val("rank") || val("નંબર");
+            let per = val("per") || val("ટકા");
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${sr}</td>
+                <td>${std}</td>
+                <td class="col-name">${name}</td>
+                <td>${rank}</td>
+                <td>${per}</td>
+                <td class="col-action action-cell">
+                    <button type="button" class="btn" style="background:#3498db; color:white; padding:3px 10px; font-size:12px;" 
+                    onclick="editTopper('${sr}','${std}','${name}','${rank}','${per}')">બદલો</button>
+                </td>
+            `;
+            tableBody.appendChild(tr);
+        });
+    };
+
+    document.getElementById('topperForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        showLoading(true);
+
+        const payload = {
+            "api_type": "toppers",
+            "ક્રમ": document.getElementById('tSr').value,
+            "sr": document.getElementById('tSr').value,
+            "ધોરણ": document.getElementById('tStd').value,
+            "std": document.getElementById('tStd').value,
+            "વિદ્યાર્થીનું નામ": document.getElementById('tName').value,
+            "name": document.getElementById('tName').value,
+            "નંબર": document.getElementById('tRank').value,
+            "rank": document.getElementById('tRank').value,
+            "ટકા": document.getElementById('tPer').value,
+            "per": document.getElementById('tPer').value
+        };
+
+        fetch(API_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(payload)
+        }).then(() => {
+            setTimeout(() => { showLoading(false); resetForm(); loadData(); }, 1500);
+        });
+    });
+
+    function editTopper(sr, std, name, rank, per) {
+        document.getElementById('tSr').value = sr;
+        document.getElementById('tStd').value = std;
+        document.getElementById('tName').value = name;
+        document.getElementById('tRank').value = rank;
+        document.getElementById('tPer').value = per;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetForm() { document.getElementById('topperForm').reset(); }
+    function showLoading(status) { document.getElementById('loadingStatus').style.display = status ? "block" : "none"; }
+</script>
+</body>
+</html>

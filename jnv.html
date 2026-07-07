@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>જવાહર નવોદય વિદ્યાલય (JNV) બાળકોની યાદી</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 20px; }
+        .main-container { max-width: 1100px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .top-nav { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
+        .btn { padding: 8px 18px; font-size: 14px; font-weight: bold; border: none; border-radius: 20px; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-print { background-color: #008000; color: white; }
+        .btn-back { background-color: #3182ce; color: white; }
+        .header-section { text-align: center; color: #0c4a60; margin-bottom: 25px; }
+        .header-section h1 { font-size: 32px; margin: 5px 0; color: #3b2787; font-weight: bold; }
+        .school-info { font-size: 14px; color: #0076a3; margin: 5px 0; font-weight: bold; }
+        .festival-title { font-size: 18px; color: #008000; font-weight: bold; margin-top: 10px; }
+        .table-title { text-align: center; color: #cc0000; font-size: 19px; font-weight: bold; margin: 20px 0; line-height: 1.5; }
+        
+        .form-box { background-color: #e6f4fa; border: 1px solid #bce1f2; border-radius: 8px; padding: 20px; margin-bottom: 30px; }
+        .form-title { font-size: 16px; font-weight: bold; color: #000; margin-bottom: 15px; }
+        .form-row { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
+        .form-group { flex: 1; min-width: 130px; }
+        .form-group.wide { flex: 2.5; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; color: #444; margin-bottom: 5px; }
+        .form-group input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-weight: bold; background-color: #fff; }
+        .form-buttons { display: flex; justify-content: flex-end; gap: 10px; }
+        .btn-save { background-color: #2ec4b6; color: white; border-radius: 4px; padding: 8px 20px; border:none; font-weight:bold; cursor:pointer; }
+        .btn-clear { background-color: #888; color: white; border-radius: 4px; padding: 8px 20px; border:none; font-weight:bold; cursor:pointer; }
+        
+        #live-loader {
+            display: none; text-align: center; background-color: #fff3cd; color: #856404;
+            padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #ffeeba;
+            font-weight: bold; font-size: 15px;
+        }
+
+        table { width: 100%; border-collapse: collapse; background-color: #ffffff; }
+        th, td { border: 1px solid #000; text-align: center; padding: 10px 8px; font-size: 15px; font-weight: bold; }
+        th { background-color: #f8f9fa; color: #000; }
+        
+        .btn-delete { background-color: #e63946; color: white; padding: 5px 12px; border-radius: 4px; font-size: 13px; border:none; cursor:pointer; font-weight:bold; transition: 0.2s; }
+        .btn-delete:hover { background-color: #cc0000; }
+        
+        @media print { .top-nav, .form-box, th:last-child, td:last-child, #live-loader { display: none !important; } body { padding: 10px; } .main-container { box-shadow: none; padding: 0; } }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="top-nav">
+        <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
+        <a href="praveshotsav-file.html" class="btn btn-back">⬅️ Back</a>
+    </div>
+
+    <div class="header-section">
+        <p style="color: #ff6b35; font-weight: bold; margin: 0;">સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</p>
+        <h1>હાજીપુર પ્રાથમિક શાળા</h1>
+        <p class="school-info">ગામ:- હાજીપુર,  તાલુકો:- કલોલ,  જીલ્લો:- ગાંધીનગર,  સી.આર.સી:- ભોયણ મોટી,  ડાયસ કોડ:- 24060303601</p>
+        <p class="festival-title">કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span id="currentYearText">2026-27</span></p>
+    </div>
+
+    <div class="table-title">
+        જવાહર નવોદય વિદ્યાલય (JNV) પ્રવેશ પરીક્ષા <span id="lastYearText">2025-26</span> માં સિલેક્ટ થયેલા બાળકોની યાદી
+    </div>
+
+    <div class="form-box">
+        <div class="form-title">✏️ વિદ્યાર્થીનો ડેટા ઉમેરો</div>
+        <form id="studentForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>ક્રમ</label>
+                    <input type="number" id="sr_no" required placeholder="દા.ત. 1">
+                </div>
+                <div class="form-group wide">
+                    <label>વિદ્યાર્થીનું નામ</label>
+                    <input type="text" id="student_name" required placeholder="વિદ્યાર્થીનું પૂરું નામ">
+                </div>
+                <div class="form-group">
+                    <label>જન્મ તારીખ</label>
+                    <input type="text" id="dob" required placeholder="DD-MM-YYYY">
+                </div>
+                <div class="form-group">
+                    <label>વાલીનો મોબાઈલ નંબર</label>
+                    <input type="tel" id="mobile" pattern="[0-9]{10}" required placeholder="10 આંકડાનો મોબાઈલ">
+                </div>
+                <div class="form-group">
+                    <label>મેળવેલ ગુણ</label>
+                    <input type="number" step="0.01" id="marks_input" required placeholder="ગુણ લખો">
+                </div>
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-save">💾 સેવ કરો</button>
+                <button type="button" class="btn btn-clear" onclick="clearForm()">સાફ કરો</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="live-loader">ડેટા લોડ થઈ રહ્યો છે...</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 8%;">ક્રમ</th>
+                <th style="width: 42%;">વિદ્યાર્થીનું નામ</th>
+                <th style="width: 15%;">જન્મ તારીખ</th>
+                <th style="width: 15%;">વાલીનો મોબાઈલ નંબર</th>
+                <th style="width: 12%;">પરીક્ષામાં મેળવેલ ગુણ</th>
+                <th style="width: 8%;">એક્શન</th>
+            </tr>
+        </thead>
+        <tbody id="dataTableBody">
+            <tr><td colspan="6" style="color: #ff9f1c;">ડેટા લોડ થઈ રહ્યો છે...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // ⚠️ અહી તમારી નવી નવોદય શીટ વાળી વેબ એપ્લીકેશન લિંક (Web App URL) પેસ્ટ કરો
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby2i7i5_VUYGVG-xEhJcJk4D1fulPw39Mn589VbnGpJka6I9qXSg-H69A-jvaCIRV5g/exec";
+
+    function setupDynamicYears() {
+        let currentYear = new Date().getFullYear(); 
+        let nextYearShort = String(currentYear + 1).slice(-2); 
+        let lastYear = currentYear - 1; 
+        let currentYearShort = String(currentYear).slice(-2); 
+
+        document.getElementById("currentYearText").innerText = `${currentYear}-${nextYearShort}`;
+        document.getElementById("lastYearText").innerText = `${lastYear}-${currentYearShort}`;
+    }
+
+    function fetchStudents() {
+        setupDynamicYears(); 
+        document.getElementById("live-loader").style.display = "block";
+        document.getElementById("live-loader").innerText = "⏳ નવીનતમ માહિતી લોડ થઈ રહી છે...";
+        
+        let oldScript = document.getElementById("jsonpScript");
+        if(oldScript) oldScript.remove();
+
+        let script = document.createElement('script');
+        script.id = "jsonpScript";
+        script.src = `${WEB_APP_URL}?callback=displayData&action=read&_=${new Date().getTime()}`;
+        document.body.appendChild(script);
+    }
+
+    window.onload = fetchStudents;
+
+    function displayData(data) {
+        document.getElementById("live-loader").style.display = "none";
+        const tbody = document.getElementById("dataTableBody");
+        tbody.innerHTML = "";
+
+        if(!data || data.error || data.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="color:gray; font-weight:normal;">કોઈ ડેટા ઉપલબ્ધ નથી. નવો ડેટા ઉમેરો.</td></tr>`;
+            return;
+        }
+
+        data.sort((a, b) => parseInt(a.sr) - parseInt(b.sr));
+
+        data.forEach(row => {
+            let cleanName = String(row.name).replace(/'/g, "\\'");
+            let tr = `<tr>
+                <td>${row.sr}</td>
+                <td style="text-align: left; padding-left: 15px;">${row.name}</td>
+                <td>${row.dob}</td>
+                <td>${row.mobile}</td>
+                <td>${row.marks}</td>
+                <td>
+                    <button class="btn-delete" onclick="deleteRow('${row.sr}', '${cleanName}')">❌ ડિલીટ</button>
+                </td>
+            </tr>`;
+            tbody.insertAdjacentHTML('beforeend', tr);
+        });
+    }
+
+    // 💾 🟢 ડેટા સેવ કરવા માટેનો સુધારેલો ભાગ 🟢
+    document.getElementById("studentForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        document.getElementById("live-loader").style.display = "block";
+        document.getElementById("live-loader").innerText = "⚙️ માહિતી ગુગલ શીટમાં સેવ થઈ રહી છે... કૃપા કરીને રાહ જુઓ...";
+
+        let sr_no = document.getElementById("sr_no").value;
+        let student_name = encodeURIComponent(document.getElementById("student_name").value.trim());
+        let dob = encodeURIComponent(document.getElementById("dob").value.trim());
+        let mobile = document.getElementById("mobile").value.trim();
+        let marks_value = document.getElementById("marks_input").value;
+
+        let oldScript = document.getElementById("jsonpSaveScript");
+        if(oldScript) oldScript.remove();
+
+        let script = document.createElement('script');
+        script.id = "jsonpSaveScript";
+        
+        // અહી પેરામીટર સીધા cet_marks અને nmms_marks ની જગ્યાએ સ્ક્રિપ્ટ મુજબ સેટ કર્યા
+        script.src = `${WEB_APP_URL}?action=save&sr_no=${sr_no}&student_name=${student_name}&dob=${dob}&mobile=${mobile}&cet_marks=${marks_value}&nmms_marks=${marks_value}&callback=onSaveSuccess&_=${new Date().getTime()}`;
+        document.body.appendChild(script);
+    });
+
+    function onSaveSuccess(response) {
+        if(response.success) {
+            document.getElementById("live-loader").innerText = "✅ સેવ સફળ! નવું લિસ્ટ અપડેટ થઈ રહ્યું છે...";
+            clearForm();
+            setTimeout(fetchStudents, 1000); // ડેટા રિફ્રેશ થવા થોડો સમય આપ્યો
+        } else {
+            alert("સેવ થવામાં કોઈ ખામી આવી!");
+            document.getElementById("live-loader").style.display = "none";
+        }
+    }
+
+    // ❌ ડેટા ડીલીટ કરવા માટે
+    function deleteRow(sr, name) {
+        let check = confirm("શું તમે ખરેખર ક્રમ નંબર " + sr + " [" + name + "] નો ડેટા હંમેશા માટે ડિલીટ કરવા માંગો છો?");
+        if (check) {
+            document.getElementById("live-loader").style.display = "block";
+            document.getElementById("live-loader").innerText = "🗑️ માહિતી ગુગલ શીટમાંથી ડિલીટ થઈ રહી છે...";
+
+            let oldScript = document.getElementById("jsonpDeleteScript");
+            if(oldScript) oldScript.remove();
+
+            let script = document.createElement('script');
+            script.id = "jsonpDeleteScript";
+            script.src = `${WEB_APP_URL}?action=delete&sr_no=${sr}&callback=onDeleteSuccess&_=${new Date().getTime()}`;
+            document.body.appendChild(script);
+        }
+    }
+
+    function onDeleteSuccess(response) {
+        if(response.success) {
+            document.getElementById("live-loader").innerText = "✅ ડેટા સફળતાપૂર્વક ડીલીટ થયો! લિસ્ટ અપડેટ થઈ રહ્યું છે...";
+            setTimeout(fetchStudents, 1000);
+        } else {
+            alert("ડિલીટ કરવામાં કોઈ ખામી આવી!");
+            document.getElementById("live-loader").style.display = "none";
+        }
+    }
+
+    function clearForm() {
+        document.getElementById("studentForm").reset();
+    }
+</script>
+</body>
+</html>

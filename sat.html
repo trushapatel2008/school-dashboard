@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT પરીક્ષા ગુણ વિગત પત્રક</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 20px; }
+        .main-container { max-width: 1150px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 2px solid #a200a2; }
+        .top-nav { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
+        .btn { padding: 8px 18px; font-size: 14px; font-weight: bold; border: none; border-radius: 20px; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-print { background-color: #008000; color: white; }
+        .btn-back { background-color: #3182ce; color: white; }
+        
+        .header-section { text-align: center; color: #0c4a60; margin-bottom: 25px; position: relative; }
+        .header-section h1 { font-size: 36px; margin: 5px 0; color: #d6006f; font-weight: bold; text-shadow: 1px 1px 2px #ccc; }
+        .school-info { font-size: 15px; color: #008080; margin: 5px 0; font-weight: bold; }
+        .festival-title { font-size: 20px; color: #0000ff; font-weight: bold; margin-top: 10px; }
+        .table-title { text-align: center; color: #cc00cc; font-size: 21px; font-weight: bold; margin: 20px 0; line-height: 1.5; }
+        
+        .form-box { background-color: #fdf2f8; border: 1px solid #fbcfe8; border-radius: 8px; padding: 20px; margin-bottom: 30px; }
+        .form-title { font-size: 16px; font-weight: bold; color: #9d174d; margin-bottom: 15px; }
+        .form-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 15px; }
+        .form-group { flex: 1; min-width: 105px; }
+        .form-group label { display: block; font-size: 12px; font-weight: bold; color: #444; margin-bottom: 5px; }
+        .form-group input, .form-group select { width: 100%; padding: 7px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; font-weight: bold; background-color: #fff; }
+        .form-buttons { display: flex; justify-content: flex-end; gap: 10px; }
+        .btn-save { background-color: #db2777; color: white; border-radius: 4px; padding: 8px 22px; border:none; font-weight:bold; cursor:pointer; }
+        .btn-clear { background-color: #718096; color: white; border-radius: 4px; padding: 8px 20px; border:none; font-weight:bold; cursor:pointer; }
+        
+        #live-loader {
+            display: none; text-align: center; background-color: #fef3c7; color: #92400e;
+            padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #fde68a;
+            font-weight: bold; font-size: 15px;
+        }
+
+        /* 📊 ઓરિજિનલ સ્ક્રીનશોટ જેવું ડબલ બોર્ડર હેડર ટેબલ */
+        table { width: 100%; border-collapse: collapse; background-color: #ffffff; }
+        th, td { border: 2px solid #000000; text-align: center; padding: 10px 5px; font-size: 16px; font-weight: bold; }
+        th { background-color: #ffffff; color: #000000; font-size: 15px; }
+        
+        .std-color { color: #a200a2; }
+        .reg-color { color: #d6006f; }
+        .red-color { color: #cc0000; }
+        .blue-color { color: #0000cc; }
+        .green-color { color: #008000; }
+        
+        .btn-delete { background-color: #ef4444; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; border:none; cursor:pointer; font-weight:bold; }
+        .btn-delete:hover { background-color: #dc2626; }
+@media print { 
+    .top-nav, .form-box, .no-print, th:last-child, td:last-child, #live-loader { 
+        display: none !important; 
+    } 
+    body { padding: 0; background-color: #fff; color: #000; } 
+    .main-container { box-shadow: none; padding: 0; border: none; max-width: 95%; } 
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { border: 2px solid #000000 !important; padding: 8px 4px; font-size: 14px; text-align: center; font-weight: bold; }
+    th { background-color: #fff !important; }
+}
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="top-nav">
+        <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
+        <a href="praveshotsav-file.html" class="btn btn-back">⬅️ Back</a>
+    </div>
+
+    <div class="header-section">
+        <p style="color: #ff6b35; font-weight: bold; margin: 0; font-size: 16px;">સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</p>
+        <h1>હાજીપુર પ્રાથમિક શાળા</h1>
+        <p class="school-info">પ્રાથમિક શાળા, તાલુકો:- કલોલ, જીલ્લો:- ગાંધીનગર, સી.આર.સી:- ભોયણ મોટી, ડાયસ કોડ:- 240603036021</p>
+        <p class="festival-title">કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span id="currentYearText">2026-27</span></p>
+    </div>
+
+    <div class="table-title">
+        ગત વાર્ષિક પરીક્ષા <span id="lastYearText">2025-26</span> માં (SAT) માં મેળવેલ સિદ્ધિઓની વિગત
+    </div>
+
+    <div class="form-box">
+        <div class="form-title">✏️ ધોરણ વાઇઝ SAT પરીક્ષા ડેટા એન્ટ્રી</div>
+        <form id="studentForm">
+            <div class="form-row">
+                <div class="form-group" style="flex: 0.5;">
+                    <label>ક્રમ</label>
+                    <input type="number" id="sr_no" required placeholder="-">
+                </div>
+                <div class="form-group">
+                    <label>ધોરણ</label>
+                    <select id="std_input" required>
+                        <option value="3">ધોરણ - ૩</option>
+                        <option value="4">ધોરણ - ૪</option>
+                        <option value="5">ધોરણ - ૫</option>
+                        <option value="6">ધોરણ - ૬</option>
+                        <option value="7">ધોરણ - ૭</option>
+                        <option value="8">ધોરણ - ૮</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>રજીસ્ટર સંખ્યા</label>
+                    <input type="number" id="reg_num" required placeholder="--">
+                </div>
+                <div class="form-group">
+                    <label>40% થી નીચે (સંખ્યા)</label>
+                    <input type="number" id="below40_num" required placeholder="--">
+                </div>
+                <div class="form-group">
+                    <label>40% થી નીચે (%)</label>
+                    <input type="text" id="below40_per" required placeholder="--">
+                </div>
+                <div class="form-group">
+                    <label>40% થી 79% (સંખ્યા)</label>
+                    <input type="number" id="bet4079_num" required placeholder="--">
+                </div>
+                <div class="form-group">
+                    <label>40% થી 79% (%)</label>
+                    <input type="text" id="bet4079_per" required placeholder="--">
+                </div>
+                <div class="form-group">
+                    <label>80% કે તેથી વધુ (સંખ્યા)</label>
+                    <input type="number" id="above80_num" required placeholder="--">
+                </div>
+                <div class="form-group">
+                    <label>80% કે તેથી વધુ (%)</label>
+                    <input type="text" id="above80_per" required placeholder="--">
+                </div>
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-save">💾 સેવ કરો</button>
+                <button type="button" class="btn btn-clear" onclick="clearForm()">સાફ કરો</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="live-loader">ડેટા લોડ થઈ રહ્યો છે...</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2" style="width: 5%;">ક્રમ</th>
+                <th rowspan="2" style="width: 8%;">ધોરણ</th>
+                <th rowspan="2" style="width: 12%;">રજીસ્ટર<br>સંખ્યા</th>
+                <th colspan="2" style="width: 22%; color: #cc0000;">40% થી નીચે<br>ગુણ મેળવનાર</th>
+                <th colspan="2" style="width: 22%; color: #0000cc;">40% થી 79%<br>ગુણ મેળવનાર</th>
+                <th colspan="2" style="width: 22%; color: #008000;">80% કે તેથી વધુ<br>ગુણ મેળવનાર</th>
+                <th rowspan="2" style="width: 9%;">એક્શન</th>
+            </tr>
+            <tr>
+                <th style="color: #cc0000;">સંખ્યા</th>
+                <th style="color: #cc0000;">ટકા</th>
+                <th style="color: #0000cc;">સંખ્યા</th>
+                <th style="color: #0000cc;">ટકા</th>
+                <th style="color: #008000;">સંખ્યા</th>
+                <th style="color: #008000;">ટકા</th> 
+            </tr>
+        </thead>
+        <tbody id="dataTableBody">
+            <tr><td colspan="10" style="color: #ff9f1c;">ડેટા લોડ થઈ રહ્યો છે...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // ⚠️ અહીં તમારી નવી જનરેટ કરેલી વેબ એપ URL પેસ્ટ કરો
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwyN4-Q5TOkGhAK4qT9lUp_ZJrTCFr795hHOYbQ5ulhl3u7PZpN4bAT7PR3y4dS8e51cw/exec";
+
+    function setupDynamicYears() {
+        let currentYear = new Date().getFullYear(); 
+        let nextYearShort = String(currentYear + 1).slice(-2); 
+        let lastYear = currentYear - 1; 
+        let currentYearShort = String(currentYear).slice(-2); 
+
+        document.getElementById("currentYearText").innerText = `${currentYear}-${nextYearShort}`;
+        document.getElementById("lastYearText").innerText = `${lastYear}-${currentYearShort}`;
+    }
+
+    function fetchStudents() {
+        setupDynamicYears(); 
+        document.getElementById("live-loader").style.display = "block";
+        document.getElementById("live-loader").innerText = "⏳ નવીનતમ માહિતી લોડ થઈ રહી છે...";
+        
+        let oldScript = document.getElementById("jsonpScript");
+        if(oldScript) oldScript.remove();
+
+        let script = document.createElement('script');
+        script.id = "jsonpScript";
+        script.src = `${WEB_APP_URL}?callback=displayData&action=read&_=${new Date().getTime()}`;
+        document.body.appendChild(script);
+    }
+
+    window.onload = fetchStudents;
+
+    function displayData(data) {
+        document.getElementById("live-loader").style.display = "none";
+        const tbody = document.getElementById("dataTableBody");
+        tbody.innerHTML = "";
+
+        if(!data || data.error || data.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="10" style="color:gray; font-weight:normal;">કોઈ ડેટા ઉપલબ્ધ નથી. નવો ડેટા ઉમેરો.</td></tr>`;
+            return;
+        }
+
+        // ધોરણ વાઇઝ ક્રમ ગોઠવવા માટે (Sort)
+        data.sort((a, b) => parseInt(a.sr) - parseInt(b.sr));
+
+        data.forEach(row => {
+            let tr = `<tr>
+                <td>${row.sr}</td>
+                <td class="std-color">${row.std}</td>
+                <td class="reg-color">${row.reg_num}</td>
+                <td class="red-color">${row.below40_num}</td>
+                <td>${row.below40_per}</td>
+                <td class="blue-color">${row.bet4079_num}</td>
+                <td>${row.bet4079_per}</td>
+                <td class="green-color">${row.above80_num}</td>
+                <td>${row.above80_per}</td>
+                <td>
+                    <button class="btn-delete" onclick="deleteRow('${row.sr}', '${row.std}')">❌ ડિલીટ</button>
+                </td>
+            </tr>`;
+            tbody.insertAdjacentHTML('beforeend', tr);
+        });
+    }
+
+    // 💾 ડેટા સબમિટ કરવા માટેનું લોજીક
+    document.getElementById("studentForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        document.getElementById("live-loader").style.display = "block";
+        document.getElementById("live-loader").innerText = "⚙️ માહિતી ગુગલ શીટમાં સેવ થઈ રહી છે... કૃપા કરીને રાહ જુઓ...";
+
+        let sr_no = document.getElementById("sr_no").value;
+        let std = document.getElementById("std_input").value;
+        let reg_num = document.getElementById("reg_num").value;
+        let below40_num = document.getElementById("below40_num").value;
+        let below40_per = encodeURIComponent(document.getElementById("below40_per").value.trim());
+        let bet4079_num = document.getElementById("bet4079_num").value;
+        let bet4079_per = encodeURIComponent(document.getElementById("bet4079_per").value.trim());
+        let above80_num = document.getElementById("above80_num").value;
+        let above80_per = encodeURIComponent(document.getElementById("above80_per").value.trim());
+
+        let oldScript = document.getElementById("jsonpSaveScript");
+        if(oldScript) oldScript.remove();
+
+        let script = document.createElement('script');
+        script.id = "jsonpSaveScript";
+        script.src = `${WEB_APP_URL}?action=save&sr_no=${sr_no}&std=${std}&reg_num=${reg_num}&below40_num=${below40_num}&below40_per=${below40_per}&bet4079_num=${bet4079_num}&bet4079_per=${bet4079_per}&above80_num=${above80_num}&above80_per=${above80_per}&callback=onSaveSuccess&_=${new Date().getTime()}`;
+        document.body.appendChild(script);
+    });
+
+    function onSaveSuccess(response) {
+        if(response.success) {
+            document.getElementById("live-loader").innerText = "✅ સેવ સફળ! પત્રક અપડેટ થઈ રહ્યું છે...";
+            clearForm();
+            setTimeout(fetchStudents, 800); 
+        } else {
+            alert("સેવ થવામાં કોઈ ખામી આવી!");
+            document.getElementById("live-loader").style.display = "none";
+        }
+    }
+
+    // ❌ ડેટા ડીલીટ કરવા માટે
+    function deleteRow(sr, std) {
+        if (confirm(`શું તમે ખરેખર ધોરણ ${std} નો ડેટા પત્રકમાંથી કાયમ માટે ડિલીટ કરવા માંગો છો?`)) {
+            document.getElementById("live-loader").style.display = "block";
+            document.getElementById("live-loader").innerText = "🗑️ માહિતી ગુગલ શીટમાંથી ડિલીટ થઈ રહી છે...";
+
+            let oldScript = document.getElementById("jsonpDeleteScript");
+            if(oldScript) oldScript.remove();
+
+            let script = document.createElement('script');
+            script.id = "jsonpDeleteScript";
+            script.src = `${WEB_APP_URL}?action=delete&sr_no=${sr}&callback=onDeleteSuccess&_=${new Date().getTime()}`;
+            document.body.appendChild(script);
+        }
+    }
+
+    function onDeleteSuccess(response) {
+        if(response.success) {
+            document.getElementById("live-loader").innerText = "✅ ડેટા સફળતાપૂર્વક ડીલીટ થયો! પત્રક અપડેટ થઈ રહ્યું છે...";
+            setTimeout(fetchStudents, 800);
+        } else {
+            alert("ડિલીટ કરવામાં કોઈ ખામી આવી!");
+            document.getElementById("live-loader").style.display = "none";
+        }
+    }
+
+    function clearForm() {
+        document.getElementById("studentForm").reset();
+    }
+</script>
+</body>
+</html>

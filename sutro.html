@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>કન્યા કેળવણીના સૂત્રો</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 20px; }
+        .main-container { max-width: 900px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 2px solid #008000; }
+        
+        /* નેવિગેશન બટનો */
+        .top-nav { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
+        .btn { padding: 8px 18px; font-size: 14px; font-weight: bold; border: none; border-radius: 20px; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-print { background-color: #008000; color: white; }
+        .btn-back { background-color: #3182ce; color: white; }
+        
+        /* હેડર સેક્શન */
+        .header-section { text-align: center; color: #0c4a60; margin-bottom: 20px; border-bottom: 2px dashed #008000; padding-bottom: 15px; }
+        .header-section h1 { font-size: 30px; margin: 5px 0; color: #d91b5c; font-weight: bold; }
+        .school-info { font-size: 13px; color: #0076a3; margin: 5px 0; font-weight: bold; }
+        .festival-title { font-size: 16px; color: #3b2787; font-weight: bold; margin-top: 5px; }
+        
+        .table-title { text-align: center; color: #cc0000; font-size: 20px; font-weight: bold; margin: 15px 0; }
+        
+        /* મુખ્ય માળખું - બે ભાગમાં વિભાજન */
+        .content-wrapper { display: flex; gap: 20px; justify-content: space-between; align-items: flex-start; }
+        
+        /* ડાબી બાજુ - સૂત્રોની યાદી */
+        .sutro-list { flex: 1.3; display: flex; flex-direction: column; gap: 11px; }
+        .sutro-item { display: flex; align-items: flex-start; gap: 10px; font-size: 16px; font-weight: bold; line-height: 1.4; }
+        .sutro-item span.star { font-size: 18px; }
+
+        /* જમણી બાજુ - સજાવટની ઈમેજો */
+        .image-gallery { flex: 0.7; display: flex; flex-direction: column; gap: 25px; align-items: center; justify-content: center; padding-top: 20px; }
+        .gallery-img { width: 130px; height: auto; object-fit: contain; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1)); }
+
+        /* પ્રિન્ટ સેટિંગ્સ - પ્રિન્ટ વખતે પણ કલર જળવાઈ રહેશે */
+        @media print { 
+            .top-nav { display: none !important; } 
+            body { padding: 0; background-color: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; } 
+            .main-container { box-shadow: none; border: none; padding: 10px; } 
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="top-nav">
+        <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
+        <a href="praveshotsav-file.html" class="btn btn-back">⬅️ Back</a>
+    </div>
+
+    <div class="header-section">
+        <p style="color: #ff6b35; font-weight: bold; margin: 0; font-size: 15px;">સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</p>
+        <h1>હાજીપુર પ્રાથમિક શાળા</h1>
+        <p class="school-info">ગામ:- હાજીપુર,  તાલુકો:- કલોલ,  જીલ્લો:- ગાંધીનગર,  સી.આર.સી:- ભોયણ મોટી,  ડાયસ કોડ:- 24060303601</p>
+        <p class="festival-title">કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span id="currentYearText">2026-27</span></p>
+    </div>
+
+    <div class="table-title">■ કન્યા કેળવણીના સૂત્રો ■</div>
+
+    <div class="content-wrapper">
+        <div class="sutro-list">
+            <div class="sutro-item" style="color: #cc0000;"><span class="star" style="color: #ff9f1c;">★</span> <span>દીકરીને ગાય સર્વત્ર પુજાય.</span></div>
+            <div class="sutro-item" style="color: #0056b3;"><span class="star" style="color: #e63946;">★</span> <span>જનની અને જન્મભુમી સ્વર્ગથી પણ મહાન છે.</span></div>
+            <div class="sutro-item" style="color: #008000;"><span class="star" style="color: #3b2787;">★</span> <span>નારી શકિત જાગે છે, કુરિવાજો ભાગે છે.</span></div>
+            <div class="sutro-item" style="color: #b300b3;"><span class="star" style="color: #ff6b35;">★</span> <span>દીકરીને ગાય કામધેનું ગણાય.</span></div>
+            <div class="sutro-item" style="color: #ff6b35;"><span class="star" style="color: #008000;">★</span> <span>ગોળ વિના મોળો કંસાર, દીકરી વિના સૂનો સંસાર.</span></div>
+            <div class="sutro-item" style="color: #3b2787;"><span class="star" style="color: #cc0000;">★</span> <span>માતાને વ્હાલો દીકરો, પિતાને વ્હાલી દીકરી.</span></div>
+            <div class="sutro-item" style="color: #2ec4b6;"><span class="star" style="color: #b300b3;">★</span> <span>ગણપતિ તો પ્રથમ પુજાય, દીકરીને અભણ ના રખાય.</span></div>
+            <div class="sutro-item" style="color: #e63946;"><span class="star" style="color: #0056b3;">★</span> <span>નારી શિક્ષણ નિરક્ષરતા ભગાડે.</span></div>
+            <div class="sutro-item" style="color: #0c4a60;"><span class="star" style="color: #ff9f1c;">★</span> <span>દીકરીનું ભણતર સમાજનું ઘડતર.</span></div>
+            <div class="sutro-item" style="color: #7209b7;"><span class="star" style="color: #2ec4b6;">★</span> <span>દીકરો - દીકરી એક સમાન, દેશ બને સ્વર્ગ સમાન.</span></div>
+            <div class="sutro-item" style="color: #38b000;"><span class="star" style="color: #ff6b35;">★</span> <span>જો સુધારવો હોય સંસાર, તો કન્યા કેળવણીનો કરો સ્વીકાર.</span></div>
+            <div class="sutro-item" style="color: #f72585;"><span class="star" style="color: #3b2787;">★</span> <span>ભણેલી વહુ, પુજે  સહુ.</span></div>
+            <div class="sutro-item" style="color: #03045e;"><span class="star" style="color: #008000;">★</span> <span>માન મર્યાદાનો થાય જયાં ભંગ, ભણેલી દીકરી માંડે જંગ.</span></div>
+            <div class="sutro-item" style="color: #fb8500;"><span class="star" style="color: #cc0000;">★</span> <span>ભણેલી દીકરી બે પેઢી ઉજાળે.</span></div>
+            <div class="sutro-item" style="color: #4a4e69;"><span class="star" style="color: #b300b3;">★</span> <span>સુંદર ફૂલોથી બાગ શોભે, ભણેલી દીકરીથી ઘર-ગામ શોભે.</span></div>
+            <div class="sutro-item" style="color: #007f5f;"><span class="star" style="color: #0056b3;">★</span> <span>કન્યા કેળવણી એટલે તેનું સશકિતકરણ.</span></div>
+            <div class="sutro-item" style="color: #bc4749;"><span class="star" style="color: #ff9f1c;">★</span> <span>માં તે માં બીજા વગડાના વા.</span></div>
+            <div class="sutro-item" style="color: #240046;"><span class="star" style="color: #e63946;">★</span> <span>નારી તુ નારાયણી.</span></div>
+            <div class="sutro-item" style="color: #0096c7;"><span class="star" style="color: #38b000;">★</span> <span>નારી શિક્ષણ, નિરક્ષરતા નાબુદી.</span></div>
+            <div class="sutro-item" style="color: #d90429;"><span class="star" style="color: #fb8500;">★</span> <span>દીકરી એટલે દેવી.</span></div>
+            <div class="sutro-item" style="color: #137547;"><span class="star" style="color: #3b2787;">★</span> <span>સીતા, ગીતા અને કુંતાની : આ સંસ્કૃતિ છે અસ્મિતાની.</span></div>
+            <div class="sutro-item" style="color: #5c677d;"><span class="star" style="color: #f72585;">★</span> <span>એક ભણેલી માતા સો શિક્ષકની ગરજ સારે છે.</span></div>
+            <div class="sutro-item" style="color: #7b2cbf;"><span class="star" style="color: #008000;">★</span> <span>જનનીની જોડ સખી નહિ જડે રે લોલ.</span></div>
+            <div class="sutro-item" style="color: #a61c3c;"><span class="star" style="color: #0056b3;">★</span> <span>દીકરી ચમકતો તારો છે.</span></div>
+            <div class="sutro-item" style="color: #2d6a4f;"><span class="star" style="color: #ff9f1c;">★</span> <span>સ્ત્રી એ મમતાની મૂર્તિ છે.</span></div>
+            <div class="sutro-item" style="color: #ff4d6d;"><span class="star" style="color: #e63946;">★</span> <span>નારી તારા નવલાં રૂપ.</span></div>
+            <div class="sutro-item" style="color: #0077b6;"><span class="star" style="color: #bc4749;">★</span> <span>પહેલું સુખ તે સુલક્ષણાં નાર.</span></div>
+            <div class="sutro-item" style="color: #606c38;"><span class="star" style="color: #fb8500;">★</span> <span>દીકરી ઘરનું આભૂષણ.</span></div>
+            <div class="sutro-item" style="color: #cc0000;"><span class="star" style="color: #ff9f1c;">★</span> <span>દીકરી ઘરની દીવાદાંડી.</span></div>
+            <div class="sutro-item" style="color: #0056b3;"><span class="star" style="color: #e63946;">★</span> <span>દીકરી એટલે લક્ષ્મીનો વાસ.</span></div>
+            <div class="sutro-item" style="color: #008000;"><span class="star" style="color: #3b2787;">★</span> <span>યત્ર યત્ર નારી પૂજય તે, તત્ર તત્ર વસતે દેવા.</span></div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function setupDynamicYears() {
+        let currentYear = new Date().getFullYear(); 
+        let nextYearShort = String(currentYear + 1).slice(-2); 
+        let lastYear = currentYear - 1; 
+        let currentYearShort = String(currentYear).slice(-2); 
+
+        document.getElementById("currentYearText").innerText = `${currentYear}-${nextYearShort}`;
+        document.getElementById("lastYearText").innerText = `${lastYear}-${currentYearShort}`;
+    }
+</script>
+</body>
+</html>

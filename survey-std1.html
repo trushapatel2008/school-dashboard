@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ધોરણ-૧ સર્વે પત્રકોની માહિતી</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Arial Unicode MS', 'Hind Vadodara', sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        .container { 
+            width: 1100px; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            border: 2px solid #ff5722; 
+        }
+        
+        /* 🖨️ એક્શન બટન્સ */
+        .top-actions { width: 1100px; display: flex; justify-content: flex-end; margin-bottom: 15px; gap: 10px; }
+        .btn-print { background: green; color: white; padding: 8px 24px; font-size: 14px; font-weight: bold; border-radius: 20px; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(37, 117, 252, 0.3); }
+        .btn-back { background: linear-gradient(45deg,#4facfe,#00c6fb); color: white; padding: 8px 22px; font-size: 14px; font-weight: bold; border-radius: 20px; text-decoration: none; box-shadow: 0 4px 10px rgba(0, 176, 255, 0.3); }
+
+        /* 👑 હેડર સેક્શન */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #bdc3c7;
+            padding-bottom: 10px;
+        }
+        .header-center { flex-grow: 1; padding: 0 20px; text-align: center; }
+        .badge-img { height: 90px; width: auto; object-fit: contain; }
+
+        .top-sub { font-size: 20px; font-weight: bold; color: #ff5722; margin: 0; }
+        .main-title { font-size: 34px; font-weight: bold; color: #1f4e78; margin: 5px 0; }
+        .village-info { font-size: 13px; font-weight: bold; color: #7f6000; margin: 5px 0; line-height: 1.4; }
+        .festival-title { font-size: 20px; font-weight: bold; color: #002060; margin: 8px 0; }
+        
+        .section-title { font-size: 22px; font-weight: bold; color: #d50000; text-align: center; margin: 15px 0; }
+
+        /* 📊 પત્રક ડિઝાઈન */
+        .patrak-container { margin-bottom: 20px; background: #fff; padding: 5px; border-radius: 6px; }
+        .patrak-title { font-size: 17px; font-weight: bold; color: #c00000; margin-bottom: 2px; text-align: center; }
+        .patrak-subtitle { font-size: 14px; font-weight: bold; color: #2e7d32; margin-bottom: 8px; text-align: center; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 5px; table-layout: fixed; }
+        th, td { border: 2px solid #4a4a4a; text-align: center; font-weight: bold; padding: 6px 2px; overflow: hidden; }
+        
+        .col-index { width: 6%; }
+        .col-cate { width: 18.8%; }
+
+        th { background-color: #ffffff; color: #000; }
+        
+        .lbl-kumar { color: #1b4f72; font-size: 13px; }
+        .lbl-kanya { color: #b03a2e; font-size: 13px; }
+        .lbl-kul { color: #1e8449; font-size: 13px; }
+
+        /* ઇનપુટ બોક્સ */
+        .table-input {
+            width: 100%;
+            border: none;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            padding: 2px 0;
+            background: transparent;
+        }
+        
+        /* ટોટલ બોક્સ */
+        .total-display {
+            font-size: 14px;
+            font-weight: bold;
+            background-color: #f4f6f7;
+        }
+        .final-total-display {
+            background-color: #e8f8f5;
+            color: #117a65;
+            font-size: 15px;
+        }
+
+        .loading { text-align: center; font-weight: bold; color: #e67e22; padding: 15px 0; font-size: 16px; }
+        
+        /* 💾 એક્શન બટન રો */
+        .action-row { text-align: center; margin-top: 20px; margin-bottom: 10px; }
+        .btn-submit-all { 
+            background: blue; 
+            color: white; 
+            padding: 12px 45px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            border-radius: 4px; 
+            border: none; 
+            cursor: pointer; 
+            box-shadow: 0 4px 12px rgba(230,126,34,0.3);
+        }
+
+        /* 🖨️ ONE PAGE PRINT SETTING */
+        @media print {
+            @page { 
+                size: A4 portrait; 
+                margin: 5mm 5mm 5mm 5mm; 
+            }
+            body { 
+                background-color: white; 
+                padding: 0; 
+                margin: 0; 
+            }
+            .top-actions, .action-row, #loadingMessage { 
+                display: none !important; 
+            } 
+            .container { 
+                box-shadow: none; 
+                padding: 5px; 
+                width: 100% !important; 
+                border: none !important; 
+                transform: scale(0.96); 
+                transform-origin: top center; 
+            }
+            .patrak-container {
+                margin-bottom: 12px !important; 
+                page-break-inside: avoid; 
+            }
+            th, td {
+                padding: 4px 2px !important; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-actions">
+    <button onclick="window.print()" class="btn-print">🖨️ પ્રિન્ટ આઉટ કાઢો</button>
+    <a href="praveshotsav-file.html" class="btn-back">⬅ પાછા જાઓ</a>
+</div>
+
+<div class="container">
+    
+    <div class="header-container">
+        <img src="https://samagrashiksha.ssagujarat.org/assets/images/logo.png" class="badge-img" onerror="this.style.display='none'">
+        <div class="header-center">
+            <div class="top-sub">સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</div>
+            <div class="main-title">હાજીપુર પ્રાથમિક શાળા</div>
+            <div class="village-info">ગામ:- હાજીપુર,  તાલુકો:- કાલોલ,  જીલ્લો:- ગાંધીનગર,  પી.આર.સી:- રણજી,  બી.આર.સી:- ભાભર,  ડાયસ કોડ:- 24060303601</div>
+            <div class="festival-title">કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span id="lblAcademicYear">2026-27</span></div>
+        </div>
+        <img src="https://samagrashiksha.ssagujarat.org/assets/images/logo.png" class="badge-img" onerror="this.style.display='none'">
+    </div>
+
+    <div class="section-title">※ ધોરણ-૧ સર્વે પત્રકો ની માહિતી ※</div>
+
+    <div id="loadingMessage" class="loading">ગૂગલ શીટમાંથી લાઈવ પત્રકોનો ડેટા લોડ થઈ રહ્યો છે...</div>
+
+    <form id="mainSurveyForm" style="display:none;">
+        
+        <div class="patrak-container">
+            <div class="patrak-title">પત્રક :- 1</div>
+            <div class="patrak-subtitle">સર્વે કરેલ પ્રવેશપાત્ર બાળકોની વિગત દર્શાવતું પત્રક</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="col-index">અનુક્રમ<br>નંબર</th>
+                        <th colspan="3" class="col-cate">અનુ.જાતિ</th>
+                        <th colspan="3" class="col-cate">અનુ.જ.જાતિ</th>
+                        <th colspan="3" class="col-cate">બક્ષીપંચ</th>
+                        <th colspan="3" class="col-cate">અન્ય</th>
+                        <th colspan="3" class="col-cate" style="background-color: #fcf3cf;">કુલ</th>
+                    </tr>
+                    <tr>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar" style="background-color: #fcf3cf;">કુમાર</th><th class="lbl-kanya" style="background-color: #fcf3cf;">કન્યા</th><th class="lbl-kul" style="background-color: #fcf3cf;">કુલ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><input type="number" id="p1_sc_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p1')"></td>
+                        <td><input type="number" id="p1_sc_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p1')"></td>
+                        <td id="p1_sc_t" class="total-display lbl-kul">0</td>
+                        
+                        <td><input type="number" id="p1_st_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p1')"></td>
+                        <td><input type="number" id="p1_st_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p1')"></td>
+                        <td id="p1_st_t" class="total-display lbl-kul">0</td>
+                        
+                        <td><input type="number" id="p1_obc_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p1')"></td>
+                        <td><input type="number" id="p1_obc_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p1')"></td>
+                        <td id="p1_obc_t" class="total-display lbl-kul">0</td>
+                        
+                        <td><input type="number" id="p1_gen_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p1')"></td>
+                        <td><input type="number" id="p1_gen_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p1')"></td>
+                        <td id="p1_gen_t" class="total-display lbl-kul">0</td>
+                        
+                        <td id="p1_tot_m" class="total-display lbl-kumar" style="background-color: #fcf3cf;">0</td>
+                        <td id="p1_tot_f" class="total-display lbl-kanya" style="background-color: #fcf3cf;">0</td>
+                        <td id="p1_tot_all" class="total-display final-total-display">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="patrak-container">
+            <div class="patrak-title">પત્રક :- 2</div>
+            <div class="patrak-subtitle">પ્રવેશ આપેલ બાળકોની વિગત દર્શાવતું પત્રક</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="col-index">અનુક્રમ<br>નંબર</th>
+                        <th colspan="3" class="col-cate">અનુ.જાતિ</th>
+                        <th colspan="3" class="col-cate">અનુ.જ.જાતિ</th>
+                        <th colspan="3" class="col-cate">બક્ષીપંચ</th>
+                        <th colspan="3" class="col-cate">અન્ય</th>
+                        <th colspan="3" class="col-cate" style="background-color: #fcf3cf;">કુલ</th>
+                    </tr>
+                    <tr>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar">કુમા热</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar" style="background-color: #fcf3cf;">કુમાર</th><th class="lbl-kanya" style="background-color: #fcf3cf;">કન્યા</th><th class="lbl-kul" style="background-color: #fcf3cf;">કુલ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2</td>
+                        <td><input type="number" id="p2_sc_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p2')"></td>
+                        <td><input type="number" id="p2_sc_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p2')"></td>
+                        <td id="p2_sc_t" class="total-display lbl-kul">0</td>
+                        
+                        <td><input type="number" id="p2_st_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p2')"></td>
+                        <td><input type="number" id="p2_st_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p2')"></td>
+                        <td id="p2_st_t" class="total-display lbl-kul">0</td>
+                        
+                        <td><input type="number" id="p2_obc_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p2')"></td>
+                        <td><input type="number" id="p2_obc_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p2')"></td>
+                        <td id="p2_obc_t" class="total-display lbl-kul">0</td>
+                        
+                        <td><input type="number" id="p2_gen_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p2')"></td>
+                        <td><input type="number" id="p2_gen_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p2')"></td>
+                        <td id="p2_gen_t" class="total-display lbl-kul">0</td>
+                        
+                        <td id="p2_tot_m" class="total-display lbl-kumar" style="background-color: #fcf3cf;">0</td>
+                        <td id="p2_tot_f" class="total-display lbl-kanya" style="background-color: #fcf3cf;">0</td>
+                        <td id="p2_tot_all" class="total-display final-total-display">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="patrak-container">
+            <div class="patrak-title">પત્રક :- 3</div>
+            <div class="patrak-subtitle">પુનઃપ્રવેશ આપેલ બાળકોની વિગત દર્શાવતું પત્રક</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="col-index">અનુક્રમ<br>નંબર</th>
+                        <th colspan="3" class="col-cate">અનુ.જાતિ</th>
+                        <th colspan="3" class="col-cate">અનુ.જ.જાતિ</th>
+                        <th colspan="3" class="col-cate">બક્ષીપંચ</th>
+                        <th colspan="3" class="col-cate">અન્ય</th>
+                        <th colspan="3" class="col-cate" style="background-color: #fcf3cf;">કુલ</th>
+                    </tr>
+                    <tr>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar" style="background-color: #fcf3cf;">કુમાર</th><th class="lbl-kanya" style="background-color: #fcf3cf;">કન્યા</th><th class="lbl-kul" style="background-color: #fcf3cf;">કુલ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>3</td>
+                        <td><input type="number" id="p3_sc_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p3')"></td>
+                        <td><input type="number" id="p3_sc_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p3')"></td>
+                        <td id="p3_sc_t" class="total-display lbl-kul">0</td>
+                        
+                        <td><input type="number" id="p3_st_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p3')"></td>
+                        <td><input type="number" id="p3_st_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p3')"></td>
+                        <td id="p3_st_t" class="total-display lbl-kul">0</td>
+                        
+                        <td><input type="number" id="p3_obc_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p3')"></td>
+                        <td><input type="number" id="p3_obc_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p3')"></td>
+                        <td id="p3_obc_t" class="total-display lbl-kul">0</td>
+                        
+                        <td><input type="number" id="p3_gen_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p3')"></td>
+                        <td><input type="number" id="p3_gen_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p3')"></td>
+                        <td id="p3_gen_t" class="total-display lbl-kul">0</td>
+                        
+                        <td id="p3_tot_m" class="total-display lbl-kumar" style="background-color: #fcf3cf;">0</td>
+                        <td id="p3_tot_f" class="total-display lbl-kanya" style="background-color: #fcf3cf;">0</td>
+                        <td id="p3_tot_all" class="total-display final-total-display">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="patrak-container">
+            <div class="patrak-title">પત્રક :- 4</div>
+            <div class="patrak-subtitle">ડ્રોપઆઉટ બાળકોની વિગત દર્શાવતું પત્રક</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="col-index">અનુક્રમ<br>નંબર</th>
+                        <th colspan="3" class="col-cate">અનુ.જાતિ</th>
+                        <th colspan="3" class="col-cate">અનુ.જ.જાતિ</th>
+                        <th colspan="3" class="col-cate">બક્ષીપંચ</th>
+                        <th colspan="3" class="col-cate">અન્ય</th>
+                        <th colspan="3" class="col-cate" style="background-color: #fcf3cf;">કુલ</th>
+                    </tr>
+                    <tr>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar">કુમાર</th><th class="lbl-kanya">કન્યા</th><th class="lbl-kul">કુલ</th>
+                        <th class="lbl-kumar" style="background-color: #fcf3cf;">કુમાર</th><th class="lbl-kanya" style="background-color: #fcf3cf;">કન્યા</th><th class="lbl-kul" style="background-color: #fcf3cf;">કુલ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>4</td>
+                        <td><input type="number" id="p4_sc_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p4')"></td>
+                        <td><input type="number" id="p4_sc_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p4')"></td>
+                        <td id="p4_sc_t" class="total-display lbl-kul">0</td>
+                        
+                        <td><input type="number" id="p4_st_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p4')"></td>
+                        <td><input type="number" id="p4_st_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p4')"></td>
+                        <td id="p4_st_t" class="total-display lbl-kul">0</td>
+                        
+                        <td><input type="number" id="p4_obc_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p4')"></td>
+                        <td><input type="number" id="p4_obc_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p4')"></td>
+                        <td id="p4_obc_t" class="total-display lbl-kul">0</td>
+                        
+                        <td><input type="number" id="p4_gen_m" class="table-input lbl-kumar" value="0" oninput="calculateTotals('p4')"></td>
+                        <td><input type="number" id="p4_gen_f" class="table-input lbl-kanya" value="0" oninput="calculateTotals('p4')"></td>
+                        <td id="p4_gen_t" class="total-display lbl-kul">0</td>
+                        
+                        <td id="p4_tot_m" class="total-display lbl-kumar" style="background-color: #fcf3cf;">0</td>
+                        <td id="p4_tot_f" class="total-display lbl-kanya" style="background-color: #fcf3cf;">0</td>
+                        <td id="p4_tot_all" class="total-display final-total-display">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="action-row">
+            <button type="submit" id="btnSubmit" class="btn-submit-all">💾 બધી માહિતી શીટમાં સેવ કરો</button>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    // 🔗 તમારી ગૂગલ વેબ એપની લીંક અહીં પેસ્ટ કરો
+    const API_URL = "https://script.google.com/macros/s/AKfycbxFz8z2v8_EOI4oXTaQJsfX0gImT3V_rPQNIvIvZ7UHUpsQZQBOCnQnzE8diQAhwlmJ4w/exec"; 
+
+    window.onload = function() {
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth(); 
+        
+        let academicYear = "";
+
+        if (currentMonth >= 5) { 
+            academicYear = currentYear + "-" + String(currentYear + 1).slice(-2);
+        } else {
+            academicYear = (currentYear - 1) + "-" + String(currentYear).slice(-2);
+        }
+        
+        document.getElementById("lblAcademicYear").innerText = academicYear;
+        loadSheetData();
+    };
+
+    function loadSheetData() {
+        const oldScript = document.getElementById('jsonpScript');
+        if(oldScript) oldScript.remove(); 
+        
+        const script = document.createElement('script');
+        script.id = 'jsonpScript';
+        // ધોરણ-૧ માટે api_type=survey_std1 કર્યું
+        script.src = API_URL + "?api_type=survey_std1&callback=handleResponse&_ts=" + new Date().getTime(); 
+        document.body.appendChild(script);
+    }
+
+    window.handleResponse = function(data) {
+        document.getElementById('loadingMessage').style.display = 'none';
+        document.getElementById('mainSurveyForm').style.display = 'block';
+
+        const patraks = ["1", "2", "3", "4"];
+        patraks.forEach(pNo => {
+            let row = data.find(r => String(r.patrak_no) === String(pNo));
+            if (row) {
+                document.getElementById(`p${pNo}_sc_m`).value = row.sc_m || 0;
+                document.getElementById(`p${pNo}_sc_f`).value = row.sc_f || 0;
+                document.getElementById(`p${pNo}_st_m`).value = row.st_m || 0;
+                document.getElementById(`p${pNo}_st_f`).value = row.st_f || 0;
+                document.getElementById(`p${pNo}_obc_m`).value = row.obc_m || 0;
+                document.getElementById(`p${pNo}_obc_f`).value = row.obc_f || 0;
+                document.getElementById(`p${pNo}_gen_m`).value = row.gen_m || 0;
+                document.getElementById(`p${pNo}_gen_f`).value = row.gen_f || 0;
+            }
+            calculateTotals(`p${pNo}`);
+        });
+    };
+
+    function calculateTotals(pId) {
+        let sc_m = parseInt(document.getElementById(`${pId}_sc_m`).value) || 0;
+        let sc_f = parseInt(document.getElementById(`${pId}_sc_f`).value) || 0;
+        let st_m = parseInt(document.getElementById(`${pId}_st_m`).value) || 0;
+        let st_f = parseInt(document.getElementById(`${pId}_st_f`).value) || 0;
+        let obc_m = parseInt(document.getElementById(`${pId}_obc_m`).value) || 0;
+        let obc_f = parseInt(document.getElementById(`${pId}_obc_f`).value) || 0;
+        let gen_m = parseInt(document.getElementById(`${pId}_gen_m`).value) || 0;
+        let gen_f = parseInt(document.getElementById(`${pId}_gen_f`).value) || 0;
+
+        document.getElementById(`${pId}_sc_t`).innerText = sc_m + sc_f;
+        document.getElementById(`${pId}_st_t`).innerText = st_m + st_f;
+        document.getElementById(`${pId}_obc_t`).innerText = obc_m + obc_f;
+        document.getElementById(`${pId}_gen_t`).innerText = gen_m + gen_f;
+
+        let tot_m = sc_m + st_m + obc_m + gen_m;
+        let tot_f = sc_f + st_f + obc_f + gen_f;
+        
+        document.getElementById(`${pId}_tot_m`).innerText = tot_m;
+        document.getElementById(`${pId}_tot_f`).innerText = tot_f;
+        document.getElementById(`${pId}_tot_all`).innerText = tot_m + tot_f;
+    }
+
+    document.getElementById('mainSurveyForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const btn = document.getElementById('btnSubmit');
+        btn.innerText = "⏳ માહિતી સેવ થઈ રહી છે...";
+        btn.disabled = true;
+
+        let allData = [];
+        for (let i = 1; i <= 4; i++) {
+            allData.push({
+                "patrak_no": i,
+                "sc_m": document.getElementById(`p${i}_sc_m`).value,
+                "sc_f": document.getElementById(`p${i}_sc_f`).value,
+                "st_m": document.getElementById(`p${i}_st_m`).value,
+                "st_f": document.getElementById(`p${i}_st_f`).value,
+                "obc_m": document.getElementById(`p${i}_obc_m`).value,
+                "obc_f": document.getElementById(`p${i}_obc_f`).value,
+                "gen_m": document.getElementById(`p${i}_gen_m`).value,
+                "gen_f": document.getElementById(`p${i}_gen_f`).value
+            });
+        }
+
+        // ધોરણ-૧ માટે api_type=survey_std1_bulk કર્યું
+        fetch(API_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({ "api_type": "survey_std1_bulk", "rows": allData })
+        }).then(() => {
+            alert("✅ ધોરણ-૧ ની બધી જ માહિતી ગૂગલ શીટમાં સફળતાપૂર્વક અપડેટ થઈ ગઈ છે!");
+            btn.innerText = "💾 બધી માહિતી શીટમાં સેવ કરો";
+            btn.disabled = false;
+            loadSheetData();
+        }).catch(err => {
+            alert("❌ કનેક્શન પ્રોબ્લેમ!");
+            btn.innerText = "💾 બધી માહિતી શીટમાં સેવ કરો";
+            btn.disabled = false;
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>શાળાના બાળકોની જાતિવાર આંકડા દર્શાવતું પત્રક</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 2px solid #ff4a5a;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .top-nav {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .btn {
+            padding: 8px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-print { background-color: #e2e8f0; color: #4a5568; }
+        .btn-back { background-color: #3182ce; color: white; }
+        .btn-submit {
+            background: linear-gradient(135deg, #ff4e50, #f9d423);
+            color: #333;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 4px 10px rgba(255, 78, 80, 0.3);
+        }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        
+        .header-section {
+            text-align: center;
+            color: #0c4a60;
+            margin-bottom: 25px;
+        }
+        .header-section h2 { color: #ff007f; margin: 5px 0; font-size: 26px; }
+        .header-section h1 { font-size: 36px; margin: 5px 0; color: #02475e; font-weight: bold; }
+        .school-info { font-size: 14px; color: #666; margin: 5px 0; font-weight: 500; }
+        .festival-title { font-size: 18px; color: #02475e; font-weight: bold; margin-top: 10px; }
+        .table-title {
+            text-align: center;
+            color: #d11141;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            background-color: #fffdf2;
+        }
+        th, td {
+            border: 1px solid #444;
+            text-align: center;
+            padding: 6px 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        th { background-color: #fff9db; color: #000; }
+        .bg-total { background-color: #e6fffa; }
+        
+        input[type="number"] {
+            width: 100%;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+            color: #0056b3;
+            outline: none;
+        }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+            -webkit-appearance: none; margin: 0;
+        }
+        
+        .total-val { color: #234e52; }
+        .grand-total { color: #007722; }
+        .footer-text {
+            color: #cc0000;
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 25px;
+            line-height: 1.4;
+        }
+
+        /* Loading Overlay */
+        #loader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.9);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000; font-size: 20px; font-weight: bold; color: #02475e;
+        }
+
+        @media print {
+            body { background: none; padding: 10px; }
+            .main-container { border: none; box-shadow: none; padding: 10px; }
+            .top-nav, .btn-submit { display: none !important; }
+            input[type="number"] { border: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loader">ગુગલ શીટમાંથી લાઈવ ડેટા લોડ થઈ રહ્યો છે... કૃપા કરીને રાહ જુઓ...</div>
+
+<div class="main-container">
+    <div class="top-nav">
+        <button class="btn btn-print" onclick="window.print()">🖨️ પ્રિન્ટ આઉટ કાઢો</button>
+        <a href="praveshotsav-file.html" class="btn btn-back">⬅️ પાછા જાઓ</a>
+    </div>
+
+    <div class="header-section">
+        <h2>સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</h2>
+        <h1>હાજીપુર પ્રાથમિક શાળા</h1>
+        <p class="school-info">ગામ:- હાજીપુર, તાલુકો:- કાલોલ, જીલ્લો:- ગાંધીનગર, પી.આર.સી:- રણજી, બી.આર.સી:- ભાભર, ડાયસ કોડ:- 24060303601</p>
+        <p class="festival-title">※ કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span class="dynamic-year"></span> ※</p>
+    </div>
+
+    <div class="table-title">※ શાળાના બાળકોની જાતિવાર આંકડા દર્શાવતું પત્રક ※</div>
+
+    <form id="casteForm">
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="2" style="width: 8%;">ધોરણ</th>
+                    <th colspan="3">અનુ.જાતિ</th>
+                    <th colspan="3">અનુ.જન.જાતિ</th>
+                    <th colspan="3">બક્ષીપંચ</th>
+                    <th colspan="3">અન્ય</th>
+                    <th colspan="3" class="bg-total">કુલ</th>
+                </tr>
+                <tr>
+                    <th style="color: #1a365d;">કુમાર</th><th style="color: #9b2c2c;">કન્યા</th><th>કુલ</th>
+                    <th style="color: #1a365d;">કુમાર</th><th style="color: #9b2c2c;">કન્યા</th><th>કુલ</th>
+                    <th style="color: #1a365d;">કુમાર</th><th style="color: #9b2c2c;">કન્યા</th><th>કુલ</th>
+                    <th style="color: #1a365d;">કુમાર</th><th style="color: #9b2c2c;">કન્યા</th><th>કુલ</th>
+                    <th class="bg-total" style="color: #1a365d;">કુમાર</th><th class="bg-total" style="color: #9b2c2c;">કન્યા</th><th class="bg-total">કુલ</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+            <tfoot>
+                <tr style="background-color: #fff9db;">
+                    <td>કુલ</td>
+                    <td id="tot_sc_m" class="grand-total">0</td><td id="tot_sc_f" class="grand-total">0</td><td id="tot_sc_t" class="grand-total">0</td>
+                    <td id="tot_st_m" class="grand-total">0</td><td id="tot_st_f" class="grand-total">0</td><td id="tot_st_t" class="grand-total">0</td>
+                    <td id="tot_obc_m" class="grand-total">0</td><td id="tot_obc_f" class="grand-total">0</td><td id="tot_obc_t" class="grand-total">0</td>
+                    <td id="tot_gen_m" class="grand-total">0</td><td id="tot_gen_f" class="grand-total">0</td><td id="tot_gen_t" class="grand-total">0</td>
+                    <td id="tot_grand_m" class="grand-total" style="background-color: #e6fffa;">0</td>
+                    <td id="tot_grand_f" class="grand-total" style="background-color: #e6fffa;">0</td>
+                    <td id="tot_grand_total" class="grand-total" style="background-color: #b2f5ea;">0</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <button type="submit" class="btn btn-submit">💾 બધી માહિતી શીટમાં સેવ કરો</button>
+    </form>
+
+</div>
+
+<script>
+    // તમારી સાચી ગૂગલ વેબ એપ યુઆરએલ સેટ જ છે
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxkjDTNI3Bhc2hj58cungNwgZFThXeQeB6MXDLbcTirAcXExW0sFuc-n2E09PWhAfe6/exec";
+    
+    const standards = ["BV", "1", "2", "3", "4", "5", "6", "7", "8"];
+    const fields = ["sc_m", "sc_f", "st_m", "st_f", "obc_m", "obc_f", "gen_m", "gen_f"];
+    
+    // 🚀 ઓટોમેટિક વર્ષ ગણવા અને સેટ કરવા માટેનું ફંક્શન
+    function setAutomaticYear() {
+        let currentYear = new Date().getFullYear();
+        let nextYearShort = String(currentYear + 1).slice(-2); // જેમ કે 2026 માંથી 27 લેશે
+        let academicYear = `${currentYear}-${nextYearShort}`;
+        
+        // પેજ પર જ્યાં પણ .dynamic-year ક્લાસ છે ત્યાં વર્ષ બદલી નાખશે
+        document.querySelectorAll(".dynamic-year").forEach(el => {
+            el.innerText = academicYear;
+        });
+    }
+
+    // લાઈવ ટેબલ રો ક્રિએશન
+    const tableBody = document.getElementById("tableBody");
+    standards.forEach(std => {
+        let row = `<tr>
+            <td>${std}</td>
+            <td><input type="number" id="${std}_sc_m" value="0" oninput="calculateRowTotal('${std}')"></td>
+            <td><input type="number" id="${std}_sc_f" value="0" oninput="calculateRowTotal('${std}')"></td>
+            <td id="${std}_sc_t" class="total-val">0</td>
+            <td><input type="number" id="${std}_st_m" value="0" oninput="calculateRowTotal('${std}')"></td>
+            <td><input type="number" id="${std}_st_f" value="0" oninput="calculateRowTotal('${std}')"></td>
+            <td id="${std}_st_t" class="total-val">0</td>
+            <td><input type="number" id="${std}_obc_m" value="0" oninput="calculateRowTotal('${std}')"></td>
+            <td><input type="number" id="${std}_obc_f" value="0" oninput="calculateRowTotal('${std}')"></td>
+            <td id="${std}_obc_t" class="total-val">0</td>
+            <td><input type="number" id="${std}_gen_m" value="0" oninput="calculateRowTotal('${std}')"></td>
+            <td><input type="number" id="${std}_gen_f" value="0" oninput="calculateRowTotal('${std}')"></td>
+            <td id="${std}_gen_t" class="total-val">0</td>
+            <td id="${std}_grand_m" class="total-val bg-total" style="color: #1a365d;">0</td>
+            <td id="${std}_grand_f" class="total-val bg-total" style="color: #9b2c2c;">0</td>
+            <td id="${std}_grand_total" class="total-val" style="background-color: #e6fffa;">0</td>
+        </tr>`;
+        tableBody.insertAdjacentHTML('beforeend', row);
+    });
+
+    // ગૂગલ શીટમાંથી લાઈવ ડેટા લોડ કરવા માટે (JSONP Fetch)
+    window.onload = function() {
+        setAutomaticYear(); // 🚀 પેજ લોડ થતાં જ ઓટોમેટિક વર્ષ સેટ થઈ જશે
+        
+        const script = document.createElement('script');
+        script.src = `${WEB_APP_URL}?apiType=survey_bv&callback=loadData`; 
+        document.body.appendChild(script);
+    };
+
+    function loadData(data) {
+        document.getElementById("loader").style.display = "none";
+        if(!data || data.error) {
+            alert("ડેટા લોડ કરવામાં ભૂલ આવી અથવા કોઈ રેકોર્ડ નથી!");
+            return;
+        }
+        
+        data.forEach(row => {
+            let std = row.standard || row.patrak_no; 
+            if(std && standards.includes(String(std).toUpperCase().trim())) {
+                let formattedStd = String(std).toUpperCase().trim();
+                fields.forEach(field => {
+                    let inputElement = document.getElementById(`${formattedStd}_${field}`);
+                    if(inputElement) {
+                        inputElement.value = (row[field] !== undefined && row[field] !== "") ? row[field] : 0;
+                    }
+                });
+                calculateRowTotal(formattedStd);
+            }
+        });
+        calculateGrandTotal();
+    }
+
+    // આડી લાઈન (રો) નો સરવાળો
+    function calculateRowTotal(std) {
+        let sc_m = parseInt(document.getElementById(`${std}_sc_m`).value) || 0;
+        let sc_f = parseInt(document.getElementById(`${std}_sc_f`).value) || 0;
+        let st_m = parseInt(document.getElementById(`${std}_st_m`).value) || 0;
+        let st_f = parseInt(document.getElementById(`${std}_st_f`).value) || 0;
+        let obc_m = parseInt(document.getElementById(`${std}_obc_m`).value) || 0;
+        let obc_f = parseInt(document.getElementById(`${std}_obc_f`).value) || 0;
+        let gen_m = parseInt(document.getElementById(`${std}_gen_m`).value) || 0;
+        let gen_f = parseInt(document.getElementById(`${std}_gen_f`).value) || 0;
+
+        document.getElementById(`${std}_sc_t`).innerText = sc_m + sc_f;
+        document.getElementById(`${std}_st_t`).innerText = st_m + st_f;
+        document.getElementById(`${std}_obc_t`).innerText = obc_m + obc_f;
+        document.getElementById(`${std}_gen_t`).innerText = gen_m + gen_f;
+
+        let total_m = sc_m + st_m + obc_m + gen_m;
+        let total_f = sc_f + st_f + obc_f + gen_f;
+
+        document.getElementById(`${std}_grand_m`).innerText = total_m;
+        document.getElementById(`${std}_grand_f`).innerText = total_f;
+        document.getElementById(`${std}_grand_total`).innerText = total_m + total_f;
+
+        calculateGrandTotal();
+    }
+
+    // ઊભી લાઈન (કોલમ) નો કુલ ગ્રાન્ડ ટોટલ
+    function calculateGrandTotal() {
+        let totals = { sc_m:0, sc_f:0, st_m:0, st_f:0, obc_m:0, obc_f:0, gen_m:0, gen_f:0, grand_m:0, grand_f:0, grand_total:0 };
+
+        standards.forEach(std => {
+            totals.sc_m += parseInt(document.getElementById(`${std}_sc_m`).value) || 0;
+            totals.sc_f += parseInt(document.getElementById(`${std}_sc_f`).value) || 0;
+            totals.st_m += parseInt(document.getElementById(`${std}_st_m`).value) || 0;
+            totals.st_f += parseInt(document.getElementById(`${std}_st_f`).value) || 0;
+            totals.obc_m += parseInt(document.getElementById(`${std}_obc_m`).value) || 0;
+            totals.obc_f += parseInt(document.getElementById(`${std}_obc_f`).value) || 0;
+            totals.gen_m += parseInt(document.getElementById(`${std}_gen_m`).value) || 0;
+            totals.gen_f += parseInt(document.getElementById(`${std}_gen_f`).value) || 0;
+            totals.grand_m += parseInt(document.getElementById(`${std}_grand_m`).innerText) || 0;
+            totals.grand_f += parseInt(document.getElementById(`${std}_grand_f`).innerText) || 0;
+            totals.grand_total += parseInt(document.getElementById(`${std}_grand_total`).innerText) || 0;
+        });
+
+        document.getElementById("tot_sc_m").innerText = totals.sc_m;
+        document.getElementById("tot_sc_f").innerText = totals.sc_f;
+        document.getElementById("tot_sc_t").innerText = totals.sc_m + totals.sc_f;
+        
+        document.getElementById("tot_st_m").innerText = totals.st_m;
+        document.getElementById("tot_st_f").innerText = totals.st_f;
+        document.getElementById("tot_st_t").innerText = totals.st_m + totals.st_f;
+
+        document.getElementById("tot_obc_m").innerText = totals.obc_m;
+        document.getElementById("tot_obc_f").innerText = totals.obc_f;
+        document.getElementById("tot_obc_t").innerText = totals.obc_m + totals.obc_f;
+
+        document.getElementById("tot_gen_m").innerText = totals.gen_m;
+        document.getElementById("tot_gen_f").innerText = totals.gen_f;
+        document.getElementById("tot_gen_t").innerText = totals.gen_m + totals.gen_f;
+
+        document.getElementById("tot_grand_m").innerText = totals.grand_m;
+        document.getElementById("tot_grand_f").innerText = totals.grand_f;
+        document.getElementById("tot_grand_total").innerText = totals.grand_total;
+    }
+
+    // ડેટા સબમિટ (POST) કરવા માટે
+    document.getElementById("casteForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        document.getElementById("loader").style.display = "flex";
+        document.getElementById("loader").innerText = "માહિતી ગુગલ શીટમાં સેવ થઈ રહી છે...";
+
+        let rowsData = [];
+        standards.forEach(std => {
+            rowsData.push({
+                patrak_no: std, 
+                sc_m: parseInt(document.getElementById(`${std}_sc_m`).value) || 0,
+                sc_f: parseInt(document.getElementById(`${std}_sc_f`).value) || 0,
+                st_m: parseInt(document.getElementById(`${std}_st_m`).value) || 0,
+                st_f: parseInt(document.getElementById(`${std}_st_f`).value) || 0,
+                obc_m: parseInt(document.getElementById(`${std}_obc_m`).value) || 0,
+                obc_f: parseInt(document.getElementById(`${std}_obc_f`).value) || 0,
+                gen_m: parseInt(document.getElementById(`${std}_gen_m`).value) || 0,
+                gen_f: parseInt(document.getElementById(`${std}_gen_f`).value) || 0
+            });
+        });
+
+        let payload = {
+            api_type: "survey_bv_bulk", 
+            rows: rowsData
+        };
+
+        fetch(WEB_APP_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        })
+        .then(() => {
+            document.getElementById("loader").style.display = "none";
+            alert("🎉 બધી માહિતી સફળતાપૂર્વક સેવ થઈ ગઈ છે!");
+        })
+        .catch(err => {
+            document.getElementById("loader").style.display = "none";
+            alert("ભૂલ આવી: " + err);
+        });
+    });
+</script>
+</body>
+</html>

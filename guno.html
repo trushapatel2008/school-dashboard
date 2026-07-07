@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ગુણોત્સવ ૨.૦ પરફોર્મન્સ પત્રક</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 20px; }
+        .main-container { max-width: 1100px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .top-nav { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
+        .btn { padding: 8px 18px; font-size: 14px; font-weight: bold; border: none; border-radius: 20px; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-print { background-color: #008000; color: white; }
+        .btn-back { background-color: #3182ce; color: white; }
+        .header-section { text-align: center; color: #0c4a60; margin-bottom: 25px; }
+        .header-section h1 { font-size: 32px; margin: 5px 0; color: #3b2787; font-weight: bold; }
+        .school-info { font-size: 14px; color: #0076a3; margin: 5px 0; font-weight: bold; }
+        .festival-title { font-size: 18px; color: #008000; font-weight: bold; margin-top: 10px; }
+        .table-title { text-align: center; color: #cc0000; font-size: 19px; font-weight: bold; margin: 20px 0; line-height: 1.5; }
+        
+        .form-box { background-color: #e6f4fa; border: 1px solid #bce1f2; border-radius: 8px; padding: 20px; margin-bottom: 30px; }
+        .form-title { font-size: 16px; font-weight: bold; color: #000; margin-bottom: 15px; }
+        .form-row { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
+        .form-group { flex: 1; min-width: 110px; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; color: #444; margin-bottom: 5px; }
+        .form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-weight: bold; background-color: #fff; }
+        .form-buttons { display: flex; justify-content: flex-end; gap: 10px; }
+        .btn-save { background-color: #2ec4b6; color: white; border-radius: 4px; padding: 8px 20px; border:none; font-weight:bold; cursor:pointer; }
+        .btn-clear { background-color: #888; color: white; border-radius: 4px; padding: 8px 20px; border:none; font-weight:bold; cursor:pointer; }
+        
+        #live-loader {
+            display: none; text-align: center; background-color: #fff3cd; color: #856404;
+            padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #ffeeba;
+            font-weight: bold; font-size: 15px;
+        }
+
+        table { width: 100%; border-collapse: collapse; background-color: #ffffff; }
+        th, td { border: 1px solid #000; text-align: center; padding: 10px 8px; font-size: 15px; font-weight: bold; }
+        th { background-color: #f8f9fa; color: #000; }
+        
+        .btn-delete { background-color: #e63946; color: white; padding: 5px 12px; border-radius: 4px; font-size: 13px; border:none; cursor:pointer; font-weight:bold; transition: 0.2s; }
+        .btn-delete:hover { background-color: #cc0000; }
+        
+        @media print { .top-nav, .form-box, th:last-child, td:last-child, #live-loader { display: none !important; } body { padding: 10px; } .main-container { box-shadow: none; padding: 0; } }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="top-nav">
+        <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
+        <a href="praveshotsav-file.html" class="btn btn-back">⬅️ Back</a>
+    </div>
+
+    <div class="header-section">
+        <p style="color: #ff6b35; font-weight: bold; margin: 0;">સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</p>
+        <h1>હાજીપુર પ્રાથમિક શાળા</h1>
+        <p class="school-info">ગામ:- હાજીપુર,  તાલુકો:- કલોલ,  જીલ્લો:- ગાંધીનગર,  સી.આર.સી:- ભોયણ મોટી,  ડાયસ કોડ:- 24060303601</p>
+        <p class="festival-title">કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span id="currentYearText">2026-27</span></p>
+    </div>
+
+    <div class="table-title">
+        ※ ગુણોત્સવ ૨.૦ અંતર્ગત શાળાનું છેલ્લા ત્રણ વર્ષનું પરફોર્મન્સ ※
+    </div>
+
+    <div class="form-box">
+        <div class="form-title">✏️ ગુણોત્સવ ૨.૦ ડેટા ઉમેરો</div>
+        <form id="gunotsavForm">
+            <div class="form-row">
+                <div class="form-group" style="min-width: 60px; flex: 0.5;">
+                    <label>ક્રમ</label>
+                    <input type="number" id="sr_no" required placeholder="1">
+                </div>
+                <div class="form-group">
+                    <label>વર્ષ</label>
+                    <input type="text" id="g_year" required placeholder="2025 - '26">
+                </div>
+                <div class="form-group">
+                    <label>મેળવેલ ગ્રેડ</label>
+                    <select id="g_grade" required>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>મુખ્યક્ષેત્ર-૧</label>
+                    <input type="text" id="g_f1" required placeholder="89.9%">
+                </div>
+                <div class="form-group">
+                    <label>મુખ્યક્ષેત્ર-૨</label>
+                    <input type="text" id="g_f2" required placeholder="92.8%">
+                </div>
+                <div class="form-group">
+                    <label>મુખ્યક્ષેત્ર-૩</label>
+                    <input type="text" id="g_f3" required placeholder="71.6%">
+                </div>
+                <div class="form-group">
+                    <label>મુખ્યક્ષેત્ર-૪</label>
+                    <input type="text" id="g_f4" required placeholder="66.6%">
+                </div>
+                <div class="form-group">
+                    <label>મુખ્યક્ષેત્ર-૫</label>
+                    <input type="text" id="g_f5" required placeholder="38.0%">
+                </div>
+                <div class="form-group">
+                    <label>સરેરાશ %</label>
+                    <input type="text" id="g_avg" required placeholder="84.30%">
+                </div>
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-save">💾 સેવ કરો</button>
+                <button type="button" class="btn btn-clear" onclick="clearForm()">સાફ કરો</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="live-loader">ડેટા લોડ થઈ રહ્યો છે...</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 6%;">ક્રમ</th>
+                <th style="width: 12%;">વર્ષ</th>
+                <th style="width: 12%;">ગુણોત્સવ ૨.૦ શાળાએ મેળવેલ ગ્રેડ</th>
+                <th style="width: 13%;">મુખ્યક્ષેત્ર-૧<br>(અધ્યયન અને અધ્યાપન)</th>
+                <th style="width: 13%;">મુખ્યક્ષેત્ર-૨<br>(શાળા વ્યવસ્થાપન)</th>
+                <th style="width: 13%;">મુખ્યક્ષેત્ર-૩<br>(સહ શૈક્ષણિક પ્રવૃત્તિઓ)</th>
+                <th style="width: 13%;">મુખ્યક્ષેત્ર-૪<br>(સંસાધનો અને તેનો ઉપયોગ)</th>
+                <th style="width: 13%;">મુખ્યક્ષેત્ર-૫<br>(રાજ્ય દ્વારા આયોજિત સ્પર્ધાત્મક પરીક્ષાઓ)</th>
+                <th style="width: 10%;">સરેરાશ ગુણાંકન<br>100%</th>
+                <th style="width: 7%;" class="no-print">એક્શન</th>
+            </tr>
+        </thead>
+        <tbody id="dataTableBody">
+            <tr><td colspan="10" style="color: #ff9f1c;">ડેટા લોડ થઈ રહ્યો છે...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // ⚠️ અહીં ગૂગલ એપ્સ સ્ક્રિપ્ટ વેબ યુઆરએલ લિંક પેસ્ટ કરો
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTStJKyrCD3ufEQc2oL3VzISEWsTE_7cb_EIa06vN6FP_d5uHa-0Xc9a1usHr5gofJ/exec";
+
+    function setupDynamicYears() {
+        let currentYear = new Date().getFullYear(); 
+        let nextYearShort = String(currentYear + 1).slice(-2); 
+        let lastYear = currentYear - 1; 
+        let currentYearShort = String(currentYear).slice(-2); 
+
+        document.getElementById("currentYearText").innerText = `${currentYear}-${nextYearShort}`;
+        document.getElementById("lastYearText").innerText = `${lastYear}-${currentYearShort}`;
+    }
+
+    function fetchGunotsavData() {
+        document.getElementById("live-loader").style.display = "block";
+        document.getElementById("live-loader").innerText = "⏳ નવીનતમ માહિતી લોડ થઈ રહી છે...";
+        
+        let oldScript = document.getElementById("jsonpScript");
+        if(oldScript) oldScript.remove();
+
+        let script = document.createElement('script');
+        script.id = "jsonpScript";
+        script.src = `${WEB_APP_URL}?callback=displayData&_=${new Date().getTime()}`;
+        document.body.appendChild(script);
+    }
+
+    window.onload = fetchGunotsavData;
+
+    function displayData(data) {
+        document.getElementById("live-loader").style.display = "none";
+        const tbody = document.getElementById("dataTableBody");
+        tbody.innerHTML = "";
+
+        if(!data || data.error || data.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="10" style="color:gray; font-weight:normal;">કોઈ ડેટા ઉપલબ્ધ નથી. નવો ડેટા ઉમેરો.</td></tr>`;
+            return;
+        }
+
+        // ક્રમ મુજબ ડેટા સોર્ટ કરવા માટે
+        data.sort((a, b) => parseInt(a.sr) - parseInt(b.sr));
+
+        data.forEach(row => {
+            let tr = `<tr>
+                <td>${row.sr}</td>
+                <td>${row.year}</td>
+                <td style="color:#3b2787; font-size:16px;">${row.grade}</td>
+                <td>${row.f1}</td>
+                <td>${row.f2}</td>
+                <td>${row.f3}</td>
+                <td>${row.f4}</td>
+                <td>${row.f5}</td>
+                <td style="color:#cc0000;">${row.avg}</td>
+                <td class="no-print">
+                    <button class="btn-delete" onclick="deleteRow('${row.sr}')">❌ ડિલીટ</button>
+                </td>
+            </tr>`;
+            tbody.insertAdjacentHTML('beforeend', tr);
+        });
+    }
+
+    // 💾 ડેટા સેવ કરવા માટે
+    document.getElementById("gunotsavForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        document.getElementById("live-loader").style.display = "block";
+        document.getElementById("live-loader").innerText = "⚙️ માહિતી ગુગલ棋ટમાં સેવ થઈ રહી છે... કૃપા કરીને રાહ જુઓ...";
+
+        let sr_no = document.getElementById("sr_no").value;
+        let year = encodeURIComponent(document.getElementById("g_year").value.trim());
+        let grade = encodeURIComponent(document.getElementById("g_grade").value);
+        let f1 = encodeURIComponent(document.getElementById("g_f1").value.trim());
+        let f2 = encodeURIComponent(document.getElementById("g_f2").value.trim());
+        let f3 = encodeURIComponent(document.getElementById("g_f3").value.trim());
+        let f4 = encodeURIComponent(document.getElementById("g_f4").value.trim());
+        let f5 = encodeURIComponent(document.getElementById("g_f5").value.trim());
+        let avg = encodeURIComponent(document.getElementById("g_avg").value.trim());
+
+        let oldScript = document.getElementById("jsonpSaveScript");
+        if(oldScript) oldScript.remove();
+
+        let script = document.createElement('script');
+        script.id = "jsonpSaveScript";
+        script.src = `${WEB_APP_URL}?action=save&sr_no=${sr_no}&year=${year}&grade=${grade}&f1=${f1}&f2=${f2}&f3=${f3}&f4=${f4}&f5=${f5}&avg=${avg}&callback=onSaveSuccess&_=${new Date().getTime()}`;
+        document.body.appendChild(script);
+    });
+
+    function onSaveSuccess(response) {
+        if(response.success) {
+            document.getElementById("live-loader").innerText = "✅ સેવ સફળ! નવું લિસ્ટ અપડેટ થઈ રહ્યું છે...";
+            clearForm();
+            setTimeout(fetchGunotsavData, 800); 
+        } else {
+            alert("સેવ કરવામાં ખામી આવી!");
+            document.getElementById("live-loader").style.display = "none";
+        }
+    }
+
+    // ❌ ડેટા ડીલીટ કરવા માટે
+    function deleteRow(sr) {
+        let check = confirm("શું તમે ખરેખર ક્રમ નંબર " + sr + " નો ડેટા હંમેશા માટે ડિલીટ કરવા માંગો છો?");
+        if (check) {
+            document.getElementById("live-loader").style.display = "block";
+            document.getElementById("live-loader").innerText = "🗑️ માહિતી ગુગલ શીટમાંથી ડિલીટ થઈ રહી છે...";
+
+            let oldScript = document.getElementById("jsonpDeleteScript");
+            if(oldScript) oldScript.remove();
+
+            let script = document.createElement('script');
+            script.id = "jsonpDeleteScript";
+            script.src = `${WEB_APP_URL}?action=delete&sr_no=${sr}&callback=onDeleteSuccess&_=${new Date().getTime()}`;
+            document.body.appendChild(script);
+        }
+    }
+
+    function onDeleteSuccess(response) {
+        if(response.success) {
+            document.getElementById("live-loader").innerText = "✅ ડેટા સફળતાપૂર્વક ડીલીટ થયો! લિસ્ટ અપડેટ થઈ રહ્યું છે...";
+            setTimeout(fetchGunotsavData, 800);
+        } else {
+            alert("ડિલીટ કરવામાં ખામી આવી!");
+            document.getElementById("live-loader").style.display = "none";
+        }
+    }
+
+    function clearForm() {
+        document.getElementById("gunotsavForm").reset();
+    }
+</script>
+</body>
+</html>
