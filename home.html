@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>હાજીપુર પ્રાથમિક શાળા - સત્તાવાર સરકારી પોર્ટલ</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- આઇકોન્સ માટે FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -514,71 +513,11 @@ body{
     .slider-wrapper { height: 250px; }
     .gallery-tabs-row { justify-content: center; }
 }
-/* ૧. મુખ્ય લિસ્ટ આઇટમ (એમ.ડી.એમ) નું સેટિંગ */
-.mdm-dropdown {
-    position: relative; /* આ લાઇન સબ-મેનુને આની સાપેક્ષમાં બાજુમાં રાખશે */
-    list-style: none;
-}
-
-/* ૨. એમ.ડી.એમ લિંક (બટન) ની ડિઝાઇન */
-.mdm-dropbtn {
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between; /* અક્ષરો ડાબે અને એરો જમણે સેટ કરશે */
-    padding: 10px 20px;
-    color: #334155;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background 0.2s;
-}
-
-/* ૩. 🎯 સાઇડમાં ખુલવા વાળું સબ-મેનુ (શરૂઆતમાં છુપાયેલું રહેશે) */
-.mdm-dropdown .mdm-sub-menu {
-    display: none;          /* શરૂઆતમાં મેનુ દેખાશે નહીં */
-    position: absolute;
-    top: 0;                 /* બરાબર 'એમ.ડી.એમ.' ની સામેથી જ શરૂ થશે */
-    left: 100%;             /* ૧૦૦% ખસીને બરાબર જમણી બાજુ (Right-side) ગોઠવાશે */
-    background-color: #ffffff;
-    min-width: 220px;       /* સબ-મેનુની પહોળાઈ */
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15); /* સુંદર પડછાયો */
-    border-radius: 6px;
-    padding: 8px 0;
-    margin: 0;
-    list-style: none;
-    z-index: 9999;          /* આનાથી મેનુ કોઈ સ્લાઈડર કે બેનરની પાછળ છુપાશે નહીં */
-    border-left: 3px solid #f58220; /* તમારી થીમ મુજબની ઓરેન્જ બોર્ડર લાઇન */
-}
-
-/* ૪. 🎯 મેજિક હોવર ઇફેક્ટ: માઉસ 'એમ.ડી.એમ' પર જતાં જ સાઇડમાં મેનુ ઓપન થશે */
-.mdm-dropdown:hover .mdm-sub-menu {
-    display: block !important;
-}
-
-/* ૫. સબ-મેનુની અંદરની દરેક લિંક્સ (પત્રકો) ની ડિઝાઇન */
-.mdm-dropdown .mdm-sub-menu li a {
-    color: #475569 !important;
-    padding: 10px 18px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;              /* આઇકોન અને લખાણ વચ્ચે જગ્યા રાખશે */
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-/* ૬. સબ-મેનુની અંદરની લિંક પર માઉસ જાય ત્યારે ઇફેક્ટ */
-.mdm-dropdown .mdm-sub-menu li a:hover {
-    background-color: #f1f5f9; /* આછો ગ્રે કલર */
-    color: #f58220 !important;  /* અક્ષરો ઓરેન્જ થશે */
-    padding-left: 23px;        /* માઉસ જતાં લખાણ થોડું જમણી તરફ સરકશે */
-}
 </style>
 </head>
 
 <body>
 
-    <!-- સત્તાવાર સરકારી ટોપ લિંક્સ લાઇન -->
     <div class="gov-top-ribbon">
         <div class="left-links">
             <span>ગુજરાત સરકાર | શિક્ષણ વિભાગ</span>
@@ -589,7 +528,6 @@ body{
         </div>
     </div>
 
-    <!-- મુખ્ય સત્તાવાર સરકારી હેડર (હાજીપુર પ્રાથમિક શાળા) -->
     <div class="main-gov-header">
         <div class="logo-section-left">
             <i class="fa-solid fa-graduation-cap emblem-icon"></i>
@@ -607,7 +545,6 @@ body{
         </div>
     </div>
 
-    <!-- નેવિગેશન બાર -->
     <nav class="gov-navbar">
         <div class="gov-container" style="padding: 0;">
             <ul class="nav-list">
@@ -633,15 +570,75 @@ body{
                                 <li><a href="examfile.html">પરીક્ષા ફાઇલ</a></li>
                                 <li><a href="parinam.html">પરિણામ પત્રક</a></li>
                             </ul>
-                    </li>
+                        </li>
+                    <style>
+                        /* ૧. મુખ્ય લિસ્ટ આઇટમ (એમ.ડી.એમ) નું સેટિંગ */
+                        .mdm-dropdown {
+                            position: relative; /* આ લાઇન સબ-મેનુને આની સાપેક્ષમાં બાજુમાં રાખશે */
+                            list-style: none;
+                        }
+
+                        /* ૨. એમ.ડી.એમ લિંક (બટન) ની ડિઝાઇન */
+                        .mdm-dropbtn {
+                            display: flex !important;
+                            align-items: center;
+                            justify-content: space-between; /* અક્ષરો ડાબે અને એરો જમણે સેટ કરશે */
+                            padding: 10px 20px;
+                            color: #334155;
+                            text-decoration: none;
+                            font-weight: 500;
+                            transition: background 0.2s;
+                        }
+
+                        /* ૩. 🎯 સાઇડમાં ખુલવા વાળું સબ-મેનુ (શરૂઆતમાં છુપાયેલું રહેશે) */
+                        .mdm-dropdown .mdm-sub-menu {
+                            display: none;          /* શરૂઆતમાં મેનુ દેખાશે નહીં */
+                            position: absolute;
+                            top: 0;                 /* બરાબર 'એમ.ડી.એમ.' ની સામેથી જ શરૂ થશે */
+                            left: 100%;             /* ૧૦૦% ખસીને બરાબર જમણી બાજુ (Right-side) ગોઠવાશે */
+                            background-color: #ffffff;
+                            min-width: 220px;       /* સબ-મેનુની પહોળાઈ */
+                            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15); /* સુંદર પડછાયો */
+                            border-radius: 6px;
+                            padding: 8px 0;
+                            margin: 0;
+                            list-style: none;
+                            z-index: 9999;          /* આનાથી મેનુ કોઈ સ્લાઈડર કે બેનરની પાછળ છુપાશે નહીં */
+                            border-left: 3px solid #f58220; /* તમારી થીમ મુજબની ઓરેન્જ બોર્ડર લાઇન */
+                        }
+
+                        /* ૪. 🎯 મેજિક હોવર ઇફેક્ટ: માઉસ 'એમ.ડી.એમ' પર જતાં જ સાઇડમાં મેનુ ઓપન થશે */
+                        .mdm-dropdown:hover .mdm-sub-menu {
+                            display: block !important;
+                        }
+
+                        /* ૫. સબ-મેનુની અંદરની દરેક લિંક્સ (પત્રકો) ની ડિઝાઇન */
+                        .mdm-dropdown .mdm-sub-menu li a {
+                            color: #475569 !important;
+                            padding: 10px 18px;
+                            text-decoration: none;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;              /* આઇકોન અને લખાણ વચ્ચે જગ્યા રાખશે */
+                            font-size: 14px;
+                            font-weight: 500;
+                            transition: all 0.2s ease;
+                        }
+
+                        /* ૬. સબ-મેનુની અંદરની લિંક પર માઉસ જાય ત્યારે ઇફેક્ટ */
+                        .mdm-dropdown .mdm-sub-menu li a:hover {
+                            background-color: #f1f5f9; /* આછો ગ્રે કલર */
+                            color: #f58220 !important;  /* અક્ષરો ઓરેન્જ થશે */
+                            padding-left: 23px;        /* માઉસ જતાં લખાણ થોડું જમણી તરફ સરકશે */
+                        }
+                    </style>
                     <li class="mdm-dropdown">
                         <a href="praveshotsav.html" class="mdm-dropbtn">
-                            શાળા પ્રવેશોત્સવ <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                            شાળા પ્રવેશોત્સવ <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
                         </a>
 
                             <ul class="mdm-sub-menu">
                                 <li><a href="vali-form.html">વાલી ફોર્મ</a></li>
-                                <!-- 🎯 અહીં આપણે નવો ક્લાસ 'praveshotsav-mega-menu' ઉમેર્યો છે -->
                                 <li class="mdm-dropdown praveshotsav-mega-menu">
                                     <a href="#" class="mdm-dropbtn">
                                         પ્રવેશોત્સવ ફાઇલ <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
@@ -787,7 +784,6 @@ body{
                         <li><a href="mdm-stock.html">દૈનિક સ્ટોક રજીસ્ટર</a></li>
                     </ul>
                 </li>
-                <!-- SMC -->
                 <li class="nav-link-item">
                     <a href="#" class="nav-main-link"><i class="fa-solid fa-bowl-rice"></i> એસ.એમ.સી. (SMC) <i class="fa-solid fa-chevron-down arrow"></i></a>
                     <ul class="gov-dropdown">
@@ -804,6 +800,7 @@ body{
             </ul>
         </div>
     </nav>
+
 
     <!-- મુખ્ય કન્ટેન્ટ એરિયા -->
     <div class="gov-container">
@@ -1195,31 +1192,52 @@ body{
     </footer>
 
 <script>
-// ઈમેજ સ્લાઇડર કંટ્રોલર લોજીક
-let slideIdx = 0;
+// ૧. ગેલેરી કંટ્રોલ માટે ગ્લોબલ વેરિયેબલ્સ
+let isViewAllClicked = false;
+let selectedCategory = 'all';
+let slideIdx = 0;        // મેઈન સ્લાઈડર માટે
+let slideIndex = 0;      // કસ્ટમ સ્લાઈડર માટે
+let slideTimeout;
+
+// ૨. પેજ લોડ થાય ત્યારે બધા લોજિક એકસાથે શરૂ કરવા માટે
+window.addEventListener('DOMContentLoaded', () => {
+    // હોમ પેજના ફોટા લોડ કરો
+    if (typeof loadPhotosOnHome === 'function') {
+        loadPhotosOnHome();
+    }
+    
+    // ગેલેરી લોજિક સેટ કરો
+    applyGalleryLogic();
+    
+    // કસ્ટમ સ્લાઈડર શરૂ કરો
+    showSlides();
+});
+
+// ૩. મેઈન ઈમેજ સ્લાઈડર કંટ્રોલર લોજીક (Track Slider)
 function displaySlide(index) {
     const track = document.getElementById("mainTrack");
     const slides = document.querySelectorAll(".single-slide");
+    if (!track || slides.length === 0) return;
+    
     if (index >= slides.length) slideIdx = 0;
     else if (index < 0) slideIdx = slides.length - 1;
     else slideIdx = index;
     track.style.transform = `translateX(-${slideIdx * 100}%)`;
 }
-function changeSlide(step) { displaySlide(slideIdx + step); }
-setInterval(() => { changeSlide(1); }, 4500);
 
-// ગેલેરી કંટ્રોલ માટે ગ્લોબલ વેરિયેબલ્સ
-let isViewAllClicked = false;
-let selectedCategory = 'all';
+function changeMainSlide(step) { 
+    displaySlide(slideIdx + step); 
+}
 
-// પેજ લોડ થાય ત્યારે શરૂઆતમાં રન કરવા માટે
-window.addEventListener('DOMContentLoaded', () => {
-    applyGalleryLogic();
-});
+// મેઈન ટ્રેક સ્લાઈડર ઓટોમેટિક ફેરવવા માટે (દર 4.5 સેકન્ડે)
+setInterval(() => { 
+    if (document.getElementById("mainTrack")) {
+        changeMainSlide(1); 
+    }
+}, 4500);
 
-let slideIndex = 0;
-let slideTimeout;
 
+// ૪. કસ્ટમ સ્લાઈડર લોજીક (Fade/Dot Slider)
 function showSlides() {
     let slides = document.getElementsByClassName("custom-slide");
     let dots = document.getElementsByClassName("dot");
@@ -1236,8 +1254,8 @@ function showSlides() {
     slideIndex++;
     if (slideIndex > slides.length) { slideIndex = 1; }
 
-    slides[slideIndex - 1].classList.add("active");
-    dots[slideIndex - 1].classList.add("active");
+    if (slides[slideIndex - 1]) slides[slideIndex - 1].classList.add("active");
+    if (dots[slideIndex - 1]) dots[slideIndex - 1].classList.add("active");
 
     // દર 5 સેકન્ડે સ્લાઈડ આપોઆપ બદલાશે
     slideTimeout = setTimeout(showSlides, 5000); 
@@ -1246,6 +1264,8 @@ function showSlides() {
 function changeSlide(n) {
     clearTimeout(slideTimeout);
     let slides = document.getElementsByClassName("custom-slide");
+    if (slides.length === 0) return;
+    
     slideIndex += n - 1;
     if (slideIndex < 0) { slideIndex = slides.length - 1; }
     showSlides();
@@ -1257,20 +1277,13 @@ function currentSlide(n) {
     showSlides();
 }
 
-// પેજ લોડ થાય ત્યારે સ્લાઈડર શરૂ કરવા માટે
-window.addEventListener('DOMContentLoaded', () => {
-    // અગાઉનું ફોટા લોડ કરવાનું ફંક્શન પણ ચાલુ રહેશે
-    if(typeof loadPhotosOnHome === 'function') loadPhotosOnHome();
-    
-    // સ્લાઈડર શરૂ કરો
-    showSlides();
-});
 
+// ૫. હોમ પેજ પર લોકલ સ્ટોરેજ અને ડિફોલ્ટ ફોટા લોડ કરવાનું લોજીક
 function loadPhotosOnHome() {
     const homeGrid = document.getElementById('autoHomeGallery');
     if (!homeGrid) return;
 
-    // ૧. શરૂઆતમાં બતાવવા માટેના ૩ ફિક્સ ફોટા (જે gallery.html માં ઓલરેડી કોડેડ છે)
+    // શરૂઆતમાં બતાવવા માટેના ૪ ફિક્સ ફોટા
     const defaultPhotos = [
         {
             src: 'static/images/IMG_20260126_081325.jpg',
@@ -1294,10 +1307,9 @@ function loadPhotosOnHome() {
         }
     ];
 
-    // ૨. લોકલ સ્ટોરેજમાંથી યુઝરે અપલોડ કરેલા નવા ફોટા લાવો
+    // લોકલ સ્ટોરેજમાંથી યુઝરે અપલોડ કરેલા નવા ફોટા લાવો
     let userPhotos = JSON.parse(localStorage.getItem('userPhotos')) || [];
     
-    // ૩. યુઝરના નવા ફોટા અને ડિફોલ્ટ ફોટા બંનેને ભેગા કરો
     // યુઝરના ફોટા આગળ રહેશે જેથી તે હોમ પેજ પર પહેલા દેખાય
     let allPhotos = [...userPhotos.map(p => ({
         src: p.src,
@@ -1305,18 +1317,17 @@ function loadPhotosOnHome() {
         catText: p.cat === 'building' ? 'શાળા બિલ્ડિંગ' : 'તહેવારો / કાર્યક્રમો'
     })), ...defaultPhotos];
 
-    // ૪. હોમ પેજની ગ્રીડ ક્લિયર કરો
+    // હોમ પેજની ગ્રીડ ક્લિયર કરો
     homeGrid.innerHTML = '';
 
-    // ૫. ફક્ત પ્રથમ ૪ ફોટા જ હોમ પેજ પર ગોઠવો
+    // ફક્ત પ્રથમ ૪ ફોટા જ હોમ પેજ પર ગોઠવો
     let limit = Math.min(allPhotos.length, 4);
     for (let i = 0; i < limit; i++) {
         let photo = allPhotos[i];
         
         let mediaItem = document.createElement('div');
-        mediaItem.className = 'media-item'; // તમારા હોમ પેજની સીએસએસ ડિઝાઇન મુજબ
+        mediaItem.className = 'media-item';
         
-        // ગેલેરી કાર્ડની સુંદર ડિઝાઇન
         mediaItem.innerHTML = `
             <div class="media-preview-box" style="width: 100%; height: 190px; overflow: hidden; border-radius: 4px; background: #e2e8f0;">
                 <img src="${photo.src}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://picsum.photos/600/400?random=${i}'">
@@ -1335,18 +1346,16 @@ function loadPhotosOnHome() {
     }
 }
 
-// પેજ ઓપન થાય એટલે તરત રન કરો
-window.addEventListener('DOMContentLoaded', loadPhotosOnHome);
 
-// ગેલેરી ફિલ્ટર સ્ક્રિપ્ટ (All, Photo, Video)
+// ૬. ગેલેરી ફિલ્ટર સ્ક્રિપ્ટ (All, Photo, Video)
 function filterMedia(type) {
     selectedCategory = type;
     
     // એક્ટિવ ટેબ સ્ટાઈલ ચેન્જ કરવા માટે
     const buttons = document.querySelectorAll('.gallery-tab-btn');
     buttons.forEach(btn => btn.classList.remove('active-tab'));
-    if(event) {
-        event.target.classList.add('active-tab');
+    if(window.event && window.event.target) {
+        window.event.target.classList.add('active-tab');
     }
 
     // જો અલગથી Photo કે Video પર ક્લિક કરે તો ૪ ની લિમિટ હટી જશે
@@ -1359,7 +1368,8 @@ function filterMedia(type) {
     applyGalleryLogic();
 }
 
-// ૪ ની લિમિટ અને ફિલ્ટર સેટ કરવાનું કોર લોજિક ફંક્શન
+
+// ૭. ૪ ની લિમિટ અને ફિલ્ટર સેટ કરવાનું કોર લોજિક ફંક્શન (સુધારેલું)
 function applyGalleryLogic() {
     const items = document.querySelectorAll('.media-item');
     let shownCount = 0;
@@ -1377,56 +1387,64 @@ function applyGalleryLogic() {
         if (match) {
             totalMatches++;
             if (selectedCategory === 'all' && !isViewAllClicked) {
-                // શરૂઆતમાં ફક્ત ૪ જ બતાવો
                 if (shownCount < 4) {
-                    item.style.display = 'block';
+                    item.style.display = ''; // ઓરિજિનલ CSS સ્ટાઈલ (Grid/Flex) જાળવી રાખવા માટે ખાલી રાખ્યું
                     shownCount++;
                 } else {
                     item.style.display = 'none';
                 }
             } else {
-                item.style.display = 'block';
+                item.style.display = ''; // ઓરિજિનલ CSS સ્ટાઈલ જાળવી રાખવા માટે ખાલી રાખ્યું
             }
         } else {
             item.style.display = 'none';
         }
     });
 
-    // સ્માર્ટ View All બટન હાઇડ/શો કન્ડિશન
+    // View All બટન હાઇડ/શો કન્ડિશન
     const viewAllBox = document.getElementById('viewAllBox');
-    if (selectedCategory === 'all' && totalMatches > 4 && !isViewAllClicked) {
-        viewAllBox.style.display = 'block';
-    } else {
-        viewAllBox.style.display = 'none';
+    if (viewAllBox) {
+        if (selectedCategory === 'all' && totalMatches > 4 && !isViewAllClicked) {
+            viewAllBox.style.display = '';
+        } else {
+            viewAllBox.style.display = 'none';
+        }
     }
 }
 
-// View All બટન પર ક્લિક કરવાથી તે જ પેજ પર બધી આઇટમ દેખાશે
+
+// ૮. View All બટન પર ક્લિક કરવાથી બધી આઇટમ બતાવવા માટે
 function showAllMediaItems() {
     isViewAllClicked = true;
     applyGalleryLogic();
 }
 
-// લાઇટબોક્સ (Popup) ઓપન/ક્લોઝ સિસ્ટમ
+
+// ૯. લાઇટબોક્સ (Popup) ઓપન/ક્લોઝ સિસ્ટમ
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightboxImg');
 const lightboxCaption = document.getElementById('lightboxCaption');
 
 function openLightbox(src, title) {
+    if(!lightbox || !lightboxImg || !lightboxCaption) return;
     lightboxImg.src = src;
     lightboxCaption.innerText = title;
     lightbox.classList.add('active');
 }
 
 function closeLightbox() {
-    lightbox.classList.remove('active');
+    if(lightbox) lightbox.classList.remove('active');
 }
 
-// બેકગ્રાઉન્ડ પર ક્લિક કરવાથી પણ બંધ થશે
-lightbox.addEventListener('click', (e) => {
-    if(e.target === lightbox) closeLightbox();
-});
+// બેકગ્રાઉન્ડ પર ક્લિક કરવાથી બંધ થશે
+if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+        if(e.target === lightbox) closeLightbox();
+    });
+}
 
+
+// ૧૦. લોગઆઉટ સિસ્ટમ
 function logoutSystem(){
     if(confirm("શું તમે આ સત્તાવાર પોર્ટલમાંથી બહાર નીકળવા માંગો છો?")){
         sessionStorage.clear();
