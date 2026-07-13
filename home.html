@@ -596,7 +596,62 @@ body{
         margin-left: 0;
     }
 }
+/* મોબાઈલમાં સ્કૂલનું નામ પ્રોપર સેટ કરવા અને જમણી બાજુનું સેક્શન ડીલીટ કરવા માટે */
+@media(max-width: 992px) {
+    /* ૧. આખા હેડરને સેન્ટર કરવા અને વર્ટિકલ (ઉભું) ગોઠવવા */
+    .main-gov-header { 
+        flex-direction: column !important; 
+        text-align: center !important; 
+        padding: 20px 15px !important;
+    }
 
+    /* ૨. સ્કૂલના નામ અને ટોપીવાળા આયકનને સેન્ટરમાં ગોઠવવા */
+    .logo-section-left { 
+        flex-direction: column !important; 
+        gap: 10px !important; 
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* ૩. સ્કૂલના નામની સાઈઝ મોબાઈલ સ્ક્રીન પ્રમાણે સેટ કરવા */
+    .logo-title-text h1 { 
+        font-size: 24px !important; 
+        text-align: center !important;
+    }
+    .logo-title-text p {
+        font-size: 13px !important;
+        text-align: center !important;
+    }
+
+    /* ૪. જમણી બાજુનું "પ્રાથમિક શિક્ષણ વિભાગ" વાળું આખું બોક્સ મોબાઈલમાંથી ડીલીટ (Hide) કરવા */
+    .ministry-right { 
+        display: none !important; 
+    }
+}
+/* મોબાઈલમાં ટોપ રીબન (પહેલી લાઇન) ને વ્યવસ્થિત કરવા માટે */
+@media(max-width: 992px) {
+    .gov-top-ribbon { 
+        flex-direction: column !important; /* ડાબે-જમણેથી બદલીને ઉપર-નીચે કરવા */
+        text-align: center !important;     /* લખાણ સેન્ટર કરવા */
+        gap: 6px !important;              /* બંને વચ્ચે સ્પેસ આપવા */
+        padding: 10px 15px !important;     /* સરસ ગેપ આપવા */
+        font-size: 12px !important;        /* અક્ષરો થોડા મોટા અને વંચાય તેવા કરવા */
+    }
+    
+    .gov-top-ribbon .right-links a { 
+        margin-left: 0 !important;         /* વધારાની સ્પેસ કાઢવા */
+    }
+}
+/* ફક્ત મોબાઈલમાં લોગો નાનો કરવા માટે */
+@media(max-width: 992px) {
+    .intro-logo-box img { 
+        max-width: 140px !important; /* લોગોની સાઈઝ નાની કરી */
+        width: 140px !important;
+        height: auto !important;
+        margin: 15px auto 0 auto !important;
+        display: block !important;
+    }
+}
 </style>
 </head>
 
@@ -1117,10 +1172,10 @@ body{
                 </p>
             </div>
 
-            <div class="intro-right-box">
-                <div class="logo-wrapper">
-                    <img src="static/images/logo.jpg" alt="School Logo" class="school-intro-logo" onerror="this.src='https://i.ibb.co/L9Y0wN2/default-gov-logo.png'">
-                </div>
+                <div class="intro-right-box">
+                    <div class="logo-wrapper">
+                        <img src="static/images/logo.jpg" alt="School Logo" class="school-intro-logo" onerror="this.src='https://i.ibb.co/L9Y0wN2/default-gov-logo.png'">
+                    </div>
                 
             </div>
         </div>
@@ -1213,6 +1268,22 @@ body{
     .intro-right-box {
         width: 100%;
         box-sizing: border-box;
+    }
+}
+/* ફક્ત મોબાઈલમાં લોગોની સાઈઝ નાની કરવા માટે */
+@media(max-width: 992px) {
+    .school-intro-logo { 
+        max-width: 200px !important; /* લોગો નાનો કરવા માટે */
+        width: 180px !important;
+        height: 190px !important;
+        margin: 0 0 0 0 !important;
+        display: block !important;
+    }
+    
+    /* લોગોની આજુબાજુનું બોક્સ પણ સેન્ટર થઈ જાય તે માટે */
+    .logo-wrapper {
+        text-align: center !important;
+        width: 100% !important;
     }
 }
 </style>
