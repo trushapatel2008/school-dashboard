@@ -519,7 +519,7 @@ body{
 }
 
 /* ==========================================================
-   📱 મોબાઈલ સાઈઝ (Phone View) માટે રિસ્પોન્સિવ CSS
+   📱 મોબાઈલ સાઈઝ (Phone View) માટે રિસ્પોન્સિવ CSS (ઓવરલેપ સાઇડબાર)
    ========================================================== */
 @media(max-width: 992px) {
     /* મોબાઈલમાં ૩-લાઇન વાળું લેબલ બતાવો */
@@ -528,31 +528,41 @@ body{
         align-items: center;
         gap: 10px;
         width: 100%;
+        cursor: pointer;
     }
 
-    /* શરૂઆતમાં મેનુ લિસ્ટ છુપાયેલું (Hide) રહેશે */
+    /* સુધારો: શરૂઆતમાં મેનુ લિસ્ટ છુપાયેલું અને સ્ક્રીનની ડાબી બાજુ બહાર (fixed) રહેશે */
     .nav-list {
-        display: none !important;
+        display: flex !important; /* નોર્મલ ડિસ્પ્લે flex રાખ્યું */
         flex-direction: column;
-        width: 100%;
+        position: fixed !important;
+        top: 0;
+        left: -280px;             /* શરૂઆતમાં ડાબી બાજુ છુપાયેલું રહેશે */
+        width: 280px !important;  /* સાઇડબારની પહોળાઈ */
+        height: 100vh !important; /* આખી સ્ક્રીનની ઊંચાઈ */
         background: var(--gov-blue);
+        z-index: 9999 !important; /* પેજના કન્ટેન્ટની બિલકુલ ઉપર ઓવરલેપ થશે */
+        padding-top: 60px !important; /* ઉપરથી થોડી જગ્યા જેથી બંધ કરવાનું સરળ રહે */
+        overflow-y: auto !important; /* મેનુ મોટું હોય તો અંદર જ સ્ક્રોલ થશે */
+        transition: left 0.3s ease-in-out !important; /* સ્મૂધ બહાર આવવાની ઇફેક્ટ */
+        box-shadow: 5px 0 15px rgba(0,0,0,0.3);
     }
 
-    /* પ્યોર CSS મેજિક: જ્યારે ચેકબોક્સ ટીક થાય ત્યારે મેનુ ઓપન થશે */
+    /* પ્યોર CSS મેજિક: જ્યારે ચેકબોક્સ ટીક થાય ત્યારે મેનુ પેજની ઉપર (Overlap) આવી જશે */
     .menu-checkbox:checked ~ .nav-list {
-        display: flex !important;
+        left: 0 !important; /* ડાબી બાજુથી સ્ક્રીન પર આવી જશે */
     }
 
     /* મોબાઈલ ડ્રોપડાઉન સેટિંગ્સ */
     .gov-dropdown {
-        position: static;
+        position: static !important; /* સાઇડબારની અંદર ફિક્સ કરવા માટે */
         opacity: 1;
         visibility: visible;
         transform: none;
         box-shadow: none;
         padding-left: 15px;
         background: #0f4c75;
-        width: 100%;
+        width: 100% !important;
         border-top: none;
         display: none;
     }
@@ -562,14 +572,15 @@ body{
     .gov-dropdown a {
         color: #e2e8f0;
         border-bottom: 1px solid rgba(255,255,255,0.1);
+        white-space: normal !important; /* ટેક્સ્ટ સાઇડબારની બહાર ન જાય તે માટે */
     }
 
     /* નેસ્ટેડ સબ-મેનુ સેટિંગ્સ */
     .mdm-dropdown .mdm-sub-menu {
-        position: static;
+        position: static !important;
         box-shadow: none;
         background: #155e8a;
-        min-width: 100%;
+        min-width: 100% !important;
         border-left: 2px solid var(--gov-orange);
         padding-left: 10px;
         display: none !important;
@@ -580,7 +591,7 @@ body{
 
     /* મેગા મેનુ મોબાઈલ સેટિંગ્સ */
     .mdm-dropdown.praveshotsav-mega-menu .mdm-sub-menu {
-        position: static;
+        position: static !important;
         grid-template-columns: 1fr !important;
         min-width: 100% !important;
         box-shadow: none !important;
@@ -695,7 +706,7 @@ body{
                     <a href="home.html" class="nav-main-link"><i class="fa-solid fa-house-user"></i> હોમ</a>
                 </li>
                 <li class="nav-link-item">
-                    <a href="javascript:void(0);" class="nav-main-link" ><i class="fa-solid fa-school"></i> શાળા પરિચય<i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <a href="javascript:void(0);" class="nav-main-link"><i class="fa-solid fa-school"></i> શાળા પરિચય<i class="fa-solid fa-chevron-down arrow"></i></a>
                     <ul class="gov-dropdown">
                         <li><a href="teacher-information.html">શિક્ષકની માહિતી</a></li>
                         <li><a href="student-detail.html">વિદ્યાર્થી માહિતી</a></li>
