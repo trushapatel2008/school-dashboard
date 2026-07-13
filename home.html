@@ -533,19 +533,33 @@ body{
 
     /* સુધારો: શરૂઆતમાં મેનુ લિસ્ટ છુપાયેલું અને સ્ક્રીનની ડાબી બાજુ બહાર (fixed) રહેશે */
     .nav-list {
-        display: flex !important; /* નોર્મલ ડિસ્પ્લે flex રાખ્યું */
+        display: flex !important;
         flex-direction: column;
         position: fixed !important;
         top: 0;
-        left: -280px;             /* શરૂઆતમાં ડાબી બાજુ છુપાયેલું રહેશે */
-        width: 280px !important;  /* સાઇડબારની પહોળાઈ */
-        height: 100vh !important; /* આખી સ્ક્રીનની ઊંચાઈ */
+        left: -280px;
+        width: 280px !important;
+        height: 100vh !important; /* પૂરેપૂરી હાઇટ */
         background: var(--gov-blue);
-        z-index: 9999 !important; /* પેજના કન્ટેન્ટની બિલકુલ ઉપર ઓવરલેપ થશે */
-        padding-top: 60px !important; /* ઉપરથી થોડી જગ્યા જેથી બંધ કરવાનું સરળ રહે */
-        overflow-y: auto !important; /* મેનુ મોટું હોય તો અંદર જ સ્ક્રોલ થશે */
-        transition: left 0.3s ease-in-out !important; /* સ્મૂધ બહાર આવવાની ઇફેક્ટ */
+        z-index: 9999 !important;
+        padding-top: 60px !important;
+        transition: left 0.3s ease-in-out !important;
         box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+    }
+
+    .menu-close-space {
+        flex-grow: 1; /* લોગઆઉટ નીચે જેટલી પણ ખાલી જગ્યા છે તે આખી રોકી લેશે */
+        width: 100%;
+        display: block !important;
+    }
+
+    .menu-close-space label {
+        display: block;
+        width: 100%;
+        height: 100%; /* આખી ખાલી જગ્યામાં ફેલાઈ જશે */
+        min-height: 200px; /* જો લિસ્ટ નાનું હોય તો પણ મિનિમમ આટલી જગ્યા આપશે */
+        cursor: pointer;
+        background: transparent; /* અદ્રશ્ય રહેશે જેથી કશું દેખાશે નહીં */
     }
 
     /* પ્યોર CSS મેજિક: જ્યારે ચેકબોક્સ ટીક થાય ત્યારે મેનુ પેજની ઉપર (Overlap) આવી જશે */
@@ -952,6 +966,9 @@ body{
                 </li>
                 <li class="nav-link-item nav-logout">
                     <a href="index.html" class="nav-main-link" onclick="logoutSystem()"><i class="fa-solid fa-power-off"></i>લોગ આઉટ</a>
+                </li>
+                <li class="menu-close-space">
+                    <label for="menu-toggle"></label>
                 </li>
             </ul>
         </div>
