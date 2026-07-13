@@ -695,7 +695,9 @@ body{
                     <a href="home.html" class="nav-main-link"><i class="fa-solid fa-house-user"></i> હોમ</a>
                 </li>
                 <li class="nav-link-item">
-                    <a href="javascript:void(0);" class="nav-main-link"><i class="fa-solid fa-school"></i> શાળા પરિચય<i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <a href="javascript:void(0);" class="nav-main-link" onclick="toggleDropdown(this)">
+                        <i class="fa-solid fa-university"></i> શાળા પરિચય <i class="fa-solid fa-chevron-down arrow"></i>
+                    </a>
                     <ul class="gov-dropdown">
                         <li><a href="teacher-information.html">શિક્ષકની માહિતી</a></li>
                         <li><a href="student-detail.html">વિદ્યાર્થી માહિતી</a></li>
@@ -705,8 +707,8 @@ body{
                     <a href="javascript:void(0);" class="nav-main-link"><i class="fa-solid fa-file-pdf"></i> પત્રકો / ફાઇલો <i class="fa-solid fa-chevron-down arrow"></i></a>
                     <ul class="gov-dropdown">
                         <li class="mdm-dropdown">
-                            <a href="javascript:void(0);" class="mdm-dropbtn">
-                                પરીક્ષા અને પરિણામ ફાઇલ <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                            <a href="javascript:void(0);" class="mdm-dropbtn" onclick="toggleDropdown(this)">
+                                <i class="fa-solid fa-university"></i> પરીક્ષા અને પરિણામ ફાઇલ <i class="fa-solid fa-chevron-down arrow"></i>
                             </a>
                     
                             <ul class="mdm-sub-menu">
@@ -1610,6 +1612,25 @@ function logoutSystem(){
     if(confirm("શું તમે આ સત્તાવાર પોર્ટલમાંથી બહાર નીકળવા માંગો છો?")){
         sessionStorage.clear();
         window.location.href = "login.html"; 
+    }
+}
+</script>
+<script>
+function toggleDropdown(element) {
+    // મોબાઈલ સાઈઝ હોય ત્યારે જ આ કામ કરશે
+    if (window.innerWidth <= 992) {
+        var parentLi = element.parentElement;
+        
+        // જો ઓલરેડી ખુલ્લું હોય તો બંધ કરો, નહિતર ચાલુ કરો
+        if (parentLi.classList.contains("show-menu")) {
+            parentLi.classList.remove("show-menu");
+        } else {
+            // બીજા બધા ખુલ્લા મેનુ પેલા બંધ કરી દેશે
+            document.querySelectorAll('.nav-link-item').forEach(function(li) {
+                li.classList.remove("show-menu");
+            });
+            parentLi.classList.add("show-menu");
+        }
     }
 }
 </script>
