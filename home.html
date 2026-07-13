@@ -519,57 +519,67 @@ body{
 }
 
 /* ==========================================================
-   📱 મોબાઈલ સાઈઝ (Phone View) માટે રિસ્પોન્સિવ CSS (ઓવરલેપ સાઇડબાર)
+   📱 મોબાઈલ સાઈઝ (Phone View) માટે પરફેક્ટ સાઇડબાર અને ટોગલ CSS
    ========================================================== */
 @media(max-width: 992px) {
-    /* મોબાઈલમાં ૩-લાઇન વાળું લેબલ બતાવો */
+    /* ૧. હેમબર્ગર લેબલને સાઇડબારની ઉપર બરાબર સેટ કરવું */
     .hamburger-label {
         display: flex;
         align-items: center;
-        gap: 10px;
-        width: 100%;
+        justify-content: flex-start; /* 🆕 સ્પેસ બીટવીન હટાવીને ફ્લેક્સ સ્ટાર્ટ કર્યું જેથી બંને જોડે આવી જાય */
+        gap: 12px;                  /* આયકન અને મેનુ લખાણ વચ્ચેની પરફેક્ટ જગ્યા */
+        padding: 15px 20px;
+        background: var(--gov-orange);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
         cursor: pointer;
+        position: relative;
+        z-index: 1000;
     }
 
-    /* સુધારો: શરૂઆતમાં મેનુ લિસ્ટ છુપાયેલું અને સ્ક્રીનની ડાબી બાજુ બહાર (fixed) રહેશે */
+    /* ૨. મેનુ લિસ્ટ (સાઇડબાર જે ઓવરલેપ થશે) */
     .nav-list {
         display: flex !important;
         flex-direction: column;
         position: fixed !important;
         top: 0;
-        left: -280px;
-        width: 280px !important;
-        height: 100vh !important; /* પૂરેપૂરી હાઇટ */
+        left: -280px;             /* શરૂઆતમાં ડાબી બાજુ છુપાયેલું */
+        width: 280px !important;  
+        height: 100vh !important; 
         background: var(--gov-blue);
-        z-index: 9999 !important;
-        padding-top: 60px !important;
+        z-index: 9999 !important; /* કન્ટેન્ટની ઉપર તરશે */
+        padding-top: 60px !important; /* ઉપરથી બટન માટે જગ્યા છોડી */
+        overflow-y: auto !important;
         transition: left 0.3s ease-in-out !important;
         box-shadow: 5px 0 15px rgba(0,0,0,0.3);
     }
 
-    .menu-close-space {
-        flex-grow: 1; /* લોગઆઉટ નીચે જેટલી પણ ખાલી જગ્યા છે તે આખી રોકી લેશે */
-        width: 100%;
-        display: block !important;
-    }
-
-    .menu-close-space label {
-        display: block;
-        width: 100%;
-        height: 100%; /* આખી ખાલી જગ્યામાં ફેલાઈ જશે */
-        min-height: 200px; /* જો લિસ્ટ નાનું હોય તો પણ મિનિમમ આટલી જગ્યા આપશે */
-        cursor: pointer;
-        background: transparent; /* અદ્રશ્ય રહેશે જેથી કશું દેખાશે નહીં */
-    }
-
-    /* પ્યોર CSS મેજિક: જ્યારે ચેકબોક્સ ટીક થાય ત્યારે મેનુ પેજની ઉપર (Overlap) આવી જશે */
+    /* ૩. જ્યારે ચેકબોક્સ ટીક (મેનુ ઓપન) થાય ત્યારે સાઇડબાર સ્ક્રીન પર આવશે */
     .menu-checkbox:checked ~ .nav-list {
-        left: 0 !important; /* ડાબી બાજુથી સ્ક્રીન પર આવી જશે */
+        left: 0 !important;
+    }
+
+    /* 🆕 પ્યોર CSS મેજિક: જ્યારે મેનુ ખુલે ત્યારે 'મેનુ' લખેલું આખું લેબલ સાઇડબારની ઉપર આવી જશે */
+    .menu-checkbox:checked ~ .hamburger-label {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 280px !important; 
+        z-index: 10000 !important; 
+        background: #0d4368 !important; 
+        box-sizing: border-box;
+        justify-content: flex-start !important; /* 🆕 અહીં પણ જોડે જ રહેશે */
+    }
+
+    /* 🆕 સુપર ટ્રીક: જ્યારે મેનુ ખુલે ત્યારે ૩-લાઇન (fa-bars) ને ચોકડી (X) માં ફેરવવા માટે */
+    .menu-checkbox:checked ~ .hamburger-label .fa-bars::before {
+        content: "\f00d" !important; /* આ FontAwesome માં 'X' (Close) નો કોડ છે */
     }
 
     /* મોબાઈલ ડ્રોપડાઉન સેટિંગ્સ */
     .gov-dropdown {
-        position: static !important; /* સાઇડબારની અંદર ફિક્સ કરવા માટે */
+        position: static !important;
         opacity: 1;
         visibility: visible;
         transform: none;
@@ -586,7 +596,7 @@ body{
     .gov-dropdown a {
         color: #e2e8f0;
         border-bottom: 1px solid rgba(255,255,255,0.1);
-        white-space: normal !important; /* ટેક્સ્ટ સાઇડબારની બહાર ન જાય તે માટે */
+        white-space: normal !important;
     }
 
     /* નેસ્ટેડ સબ-મેનુ સેટિંગ્સ */
@@ -621,6 +631,7 @@ body{
         margin-left: 0;
     }
 }
+
 /* મોબાઈલમાં સ્કૂલનું નામ પ્રોપર સેટ કરવા અને જમણી બાજુનું સેક્શન ડીલીટ કરવા માટે */
 @media(max-width: 992px) {
     /* ૧. આખા હેડરને સેન્ટર કરવા અને વર્ટિકલ (ઉભું) ગોઠવવા */
