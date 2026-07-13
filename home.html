@@ -503,62 +503,58 @@ body{
 .footer-contact-item i { color: var(--gov-orange); }
 .footer-bottom { border-top: 1px solid #1e4d73; padding-top: 20px; text-align: center; font-size: 13px; color: #94a3b8; }
 
+/* ડેસ્કટોપ વ્યુ માટે હિડન સેટિંગ્સ */
+.menu-checkbox {
+    display: none;
+}
+.hamburger-label {
+    display: none;
+    background: var(--gov-orange);
+    color: white;
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
 
 /* ==========================================================
-   📱 ફોન અને નાની સ્ક્રીન માટેના ખાસ મીડિયા ક્વેરી રિસ્પોન્સિવ સુધારા
+   📱 મોબાઈલ સાઈઝ (Phone View) માટે રિસ્પોન્સિવ CSS
    ========================================================== */
 @media(max-width: 992px) {
-    .gov-top-ribbon { 
-        flex-direction: column; 
-        text-align: center; 
-        gap: 5px; 
-        padding: 8px 10px; 
-    }
-    .gov-top-ribbon .right-links a { 
-        margin: 0 5px; 
-    }
-    .main-gov-header { 
-        flex-direction: column; 
-        text-align: center; 
-        gap: 15px; 
-        padding: 20px 15px;
-    }
-    .logo-section-left { 
-        flex-direction: column; 
-        gap: 10px; 
-    }
-    .logo-title-text h1 { 
-        font-size: 22px; 
-    }
-    .ministry-right { 
-        text-align: center; 
-        flex-direction: column; 
-        gap: 5px; 
-        border-left: none; 
-        padding-left: 0; 
-        border-top: 1px solid #cbd5e1;
-        padding-top: 15px;
+    /* મોબાઈલમાં ૩-લાઇન વાળું લેબલ બતાવો */
+    .hamburger-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
         width: 100%;
     }
-    
-    /* મોબાઈલ લેઆઉટ માટે મેનુ લિસ્ટને એકની નીચે એક વર્ટિકલ કરો */
-    .nav-list { 
-        flex-direction: column; 
+
+    /* શરૂઆતમાં મેનુ લિસ્ટ છુપાયેલું (Hide) રહેશે */
+    .nav-list {
+        display: none !important;
+        flex-direction: column;
         width: 100%;
+        background: var(--gov-blue);
     }
-    
-    /* પ્રાઈમરી ડ્રોપડાઉન મોબાઈલમાં અંદરની તરફ સ્લાઈડ ડાઉન થશે */
-    .gov-dropdown { 
-        position: static; 
-        opacity: 1; 
-        visibility: visible; 
-        transform: none; 
-        box-shadow: none; 
-        padding-left: 15px; 
-        background: #0f4c75; 
+
+    /* પ્યોર CSS મેજિક: જ્યારે ચેકબોક્સ ટીક થાય ત્યારે મેનુ ઓપન થશે */
+    .menu-checkbox:checked ~ .nav-list {
+        display: flex !important;
+    }
+
+    /* મોબાઈલ ડ્રોપડાઉન સેટિંગ્સ */
+    .gov-dropdown {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        padding-left: 15px;
+        background: #0f4c75;
         width: 100%;
         border-top: none;
-        display: none; 
+        display: none;
     }
     .nav-link-item:hover .gov-dropdown {
         display: block;
@@ -567,8 +563,8 @@ body{
         color: #e2e8f0;
         border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    
-    /* સેકન્ડરી નેસ્ટેડ સબ-મેનુ સુધારો */
+
+    /* નેસ્ટેડ સબ-મેનુ સેટિંગ્સ */
     .mdm-dropdown .mdm-sub-menu {
         position: static;
         box-shadow: none;
@@ -581,11 +577,8 @@ body{
     .mdm-dropdown:hover .mdm-sub-menu {
         display: block !important;
     }
-    .mdm-dropdown .mdm-sub-menu li a {
-        color: #f1f5f9 !important;
-    }
-    
-    /* પ્રવેશોત્સવ મેગા મેનુ મોબાઈલમાં ૧-કોલમ ગ્રીડ બનશે */
+
+    /* મેગા મેનુ મોબાઈલ સેટિંગ્સ */
     .mdm-dropdown.praveshotsav-mega-menu .mdm-sub-menu {
         position: static;
         grid-template-columns: 1fr !important;
@@ -593,41 +586,17 @@ body{
         box-shadow: none !important;
         background: #1b6ca8 !important;
         padding: 10px !important;
-        border-left: 2px solid var(--gov-orange) !important;
         display: none !important;
     }
     .mdm-dropdown.praveshotsav-mega-menu:hover > .mdm-sub-menu {
         display: block !important;
     }
-    .mdm-dropdown.praveshotsav-mega-menu .mdm-sub-menu li a {
-        white-space: normal !important;
-    }
-    
-    .nav-logout { 
-        margin-left: 0; 
-    }
-    
-    /* ટેબ્સ અને બટન મોબાઈલ ફિટ */
-    .gallery-tabs-row { 
-        flex-wrap: wrap;
-        justify-content: center; 
-    }
-    .gallery-tab-btn {
-        padding: 8px 16px;
-        font-size: 13px;
-        flex: 1 1 calc(50% - 10px);
-        text-align: center;
+
+    .nav-logout {
+        margin-left: 0;
     }
 }
 
-@media(max-width: 480px) {
-    .photo-gallery-grid {
-        grid-template-columns: 1fr !important; /* નાના ફોનમાં એક જ કોલમમાં ફોટો દેખાશે */
-    }
-    .logo-title-text h1 { 
-        font-size: 18px; 
-    }
-}
 </style>
 </head>
 
@@ -660,9 +629,13 @@ body{
         </div>
     </div>
 
-    <nav class="gov-navbar">
-        <div class="gov-container" style="padding: 0;">
-            <ul class="nav-list">
+<nav class="gov-navbar">
+    <div class="gov-container" style="padding: 0;">
+        
+        <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+        <label for="menu-toggle" class="hamburger-label"><i class="fa-solid fa-bars"></i> મેનુ</label>
+        
+        <ul class="nav-list">
                 <li class="nav-link-item">
                     <a href="home.html" class="nav-main-link"><i class="fa-solid fa-house-user"></i> હોમ</a>
                 </li>
