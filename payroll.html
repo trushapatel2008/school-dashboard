@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll System - કર્મચારી પત્રક</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 20px; }
+        .main-container { max-width: 1300px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .top-nav { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
+        .btn { padding: 8px 18px; font-size: 14px; font-weight: bold; border: none; border-radius: 20px; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-print { background-color: #008000; color: white; }
+        .btn-back { background-color: #3182ce; color: white; }
+        .header-section { text-align: center; color: #0c4a60; margin-bottom: 25px; }
+        .header-section h1 { font-size: 32px; margin: 5px 0; color: #3b2787; font-weight: bold; }
+        .school-info { font-size: 14px; color: #0076a3; margin: 5px 0; font-weight: bold; }
+        .table-title { text-align: center; color: #cc0000; font-size: 22px; font-weight: bold; margin: 20px 0; line-height: 1.5; }
+        
+        /* Form Styling */
+        .form-box { background-color: #e6f4fa; border: 1px solid #bce1f2; border-radius: 8px; padding: 20px; margin-bottom: 30px; }
+        .form-title { font-size: 16px; font-weight: bold; color: #000; margin-bottom: 15px; border-bottom: 2px solid #bce1f2; padding-bottom: 5px; }
+        .form-row { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
+        .form-group { flex: 1; min-width: 220px; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; color: #444; margin-bottom: 5px; }
+        .form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-weight: bold; background-color: #fff; }
+        .form-buttons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
+        .btn-save { background-color: #2ec4b6; color: white; border-radius: 4px; padding: 10px 25px; border:none; font-weight:bold; cursor:pointer; font-size:15px; }
+        .btn-clear { background-color: #888; color: white; border-radius: 4px; padding: 10px 25px; border:none; font-weight:bold; cursor:pointer; font-size:15px; }
+        
+        #live-loader {
+            display: none; text-align: center; background-color: #fff3cd; color: #856404;
+            padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #ffeeba;
+            font-weight: bold; font-size: 15px;
+        }
+
+        /* Responsive Wrapper for Large Table */
+        .table-wrapper { width: 100%; overflow-x: auto; margin-top: 20px; border: 1px solid #000; }
+        table { width: 100%; border-collapse: collapse; background-color: #ffffff; white-space: nowrap; }
+        th, td { border: 1px solid #000; text-align: center; padding: 10px 12px; font-size: 14px; font-weight: bold; }
+        th { background-color: #f8f9fa; color: #000; position: sticky; top: 0; }
+        .action-col { display: none !important; }
+        .btn-delete { background-color: #e63946; color: white; padding: 5px 12px; border-radius: 4px; font-size: 13px; border:none; cursor:pointer; font-weight:bold; transition: 0.2s; }
+        .btn-delete:hover { background-color: #cc0000; }
+        
+        @media print { 
+            .top-nav, .form-box, th:last-child, td:last-child, #live-loader { display: none !important; } 
+            body { padding: 0; background-color: #fff; } 
+            .main-container { box-shadow: none; padding: 0; max-width: 100%; }
+            .table-wrapper { overflow-x: visible; border: none; }
+            table { font-size: 11px; }
+            th, td { padding: 4px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="top-nav">
+        <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
+        <a href="home.html" class="btn btn-back">⬅️ Back</a>
+    </div>
+
+    <div class="header-section">
+        <p style="color: #ff6b35; font-weight: bold; margin: 0;">સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</p>
+        <h1>હાજીપુર પ્રાથમિક શાળા</h1>
+        <p class="table-title">💼 કર્મચારી પે-રોલ ડેટાબેઝ સિસ્ટમ (Payroll Register)</p>
+    </div>
+
+    <!-- ✏️ પેરૉલ ડેટા એન્ટ્રી ફોર્મ -->
+    <div class="form-box">
+        <form id="payrollForm">
+            <div class="form-title">🔑 ૧. વ્યક્તિગત વિગતો (Personal Details)</div>
+            <div class="form-row">
+                <div class="form-group" style="flex: 0.5; min-width: 80px;">
+                    <label># ક્રમ</label>
+                    <input type="number" id="sr_no" required placeholder="1">
+                </div>
+                <div class="form-group">
+                    <label>HRPN Code</label>
+                    <input type="text" id="hrpn" required placeholder="HRPN નંબર">
+                </div>
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" id="first_name" required placeholder="કર્મચારીનું નામ">
+                </div>
+                <div class="form-group">
+                    <label>Middle Name</label>
+                    <input type="text" id="middle_name" required placeholder="પિતા/પતિનું નામ">
+                </div>
+                <div class="form-group">
+                    <label>Surname</label>
+                    <input type="text" id="surname" required placeholder="અટક">
+                </div>
+            </div>
+
+            <div class="form-title">🏦 ૨. બેંક અને સરકારી ખાતાની વિગતો (Bank & Identification)</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Bank Account No.</label>
+                    <input type="text" id="bank_acc" required placeholder="બેંક એકાઉન્ટ નંબર">
+                </div>
+                <div class="form-group">
+                    <label>IFSC Code</label>
+                    <input type="text" id="ifsc" required placeholder="IFSC કોડ">
+                </div>
+                <div class="form-group">
+                    <label>Bank Name</label>
+                    <input type="text" id="bank_name" required placeholder="બેંકનું નામ">
+                </div>
+                <div class="form-group">
+                    <label>PAN Card No.</label>
+                    <input type="text" id="pan" required placeholder="PAN નંબર">
+                </div>
+            </div>
+
+            <div class="form-title">💵 ૩. સર્વિસ અને પગારની વિગતો (Salary & Joing Details)</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>First Service Joining Date</label>
+                    <input type="date" id="joining_date" required>
+                </div>
+                <div class="form-group">
+                    <label>GPF / NPS (16 digit PPAN)</label>
+                    <input type="text" id="gpf_nps" required placeholder="16 આંકડાનો PPAN">
+                </div>
+                <div class="form-group">
+                    <label>PH (Physically Handicapped?)</label>
+                    <select id="ph">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>IFMS Case No.</label>
+                    <input type="text" id="ifms_case" placeholder="IFMS કેસ નંબર">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Pay Commission Type Name</label>
+                    <input type="text" id="pay_commission" placeholder="उदा. 7th Pay Commission">
+                </div>
+                <div class="form-group">
+                    <label>Grade Pay</label>
+                    <input type="number" id="grade_pay" placeholder="ગ્રેડ પે">
+                </div>
+                <div class="form-group">
+                    <label>Pay Band</label>
+                    <input type="text" id="pay_band" placeholder="પે બેન્ડ">
+                </div>
+                <div class="form-group">
+                    <label>Pay Level</label>
+                    <input type="text" id="pay_level" placeholder="પે લેવલ">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Pay Cell</label>
+                    <input type="number" id="pay_cell" placeholder="પે સેલ">
+                </div>
+                <div class="form-group">
+                    <label>Current Month Basic Salary</label>
+                    <input type="number" id="basic_salary" required placeholder="મૂળ પગાર">
+                </div>
+                <div class="form-group">
+                    <label>Increment Month</label>
+                    <select id="increment_month">
+                        <option value="January">January</option>
+                        <option value="July">July</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Is this Government Quarter? (Yes/No)</label>
+                    <select id="gov_quarter">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-title">📍 ૪. સરનામું (Address Details)</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>House No. / Street Name</label>
+                    <input type="text" id="address1" required placeholder="શેરી/સોસાયટીનું નામ">
+                </div>
+                <div class="form-group">
+                    <label>2nd Line Address</label>
+                    <input type="text" id="address2" placeholder="બીજી લાઈન સરનામું">
+                </div>
+                <div class="form-group">
+                    <label>Country</label>
+                    <input type="text" id="country" value="India" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>State</label>
+                    <input type="text" id="state" value="Gujarat" required>
+                </div>
+                <div class="form-group">
+                    <label>District</label>
+                    <input type="text" id="district" placeholder="જિલ્લો">
+                </div>
+                <div class="form-group">
+                    <label>Taluka</label>
+                    <input type="text" id="taluka" placeholder="તાલુકો">
+                </div>
+                <div class="form-group">
+                    <label>Postal Code (Pin)</label>
+                    <input type="text" id="postal_code" required placeholder="પીનકોડ">
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-save">💾 સેવ કરો</button>
+                <button type="button" class="btn btn-clear" onclick="clearForm()">સાફ કરો</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="live-loader">ડેટા લોડ થઈ રહ્યો છે...</div>
+
+    <!-- 📊 ડેટા લિસ્ટ ટેબલ -->
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>HRPN</th>
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Surname</th>
+                    <th>Bank Account No.</th>
+                    <th>IFSC</th>
+                    <th>Bank Name</th>
+                    <th>PAN</th>
+                    <th>First Service Joining Date</th>
+                    <th>GPF / NPS (16 digit PPAN)</th>
+                    <th>PH</th>
+                    <th>IFMS Case No.</th>
+                    <th>House No. Street Name</th>
+                    <th>2nd Line Address</th>
+                    <th>Country</th>
+                    <th>State</th>
+                    <th>District</th>
+                    <th>Taluka</th>
+                    <th>Postal Code</th>
+                    <th>Is Government Quarter?</th>
+                    <th>Pay Commission</th>
+                    <th>Grade Pay</th>
+                    <th>Pay Band</th>
+                    <th>Pay Level</th>
+                    <th>Pay Cell</th>
+                    <th>Current Basic Salary</th>
+                    <th>Increment Month</th>
+                    <th class="action-col">એક્શન</th>
+                </tr>
+            </thead>
+            <tbody id="dataTableBody">
+                <tr><td colspan="29" style="color: #ff9f1c;">ડેટા લોડ થઈ રહ્યો છે...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // ⚠️ અહીં તમારી નવી પેરૉલ વેબ એપ્લીકેશન લિંક (New Web App URL) પેસ્ટ કરો
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwDtj-DTypxxux6-fYP-XzCHHz4g79pQE5aGMF1I9CbjHAna2fPcqsrbkM0atWX5lEpZw/exec";
+
+    function fetchPayrollData() {
+        document.getElementById("live-loader").style.display = "block";
+        document.getElementById("live-loader").innerText = "⏳ પેરૉલ ડેટા લોડ થઈ રહ્યો છે...";
+        
+        let oldScript = document.getElementById("jsonpScript");
+        if(oldScript) oldScript.remove();
+
+        let script = document.createElement('script');
+        script.id = "jsonpScript";
+        script.src = `${WEB_APP_URL}?callback=displayData&action=read&_=${new Date().getTime()}`;
+        document.body.appendChild(script);
+    }
+
+    window.onload = fetchPayrollData;
+
+    function displayData(data) {
+        document.getElementById("live-loader").style.display = "none";
+        const tbody = document.getElementById("dataTableBody");
+        tbody.innerHTML = "";
+
+        if(!data || data.error || data.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="29" style="color:gray; font-weight:normal;">કોઈ ડેટા ઉપલબ્ધ નથી. નવો ડેટા ઉમેરો.</td></tr>`;
+            return;
+        }
+
+        data.sort((a, b) => parseInt(a.sr) - parseInt(b.sr));
+
+        data.forEach(row => {
+            let tr = `<tr>
+                <td>${row.sr}</td>
+                <td>${row.hrpn}</td>
+                <td>${row.first_name}</td>
+                <td>${row.middle_name}</td>
+                <td>${row.surname}</td>
+                <td>${row.bank_acc}</td>
+                <td>${row.ifsc}</td>
+                <td>${row.bank_name}</td>
+                <td>${row.pan}</td>
+                <td>${row.joining_date}</td>
+                <td>${row.gpf_nps}</td>
+                <td>${row.ph}</td>
+                <td>${row.ifms_case}</td>
+                <td>${row.address1}</td>
+                <td>${row.address2}</td>
+                <td>${row.country}</td>
+                <td>${row.state}</td>
+                <td>${row.district}</td>
+                <td>${row.taluka}</td>
+                <td>${row.postal_code}</td>
+                <td>${row.gov_quarter}</td>
+                <td>${row.pay_commission}</td>
+                <td>${row.grade_pay}</td>
+                <td>${row.pay_band}</td>
+                <td>${row.pay_level}</td>
+                <td>${row.pay_cell}</td>
+                <td>${row.basic_salary}</td>
+                <td>${row.increment_month}</td>
+                <td class="action-col"><button class="btn" style="background:#3498db; color:white; padding:3px 8px;" onclick="editTeacher('${sr}','${name}','${designation}','${std}','${dob}','${doj_dept}','${doj_school}','${edu}','${address}','${mobile}')">બદલો</button></td>
+            </tr>`;
+            tbody.insertAdjacentHTML('beforeend', tr);
+        });
+    }
+
+    // 💾 ડેટા સેવ કરવા માટે
+    document.getElementById("payrollForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        document.getElementById("live-loader").style.display = "block";
+        document.getElementById("live-loader").innerText = "⚙️ માહિતી ગુગલ શીટમાં સ્ટોર થઈ રહી છે...";
+
+        let queryParams = [
+            `action=save`,
+            `sr_no=${document.getElementById("sr_no").value}`,
+            `hrpn=${encodeURIComponent(document.getElementById("hrpn").value)}`,
+            `first_name=${encodeURIComponent(document.getElementById("first_name").value)}`,
+            `middle_name=${encodeURIComponent(document.getElementById("middle_name").value)}`,
+            `surname=${encodeURIComponent(document.getElementById("surname").value)}`,
+            `bank_acc=${encodeURIComponent(document.getElementById("bank_acc").value)}`,
+            `ifsc=${encodeURIComponent(document.getElementById("ifsc").value)}`,
+            `bank_name=${encodeURIComponent(document.getElementById("bank_name").value)}`,
+            `pan=${encodeURIComponent(document.getElementById("pan").value)}`,
+            `joining_date=${document.getElementById("joining_date").value}`,
+            `gpf_nps=${encodeURIComponent(document.getElementById("gpf_nps").value)}`,
+            `ph=${document.getElementById("ph").value}`,
+            `ifms_case=${encodeURIComponent(document.getElementById("ifms_case").value)}`,
+            `address1=${encodeURIComponent(document.getElementById("address1").value)}`,
+            `address2=${encodeURIComponent(document.getElementById("address2").value)}`,
+            `country=${encodeURIComponent(document.getElementById("country").value)}`,
+            `state=${encodeURIComponent(document.getElementById("state").value)}`,
+            `district=${encodeURIComponent(document.getElementById("district").value)}`,
+            `taluka=${encodeURIComponent(document.getElementById("taluka").value)}`,
+            `postal_code=${document.getElementById("postal_code").value}`,
+            `gov_quarter=${document.getElementById("gov_quarter").value}`,
+            `pay_commission=${encodeURIComponent(document.getElementById("pay_commission").value)}`,
+            `grade_pay=${document.getElementById("grade_pay").value}`,
+            `pay_band=${encodeURIComponent(document.getElementById("pay_band").value)}`,
+            `pay_level=${encodeURIComponent(document.getElementById("pay_level").value)}`,
+            `pay_cell=${document.getElementById("pay_cell").value}`,
+            `basic_salary=${document.getElementById("basic_salary").value}`,
+            `increment_month=${document.getElementById("increment_month").value}`,
+            `callback=onSaveSuccess`,
+            `_=${new Date().getTime()}`
+        ].join('&');
+
+        let oldScript = document.getElementById("jsonpSaveScript");
+        if(oldScript) oldScript.remove();
+
+        let script = document.createElement('script');
+        script.id = "jsonpSaveScript";
+        script.src = `${WEB_APP_URL}?${queryParams}`;
+        document.body.appendChild(script);
+    });
+
+    function onSaveSuccess(response) {
+        if(response.success) {
+            document.getElementById("live-loader").innerText = "✅ પેરૉલ ડેટા સેવ સફળ!";
+            clearForm();
+            setTimeout(fetchPayrollData, 1000); 
+        } else {
+            alert("સેવ થવામાં કોઈ ખામી આવી!");
+            document.getElementById("live-loader").style.display = "none";
+        }
+    }
+
+    // ❌ ડેટા ડીલીટ કરવા માટે
+    function deleteRow(sr) {
+        let check = confirm("શું તમે ખરેખર ક્રમ નંબર " + sr + " નો પેરૉલ ડેટા ડિલીટ કરવા માંગો છો?");
+        if (check) {
+            document.getElementById("live-loader").style.display = "block";
+            document.getElementById("live-loader").innerText = "🗑️ માહિતી ડિલીટ થઈ રહી છે...";
+
+            let oldScript = document.getElementById("jsonpDeleteScript");
+            if(oldScript) oldScript.remove();
+
+            let script = document.createElement('script');
+            script.id = "jsonpDeleteScript";
+            script.src = `${WEB_APP_URL}?action=delete&sr_no=${sr}&callback=onDeleteSuccess&_=${new Date().getTime()}`;
+            document.body.appendChild(script);
+        }
+    }
+
+    function onDeleteSuccess(response) {
+        if(response.success) {
+            document.getElementById("live-loader").innerText = "✅ ડેટા ડિલીટ થયો!";
+            setTimeout(fetchPayrollData, 1000);
+        } else {
+            alert("ડિલીટ કરવામાં ભૂલ આવી!");
+            document.getElementById("live-loader").style.display = "none";
+        }
+    }
+
+    function clearForm() {
+        document.getElementById("payrollForm").reset();
+    }
+</script>
+</body>
+</html>
