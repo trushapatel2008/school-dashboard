@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>પત્રક</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+/* BODY */
+
+body{
+
+    min-height:100vh;
+
+    background:
+
+    linear-gradient(
+    rgba(240,255,252,0.90),
+    rgba(225,245,255,0.90)
+    );
+
+    background-attachment:fixed;
+
+    overflow-x:hidden;
+}
+
+/* CONTAINER */
+
+.container{
+
+    display:flex;
+
+    min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+
+    width:280px;
+
+    background:rgba(255,255,255,0.35);
+
+    backdrop-filter:blur(15px);
+
+    border-right:1px solid rgba(255,255,255,0.25);
+
+    padding:20px;
+
+    box-shadow:0 0 20px rgba(0,0,0,0.08);
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+/* LOGO */
+
+.logo{
+
+    text-align:center;
+
+    margin-bottom:25px;
+}
+
+.logo img{
+
+    width:140px;
+
+    height:auto;
+
+    object-fit:contain;
+}
+
+/* MENU */
+
+.menu{
+
+    flex:1;
+}
+
+.menu a{
+
+    display:flex;
+
+    align-items:center;
+
+    background:rgba(255,255,255,0.45);
+
+    color:#184e77;
+
+    text-decoration:none;
+
+    padding:14px;
+
+    margin-bottom:12px;
+
+    border-radius:12px;
+
+    transition:0.3s;
+
+    border:1px solid rgba(255,255,255,0.25);
+
+    font-weight:500;
+}
+
+        .menu a:hover, .menu a.active { 
+            background: linear-gradient(45deg, #4facfe, #00c6fb); 
+            color: white; 
+            transform: translateX(6px); 
+        }
+
+/* LOGOUT */
+
+.logout-link{
+
+    margin-top:20px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:14px;
+
+    text-decoration:none;
+
+    color:white;
+
+    border-radius:12px;
+
+    background:
+    linear-gradient(45deg,#ff416c,#ff4b2b);
+
+    font-weight:bold;
+}
+
+/* MAIN */
+
+.main{
+
+    flex:1;
+
+    padding:30px;
+}
+
+/* HEADER */
+
+.header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:35px;
+}
+
+.header h1{
+
+    color:#184e77;
+
+    font-size:38px;
+}
+
+.header p{
+
+    color:#355070;
+
+    margin-top:5px;
+}
+
+/* ABOUT BUTTON */
+
+.about-btn{
+
+    padding:14px 24px;
+
+    border-radius:40px;
+
+    text-decoration:none;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    background:
+    linear-gradient(
+    45deg,
+    #4f46e5,
+    #4338ca
+    );
+
+    box-shadow:
+    0 5px 15px rgba(79,70,229,0.4);
+
+    transition:0.3s;
+}
+
+.about-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 8px 20px rgba(79,70,229,0.5);
+}
+
+/* REPORT SECTION */
+
+.report-section{
+
+    margin-top:20px;
+}
+
+/* TITLE */
+
+.report-title{
+
+    color:#184e77;
+
+    font-size:38px;
+
+    margin-bottom:30px;
+
+    text-align:center;
+}
+
+/* GRID */
+
+.report-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(260px,1fr));
+
+    gap:25px;
+}
+
+/* CARD */
+
+.report-card{
+
+    background:rgba(255,255,255,0.45);
+
+    backdrop-filter:blur(12px);
+
+    border-radius:22px;
+
+    padding:25px;
+
+    border:1px solid rgba(255,255,255,0.25);
+
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+
+    transition:0.3s;
+
+    text-align:center;
+}
+
+.report-card:hover{
+
+    transform:translateY(-8px);
+
+    background:rgba(255,255,255,0.60);
+}
+
+/* TITLE */
+
+.report-card h3{
+
+    color:#0077b6;
+
+    font-size:28px;
+
+    margin-bottom:20px;
+}
+
+/* BUTTON */
+
+.report-card a{
+
+    display:inline-block;
+
+    padding:10px 20px;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    background:rgba(255,255,255,0.65);
+
+    color:#184e77;
+
+    font-weight:600;
+
+    transition:0.3s;
+
+    border:1px solid rgba(255,255,255,0.25);
+}
+
+.report-card a:hover{
+
+    background:
+    linear-gradient(45deg,#4facfe,#00c6fb);
+
+    color:white;
+
+    transform:scale(1.05);
+}
+
+/* BACK BUTTON */
+
+.back-btn{
+
+    display:inline-block;
+
+    margin-top:35px;
+
+    padding:14px 28px;
+
+    border-radius:40px;
+
+    text-decoration:none;
+
+    background:
+    linear-gradient(
+    45deg,
+    #4facfe,
+    #00c6fb
+    );
+
+    color:white;
+
+    font-weight:600;
+
+    transition:0.3s;
+}
+
+.back-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 8px 20px rgba(0,198,251,0.3);
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .container{
+
+        flex-direction:column;
+    }
+
+    .sidebar{
+
+        width:100%;
+    }
+
+    .header{
+
+        flex-direction:column;
+
+        gap:20px;
+
+        text-align:center;
+    }
+
+    .report-title{
+
+        font-size:28px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+
+        <div class="sidebar">
+            <div class="logo">
+                <img src="static/images/logo.jpg" onerror="this.src='https://placehold.co/140x140?text=SCHOOL+LOGO'" alt="School Logo">
+            </div>
+            <div class="menu">
+                <a href="school-information.html">શાળા પરિચય</a>
+                <a href="attendance.html">દૈનિક હાજરી</a>
+                <a href="mdm.html">મધ્યાહન ભોજન યોજના</a>
+                <a href="information.html">માહિતી</a>
+                <a href="report.html" class="active">પત્રક</a>
+                <a href="examfile.html">પરીક્ષા/પરીણામ ફાઇલ</a>
+                <a href="report.html">ટ્રાન્સપોર્ટેશન</a>
+                <a href="praveshotsav-file.html">પ્રવેશોત્સવ</a>
+                <a href="gr-register.html">જી.આર. રજીસ્ટર</a>
+                <a href="training.html">તાલીમ માહિતી</a>
+                <a href="SMC.html">S.M.C.</a>
+                <a href="gallery.html">કાર્યક્રમ ફોટો ફાઇલ</a>
+                <a href="settings.html">સેટિંગ્સ</a>
+            </div>
+            <a href="index.html" class="logout-link">🚪 લોગ આઉટ</a>
+        </div>
+
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div>
+
+                <h1>Welcome 👋</h1>
+
+                <p>હાજીપુર પ્રાથમિક શાળા</p>
+
+            </div>
+
+            <a href="about.html"
+               class="about-btn">
+
+               About Us
+
+            </a>
+
+        </div>
+
+        <!-- REPORT SECTION -->
+
+        <div class="report-section">
+
+            <h2 class="report-title">
+
+                📑 પરીક્ષા/પરીણામ ફાઇલ
+
+            </h2>
+
+            <div class="report-grid">
+
+                <!-- 1 -->
+
+                <div class="report-card">
+
+                    <h3>પરીક્ષા ફાઇલ </h3>
+
+                    <a href="#">
+                        Open
+                    </a>
+
+                </div>
+
+                <!-- 2 -->
+
+                <div class="report-card">
+
+                    <h3>પરિણામ પત્રક</h3>
+
+                    <a href="report-card.html">
+                        Open
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BUTTON -->
+
+        <a href="home.html"
+           class="back-btn">
+
+           ⬅ Back To Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
