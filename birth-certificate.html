@@ -162,23 +162,32 @@
         .btn-view { background-color: #00bcd4; color: white; margin-right: 5px; }
         .btn-delete { background-color: #ff5252; color: white; }
 
-        /* BACK BUTTON */
-        .back-btn{
-            display:inline-block;
-            margin-top:35px;
-            padding:14px 28px;
-            border-radius:40px;
-            text-decoration:none;
-            background: linear-gradient(45deg, #4facfe, #00c6fb);
-            color:white;
-            font-weight:600;
-            transition:0.3s;
-        }
+       /* BACK BUTTON CONTAINER */
+.back-btn-container {
+    display: flex;
+    justify-content: flex-end; /* આનાથી બટન જમણી બાજુ આવી જશે */
+    width: 102%;
+    margin-bottom: 10px; /* સ્પેસિંગ અહીં શિફ્ટ કરી */
+    padding-right: 10px; /* સેજ માર્જિન માટે */
+    box-sizing: border-box;
+}
 
-        .back-btn:hover{
-            transform:translateY(-3px);
-            box-shadow:0 8px 20px rgba(0,198,251,0.3);
-        }
+/* BACK BUTTON */
+.back-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 40px;
+    text-decoration: none;
+    background: linear-gradient(45deg, #4facfe, #00c6fb);
+    color: white;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,198,251,0.3);
+}
 
         @media print {
             .selection-grid, .form-card-section, .btn-container, .table-section, .form-title-main, .back-btn { display: none !important; }
@@ -193,7 +202,9 @@
 <body>
 
 <div class="container">
-    
+    <div class="back-btn-container">
+    <a href="home.html" class="back-btn">⬅ Back</a>
+</div>
     <div class="selection-grid">
         <div class="select-card active" id="btnJanma" onclick="switchType('janma')">
             <h2>📅 જન્મ તારીખનો દાખલો</h2>
@@ -295,8 +306,7 @@
         </div>
         
     </div>
-    
-    <a href="report.html" class="back-btn">⬅ Back</a>
+
 </div>
 
 <script>
@@ -347,7 +357,7 @@
             document.getElementById('certBodyText').innerHTML = `
                 આથી દાખલો લખી આપવામાં આવે છે કે કુમાર / કુમારી શ્રી <div class="blank-line">${name}</div> 
                 સદર શાળાના ધોરણ <div class="blank-line">${sClass}</div> માં અભ્યાસ કરે છે/કરતા હતાં/કરતી હતી. 
-                شાળાના જનરલ રજીસ્ટર નં. <div class="blank-line">${grNo}</div> પ્રમાણે તેમની જન્મ તારીખ 
+                શાળાના જનરલ રજીસ્ટર નં. <div class="blank-line">${grNo}</div> પ્રમાણે તેમની જન્મ તારીખ 
                 <div class="blank-line">${dob}</div> શબ્દોમાં <div class="blank-line">${dobWords}</div> છે. 
                 શૈક્ષણિક રેકોર્ડ મુજબ તેમની ચાલ-ચલગત <div class="blank-line">સારી</div> છે. હું તેમની સફળતા ઇચ્છુ છું॰ 
                 તેમનો યુનિક આઈ ડી નંબર <div class="blank-line">${uid}</div> છે . <br><br>
