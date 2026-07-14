@@ -152,13 +152,13 @@
 
     <div class="excel-header">
         <div class="main-title">સમગ્ર શિક્ષા અભિયાન - વાવ થરાદ જીલ્લો</div>
-        <div class="main-title" style="font-size: 16px;">દેરિયાવાળા પ્રા.શાળા (રૂણી)</div>
+        <div class="main-title" style="font-size: 16px;">હાજીપુર પ્રાથમિક શાળા</div>
         <div class="sub-title">※ શાળા વ્યવસ્થા૫ન સમિતિ (SMC) ※</div>
     </div>
     
     <div class="meta-info-grid">
-        <div>ગામ:- રૂણી, તાલુકો:- ભાભર, જીલ્લો:- વાવ થરાદ, સી.આર.સી.:- અબાળા</div>
-        <div style="text-align: right;">વર્ષ :- 2026-27</div>
+        <div>ગામ:- હાજીપુર પ્રાથમિક શાળા, તાલુકો:- કલોલ, જીલ્લો:- ગાંધીનગર, સી.આર.સી.:- ભોયણ મોટી</div>
+        <div style="text-align: right;">વર્ષ :-  <span id="lblAcademicYear"></span></div>
     </div>
 
     <div class="form-box">
@@ -233,6 +233,20 @@
         renderTable();
     };
 
+    window.onload = function() {
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth(); 
+        
+        let academicYear = "";
+        if (currentMonth >= 5) { 
+            academicYear = currentYear + "-" + String(currentYear + 1).slice(-2);
+        } else {
+            academicYear = (currentYear - 1) + "-" + String(currentYear).slice(-2);
+        }
+        document.getElementById("lblAcademicYear").innerText = academicYear;
+        loadData();
+    };
     // Render data inside the table matrix
     function renderTable() {
         tableBody.innerHTML = '';
