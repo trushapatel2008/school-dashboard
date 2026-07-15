@@ -26,7 +26,7 @@
         .ministry-right p { margin: 0; font-size: 12px; color: #64748b; }
 
         /* 🌐 ઓરિજિનલ ડાર્ક બ્લુ નેવિગેશન બાર */
-        .gov-navbar { background-color: #0c4a6e; padding: 0 20px; z-index: 999; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .gov-navbar { background-color: #0c4a6e; padding: 0 0px; z-index: 999; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .gov-container-nav { max-width: 1400px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; }
         .nav-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; }
         .nav-link-item { position: relative; }
@@ -91,7 +91,7 @@
         .gov-footer { background-color: #0c4a6e; color: #e2e8f0; padding: 35px 40px 20px 40px; margin-top: auto; border-top: 3px solid #f58220; width: 100%; }
         .gov-footer .gov-container { max-width: 1240px; margin: 0 auto; width: 100%; }
         .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-        .footer-column h4 { color: #ffffff; font-size: 16px; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid #0284c7; padding-bottom: 6px; font-weight: bold; }
+
         .footer-column p { font-size: 13.5px; line-height: 1.6; margin: 0; color: #bae6fd; }
         .footer-links { list-style: none; padding: 0; margin: 0; }
         .footer-links li { margin-bottom: 10px; }
@@ -314,105 +314,6 @@ body{
 }
 .nav-logout:hover .nav-main-link { background: #b91c1c !important; }
 
-/* --- ૪. ઈમેજ સ્લાઇડર સેક્શન --- */
-.slider-wrapper {
-    width: 100%;
-    height: 450px;
-    position: relative;
-    overflow: hidden;
-    margin: 25px 0;
-    border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-.slides-track {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.single-slide {
-    min-width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.single-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.slide-gov-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent, rgba(11, 60, 93, 0.95));
-    color: white;
-    padding: 35px 50px;
-    text-align: center;
-}
-.slide-gov-caption h2 { font-size: 30px; color: var(--gov-orange); margin-bottom: 6px; }
-.slide-gov-caption p { font-size: 15px; color: #e2e8f0; }
-
-.slide-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.5);
-    color: white;
-    border: none;
-    padding: 15px;
-    cursor: pointer;
-    font-size: 18px;
-    border-radius: 50%;
-}
-.slide-arrow:hover { background: var(--gov-blue); }
-.arrow-left { left: 20px; }
-.arrow-right { right: 20px; }
-
-/* --- ૫. શાળા પરિચય સેક્શન --- */
-.gov-about-grid {
-    display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: 30px;
-    background: white;
-    padding: 35px;
-    border-radius: 4px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-    margin-bottom: 35px;
-    border-left: 5px solid var(--gov-blue);
-}
-
-.about-info-text h2 {
-    color: var(--gov-blue);
-    font-size: 26px;
-    margin-bottom: 15px;
-}
-.about-info-text p {
-    color: #475569;
-    font-size: 15px;
-    line-height: 1.8;
-    margin-bottom: 15px;
-    text-align: justify;
-}
-
-.gov-badge-box {
-    background: #f0f7ff;
-    border: 2px dashed var(--gov-blue);
-    border-radius: 4px;
-    padding: 25px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.gov-badge-box image { font-size: 55px; margin-bottom: 15px; }
-.gov-badge-box h3 { color: var(--gov-blue); font-size: 22px; margin-bottom: 5px; }
-.gov-badge-box p { font-size: 14px; color: #475569; }
 
 /* --- ૬. સરકારી આંકડાકીય લાઈવ કાર્ડ્સ --- */
 .stats-row {
