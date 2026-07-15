@@ -1133,6 +1133,84 @@ body{
 
         </div>
     </div>
+    <style>
+        /* ==========================================================================
+   📱 મોબાઇલ સાઇઝ માટેનો રિસ્પોન્સિવ CSS કોડ (Screen Width 768px કે તેથી ઓછી)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+    
+    /* 1. મુખ્ય પેજ અને કન્ટેનર સેટિંગ્સ */
+    .page-wrapper {
+        padding: 10px 5px !important; /* આજુબાજુથી નકામી જગ્યા ઘટાડવા */
+    }
+    
+    .container {
+        padding: 15px 10px !important;
+        border-radius: 8px !important;
+    }
+
+    /* 2. હેડર અને ટેક્સ્ટ સાઇઝ */
+    .school-info-header h2 {
+        font-size: 20px !important; /* શાળાનું નામ મોબાઇલમાં બંધબેસતું કરવા */
+    }
+    .school-info-header h3 {
+        font-size: 15px !important;
+    }
+    .school-info-subtext {
+        font-size: 11px !important;
+    }
+    .section-title, .section-subtitle {
+        font-size: 14px !important;
+        line-height: 1.4;
+    }
+
+    /* 3. ઇનપુટ ફોર્મ ગ્રીડ (Form Grid) - એક લાઇનની જગ્યાએ એક નીચે એક ગોઠવાશે */
+    .form-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important; /* બધા જ ઇનપુટ બોક્સ ૧૦૦% વિડ્થના થઈ જશે */
+        gap: 10px !important;
+    }
+    
+    .form-box h4 {
+        font-size: 15px !important;
+    }
+    
+    .btn-row {
+        text-align: center !important; /* બટનો મોબાઇલમાં વચ્ચે આવી જશે */
+    }
+    
+    .btn {
+        width: 48%; /* સેવ અને સાફ કરો બટન બાજુબાજુમાં સરખા ગોઠવાશે */
+        display: inline-block;
+    }
+
+    /* 4. 📊 ટેબલ રિસ્પોન્સિવ સેટિંગ (સૌથી મહત્વનું) */
+    .table-responsive {
+        width: 100% !important;
+        overflow-x: auto !important; /* જો ટેબલ મોટું થશે તો આડા સ્ક્રોલથી જોઈ શકાશે */
+        -webkit-overflow-scrolling: touch; /* સ્મૂધ સ્ક્રોલિંગ માટે */
+        margin-top: 15px;
+        border: 1px solid #cbd5e1;
+    }
+
+    table {
+        min-width: 650px; /* ટેબલને મોબાઇલમાં ભેગું થઈને કટ થતું અટકાવશે */
+    }
+
+    th, td {
+        padding: 8px 5px !important;
+        font-size: 13px !important; /* અક્ષરો થોડા નાના થશે જેથી વધુ ડેટા સમાય */
+    }
+
+    /* 5. એક્શન બટન (બદલો/ડીલીટ) ની સાઇઝ */
+    .col-action .btn {
+        width: auto !important;
+        padding: 4px 8px !important;
+        font-size: 12px !important;
+        white-space: nowrap; /* બટનનું લખાણ તૂટે નહીં તે માટે */
+    }
+}
+    </style>
 
 <!-- લાઇટબોક્સ પોપઅપ કન્ટેનર -->
     <div class="lightbox" id="lightbox">
