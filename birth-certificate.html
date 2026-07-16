@@ -20,7 +20,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 20px;
+            padding: 0px;
         }
 
         .container {
@@ -67,6 +67,7 @@
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 15px;
             margin-bottom: 25px;
+            padding-top: 10px;
         }
 
         .form-group { display: flex; flex-direction: column; }
@@ -170,6 +171,7 @@
     margin-bottom: 10px; /* સ્પેસિંગ અહીં શિફ્ટ કરી */
     padding-right: 10px; /* સેજ માર્જિન માટે */
     box-sizing: border-box;
+    padding-top: 10px;
 }
 
 /* BACK BUTTON */
@@ -197,9 +199,813 @@
             .photo-box { border: 2px solid #000 !important; top: 0px !important; right: 20px !important; }
             .stamp-box { color: #1d4ed8 !important; border-color: #1d4ed8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
+        @media print {
+            @page { margin: 8mm 10mm; size: A4 portrait; }
+            body { background-color: white; padding: 0; margin: 0; }
+            
+            /* ❌ પ્રિન્ટમાંથી ટોપ હેડર, શાળાનું નામ, લોગો, મેનુ અને બટનોને સંપૂર્ણ દૂર કરવા માટે */
+            .gov-top-ribbon, 
+            .main-gov-header, 
+            .logo-section-left, 
+            .logo-title-text, 
+            .ministry-right, 
+            .gov-navbar, 
+            .top-actions, 
+            .form-box, 
+            .col-action, 
+            .action-cell, 
+            .gov-footer { 
+                display: none !important; 
+            } 
+            
+            .container { box-shadow: none; padding: 0; width: 100%; }
+            th { background-color: #f5f5f5 !important; }
+            th, td { padding: 8px 5px; font-size: 14px; border: 1.5px solid #000 !important; }
+        }
     </style>
 </head>
 <body>
+
+   <style>
+/* રીસેટ અને ગુજરાત સરકારી થીમ કલર્સ */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+:root {
+    --gov-blue: #0b3c5d;   /* ઓફિશિયલ સરકારી બ્લુ કલર */
+    --gov-orange: #f58220; /* રાષ્ટ્રીય નારંગી / કેસરી કલર */
+    --gov-gold: #d4af37;   /* સરકારી ગોલ્ડન ટચ */
+    --bg-light: #f8fafc;
+    --text-dark: #1e293b;
+}
+
+body{
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+/* મુખ્ય સરકારી કન્ટેનર */
+.gov-container {
+    max-width: 1350px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* --- ૧. સત્તાવાર ટોપ બાર (Government Top Ribbon) --- */
+.gov-top-ribbon {
+    background: #e2e8f0;
+    padding: 6px 30px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #334155;
+    border-bottom: 2px solid var(--gov-orange);
+    font-weight: 600;
+}
+.gov-top-ribbon .right-links a { color: #334155; text-decoration: none; margin-left: 15px; }
+
+/* --- ૨. શિક્ષણ વિભાગ મુખ્ય હેડર (Official School Header) --- */
+.main-gov-header {
+    background: white;
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid var(--gov-blue);
+}
+
+.logo-section-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo-section-left .emblem-icon {
+    font-size: 45px;
+    color: var(--gov-blue);
+}
+.logo-title-text h1 {
+    font-size: 28px;
+    color: var(--gov-blue);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+.logo-title-text p {
+    font-size: 14px;
+    color: #475569;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.ministry-right {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-left: 2px solid #cbd5e1;
+    padding-left: 15px;
+}
+.ministry-right i { font-size: 35px; color: var(--gov-orange); }
+.ministry-right h2 { font-size: 16px; color: var(--gov-blue); font-weight: 700; }
+.ministry-right p { font-size: 13px; color: #475569; }
+
+/* --- ૩. નેવિગેશન બાર --- */
+.gov-navbar {
+    background: var(--gov-blue);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+}
+
+.nav-link-item {
+    position: relative;
+}
+
+.nav-main-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 24px;
+    color: #f1f5f9;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.nav-main-link i.arrow {
+    font-size: 10px;
+    transition: transform 0.2s;
+}
+
+.nav-link-item:hover .nav-main-link {
+    background: var(--gov-orange);
+    color: white;
+}
+.nav-link-item:hover .nav-main-link i.arrow {
+    transform: rotate(180deg);
+}
+
+.gov-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 260px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: all 0.3s ease;
+    border-top: 3px solid var(--gov-orange);
+    z-index: 1000;
+}
+
+.gov-dropdown a {
+    display: block;
+    padding: 13px 20px;
+    color: #334155;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-bottom: 1px solid #f1f5f9;
+}
+.gov-dropdown a:last-child { border-bottom: none; }
+
+.gov-dropdown a:hover {
+    background: #f8fafc;
+    color: var(--gov-blue);
+    padding-left: 25px;
+}
+
+.nav-link-item:hover .gov-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.nav-logout {
+    margin-left: auto;
+    background: #dc2626 !important;
+}
+.nav-logout:hover .nav-main-link { background: #b91c1c !important; }
+
+/* --- ૧૦. સત્તાવાર સરકારી ફૂટર સેક્શન --- */
+.gov-footer {
+    background: var(--gov-blue);
+    color: #cbd5e1;
+    padding: 40px 0 20px 0;
+    margin-top: 50px;
+    border-top: 5px solid var(--gov-orange);
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+.footer-column h4 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 15px;
+    position: relative;
+    padding-bottom: 8px;
+}
+.footer-column h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gov-orange);
+}
+.footer-column p { font-size: 14px; line-height: 1.6; margin-bottom: 10px; }
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links li a { color: #cbd5e1; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+.footer-links li a:hover { color: var(--gov-orange); padding-left: 5px; }
+.footer-contact-item { display: flex; align-items: center; gap: 10px; font-size: 14px; margin-bottom: 12px; }
+.footer-contact-item i { color: var(--gov-orange); }
+.footer-bottom { border-top: 1px solid #1e4d73; padding-top: 20px; text-align: center; font-size: 13px; color: #94a3b8; }
+
+/* ડેસ્કટોપ વ્યુ માટે હિડન સેટિંગ્સ */
+.menu-checkbox {
+    display: none;
+}
+.hamburger-label {
+    display: none;
+    background: var(--gov-orange);
+    color: white;
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* ==========================================================
+   📱 મોબાઈલ સાઈઝ (Phone View) માટે પરફેક્ટ સાઇડબાર અને ટોગલ CSS
+   ========================================================== */
+@media(max-width: 992px) {
+    /* ૧. હેમબર્ગર લેબલને સાઇડબારની ઉપર બરાબર સેટ કરવું */
+    .hamburger-label {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* 🆕 સ્પેસ બીટવીન હટાવીને ફ્લેક્સ સ્ટાર્ટ કર્યું જેથી બંને જોડે આવી જાય */
+        gap: 12px;                  /* આયકન અને મેનુ લખાણ વચ્ચેની પરફેક્ટ જગ્યા */
+        padding: 15px 20px;
+        background: var(--gov-orange);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        position: relative;
+        z-index: 1000;
+    }
+
+    /* ૨. મેનુ લિસ્ટ (સાઇડબાર જે ઓવરલેપ થશે) */
+    .nav-list {
+        display: flex !important;
+        flex-direction: column;
+        position: fixed !important;
+        top: 0;
+        left: -280px;             /* શરૂઆતમાં ડાબી બાજુ છુપાયેલું */
+        width: 280px !important;  
+        height: 100vh !important; 
+        background: var(--gov-blue);
+        z-index: 9999 !important; /* કન્ટેન્ટની ઉપર તરશે */
+        padding-top: 60px !important; /* ઉપરથી બટન માટે જગ્યા છોડી */
+        overflow-y: auto !important;
+        transition: left 0.3s ease-in-out !important;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+    }
+
+    /* ૩. જ્યારે ચેકબોક્સ ટીક (મેનુ ઓપન) થાય ત્યારે સાઇડબાર સ્ક્રીન પર આવશે */
+    .menu-checkbox:checked ~ .nav-list {
+        left: 0 !important;
+    }
+
+    /* 🆕 પ્યોર CSS મેજિક: જ્યારે મેનુ ખુલે ત્યારે 'મેનુ' લખેલું આખું લેબલ સાઇડબારની ઉપર આવી જશે */
+    .menu-checkbox:checked ~ .hamburger-label {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 280px !important; 
+        z-index: 10000 !important; 
+        background: #0d4368 !important; 
+        box-sizing: border-box;
+        justify-content: flex-start !important; /* 🆕 અહીં પણ જોડે જ રહેશે */
+    }
+
+    /* 🆕 સુપર ટ્રીક: જ્યારે મેનુ ખુલે ત્યારે ૩-લાઇન (fa-bars) ને ચોકડી (X) માં ફેરવવા માટે */
+    .menu-checkbox:checked ~ .hamburger-label .fa-bars::before {
+        content: "\f00d" !important; /* આ FontAwesome માં 'X' (Close) નો કોડ છે */
+    }
+
+    /* મોબાઈલ ડ્રોપડાઉન સેટિંગ્સ */
+    .gov-dropdown {
+        position: static !important;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        padding-left: 15px;
+        background: #0f4c75;
+        width: 100% !important;
+        border-top: none;
+        display: none;
+    }
+    .nav-link-item:hover .gov-dropdown {
+        display: block;
+    }
+    .gov-dropdown a {
+        color: #e2e8f0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        white-space: normal !important;
+    }
+
+    /* નેસ્ટેડ સબ-મેનુ સેટિંગ્સ */
+    .mdm-dropdown .mdm-sub-menu {
+        position: static !important;
+        box-shadow: none;
+        background: #155e8a;
+        min-width: 100% !important;
+        border-left: 2px solid var(--gov-orange);
+        padding-left: 10px;
+        display: none !important;
+    }
+    .mdm-dropdown:hover .mdm-sub-menu {
+        display: block !important;
+    }
+
+    /* મેગા મેનુ મોબાઈલ સેટિંગ્સ */
+    .mdm-dropdown.praveshotsav-mega-menu .mdm-sub-menu {
+        position: static !important;
+        grid-template-columns: 1fr !important;
+        min-width: 100% !important;
+        box-shadow: none !important;
+        background: #1b6ca8 !important;
+        padding: 10px !important;
+        display: none !important;
+        
+    }
+    .mdm-dropdown.praveshotsav-mega-menu:hover > .mdm-sub-menu {
+        display: block !important;
+    }
+
+    .nav-logout {
+        margin-left: 0;
+    }
+}
+
+/* મોબાઈલમાં સ્કૂલનું નામ પ્રોપર સેટ કરવા અને જમણી બાજુનું સેક્શન ડીલીટ કરવા માટે */
+@media(max-width: 992px) {
+    /* ૧. આખા હેડરને સેન્ટર કરવા અને વર્ટિકલ (ઉભું) ગોઠવવા */
+    .main-gov-header { 
+        flex-direction: column !important; 
+        text-align: center !important; 
+        padding: 20px 15px !important;
+    }
+
+    /* ૨. સ્કૂલના નામ અને ટોપીવાળા આયકનને સેન્ટરમાં ગોઠવવા */
+    .logo-section-left { 
+        flex-direction: column !important; 
+        gap: 10px !important; 
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* ૩. સ્કૂલના નામની સાઈઝ મોબાઈલ સ્ક્રીન પ્રમાણે સેટ કરવા */
+    .logo-title-text h1 { 
+        font-size: 24px !important; 
+        text-align: center !important;
+    }
+    .logo-title-text p {
+        font-size: 13px !important;
+        text-align: center !important;
+    }
+
+    /* ૪. જમણી બાજુનું "પ્રાથમિક શિક્ષણ વિભાગ" વાળું આખું બોક્સ મોબાઈલમાંથી ડીલીટ (Hide) કરવા */
+    .ministry-right { 
+        display: none !important; 
+    }
+}
+/* મોબાઈલમાં ટોપ રીબન (પહેલી લાઇન) ને વ્યવસ્થિત કરવા માટે */
+@media(max-width: 992px) {
+    .gov-top-ribbon { 
+        flex-direction: column !important; /* ડાબે-જમણેથી બદલીને ઉપર-નીચે કરવા */
+        text-align: center !important;     /* લખાણ સેન્ટર કરવા */
+        gap: 6px !important;              /* બંને વચ્ચે સ્પેસ આપવા */
+        padding: 10px 15px !important;     /* સરસ ગેપ આપવા */
+        font-size: 12px !important;        /* અક્ષરો થોડા મોટા અને વંચાય તેવા કરવા */
+    }
+    
+    .gov-top-ribbon .right-links a { 
+        margin-left: 0 !important;         /* વધારાની સ્પેસ કાઢવા */
+    }
+}
+/* ફક્ત મોબાઈલમાં લોગો નાનો કરવા માટે */
+@media(max-width: 992px) {
+    .intro-logo-box img { 
+        max-width: 140px !important; /* લોગોની સાઈઝ નાની કરી */
+        width: 140px !important;
+        height: auto !important;
+        margin: 15px auto 0 auto !important;
+        display: block !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+    <div class="gov-top-ribbon">
+        <div class="left-links">
+            <span>ગુજરાત સરકાર | શિક્ષણ વિભાગ</span>
+        </div>
+        <div class="right-links">
+            <a href="#">મુ.પો. હાજીપુર, તા.કલોલ, જી.ગાંધીનગર</a> | 
+            <a href="#">ગુજરાત</a>
+        </div>
+    </div>
+
+    <div class="main-gov-header">
+        <div class="logo-section-left">
+            <i class="fa-solid fa-graduation-cap emblem-icon"></i>
+            <div class="logo-title-text">
+                <h1>હાજીપુર પ્રાથમિક શાળા</h1>
+                <p>શિક્ષણ વિભાગ, ગુજરાત સરકાર સંચાલિત સત્તાવાર શાળા પોર્ટલ</p>
+            </div>
+        </div>
+        <div class="ministry-right">
+            <i class="fa-solid fa-building-columns"></i>
+            <div>
+                <h2>પ્રાથમિક શિક્ષણ વિભાગ</h2>
+                <p>ગુજરાત રાજ્ય</p>
+            </div>
+        </div>
+    </div>
+
+<nav class="gov-navbar">
+    <div class="gov-container" style="padding: 0;">
+        
+        <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+        <label for="menu-toggle" class="hamburger-label"><i class="fa-solid fa-bars"></i> મેનુ</label>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    /* ... તમારો ઓરિજિનલ CSS કોડ અહીં રહેશે ... */
+
+    /* ==========================================================================
+       📱 મોબાઇલ સાઇઝમાં મેનુ, એરો અને ટેબલ પરફેક્ટ દેખાય તે માટેનો રિસ્પોન્સિવ CSS
+       ========================================================================== */
+    @media screen and (max-width: 768px) {
+        
+        /* ૧. મુખ્ય પેજ અને કન્ટેનર સેટિંગ્સ */
+        .page-wrapper {
+            padding: 10px 5px !important;
+        }
+        .container {
+            padding: 15px 10px !important;
+            border-radius: 8px !important;
+            width: 100% !important;
+        }
+
+        /* ૨. મોબાઇલ મેનુ બાર અને લિસ્ટ સેટિંગ */
+        .gov-navbar {
+            padding: 0 !important;
+        }
+        .gov-container-nav {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .nav-list {
+            flex-direction: column; /* મેનુ આઇટમ એકબીજાની નીચે આવશે */
+            width: 100%;
+        }
+        .nav-main-link {
+            padding: 12px 15px;
+            border-bottom: 1px solid #075985;
+            display: flex;
+            justify-content: space-between; /* એરો જમણી બાજુ પરફેક્ટ ગોઠવવા */
+            align-items: center;
+        }
+
+        /* ૩. ડ્રોપડાઉન મેનૂ મોબાઇલ સેટિંગ */
+        .gov-dropdown {
+            position: relative !important;
+            top: 0 !important;
+            box-shadow: none !important;
+            background: #075985 !important;
+        }
+        .gov-dropdown li a {
+            color: #bae6fd !important;
+            padding-left: 30px !important; /* અંદરની તરફ જગ્યા આપવા */
+            border-bottom: 1px solid #0c4a6e;
+        }
+
+        /* ૪. ઇનપુટ ફોર્મ સેટિંગ */
+        .form-grid {
+            grid-template-columns: 1fr !important; /* બધા જ બોક્સ ૧૦૦% વિડ્થના થશે */
+            gap: 10px !important;
+        }
+        .btn-row {
+            text-align: center !important;
+        }
+        .btn {
+            width: 48%;
+            display: inline-block;
+        }
+
+        /* ૫. 📊 ટેબલ આડું સ્ક્રોલ સેટિંગ (કટ અટકાવવા) */
+        .table-responsive {
+            width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 15px;
+            border: 1px solid #cbd5e1;
+        }
+        table {
+            min-width: 650px; /* ટેબલને કટ થતું અટકાવશે */
+        }
+        th, td {
+            padding: 8px 5px !important;
+            font-size: 13px !important;
+        }
+    }
+</style>
+        <ul class="nav-list">
+                <li class="nav-link-item">
+                    <a href="home.html" class="nav-main-link"><i class="fa-solid fa-house-user"></i> હોમ</a>
+                </li>
+                <li class="nav-link-item">
+                    <a href="javascript:void(0);" class="nav-main-link"><i class="fa-solid fa-school"></i> શાળા પરિચય<i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="gov-dropdown">
+                        <li><a href="school-information.html">શાળાની માહિતી</a></li>
+                        <li><a href="teacher-information.html">શિક્ષકની માહિતી</a></li>
+                        <li><a href="student-detail.html">વિદ્યાર્થી માહિતી</a></li>
+                    </ul>
+                </li>
+                <li class="nav-link-item">
+                    <a href="javascript:void(0);" class="nav-main-link"><i class="fa-solid fa-file-pdf"></i> પત્રકો / ફાઇલો <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="gov-dropdown">
+                        <li class="mdm-dropdown">
+                            <a href="javascript:void(0);" class="mdm-dropbtn">
+                                પરીક્ષા અને પરિણામ ફાઇલ <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                            </a>
+                    
+                            <ul class="mdm-sub-menu">
+                                <li><a href="examfile.html">પરીક્ષા ફાઇલ</a></li>
+                                <li><a href="parinam.html">પરિણામ પત્રક</a></li>
+                            </ul>
+                        </li>
+                    <style>
+                        /* ૧. મુખ્ય લિસ્ટ આઇટમ (એમ.ડી.એમ) નું સેટિંગ */
+                        .mdm-dropdown {
+                            position: relative; /* આ લાઇન સબ-મેનુને આની સાપેક્ષમાં બાજુમાં રાખશે */
+                            list-style: none;
+                        }
+
+                        /* ૨. એમ.ડી.એમ લિંક (બટન) ની ડિઝાઇન */
+                        .mdm-dropbtn {
+                            display: flex !important;
+                            align-items: center;
+                            justify-content: space-between; /* અક્ષરો ડાબે અને એરો જમણે સેટ કરશે */
+                            padding: 10px 20px;
+                            color: #334155;
+                            text-decoration: none;
+                            font-weight: 500;
+                            transition: background 0.2s;
+                        }
+
+                        /* ૩. 🎯 સાઇડમાં ખુલવા વાળું સબ-મેનુ (શરૂઆતમાં છુપાયેલું રહેશે) */
+                        .mdm-dropdown .mdm-sub-menu {
+                            display: none;          /* શરૂઆતમાં મેનુ દેખાશે નહીં */
+                            position: absolute;
+                            top: 0;                 /* બરાબર 'એમ.ડી.એમ.' ની સામેથી જ શરૂ થશે */
+                            left: 100%;             /* ૧૦૦% ખસીને બરાબર જમણી બાજુ (Right-side) ગોઠવાશે */
+                            background-color: #ffffff;
+                            min-width: 220px;       /* સબ-મેનુની પહોળાઈ */
+                            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15); /* સુંદર પડછાયો */
+                            border-radius: 6px;
+                            padding: 8px 0;
+                            margin: 0;
+                            list-style: none;
+                            z-index: 9999;          /* આનાથી મેનુ કોઈ સ્લાઈડર કે બેનરની પાછળ છુપાશે નહીં */
+                            border-left: 3px solid #f58220; /* તમારી થીમ મુજબની ઓરેન્જ બોર્ડર લાઇન */
+                        }
+
+                        /* ૪. 🎯 મેજિક હોવર ઇફેક્ટ: માઉસ 'એમ.ડી.એમ' પર જતાં જ સાઇડમાં મેનુ ઓપન થશે */
+                        .mdm-dropdown:hover .mdm-sub-menu {
+                            display: block !important;
+                        }
+
+                        /* ૫. સબ-મેનુની અંદરની દરેક લિંક્સ (પત્રકો) ની ડિઝાઇન */
+                        .mdm-dropdown .mdm-sub-menu li a {
+                            color: #475569 !important;
+                            padding: 10px 18px;
+                            text-decoration: none;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;              /* આઇકોન અને લખાણ વચ્ચે જગ્યા રાખશે */
+                            font-size: 14px;
+                            font-weight: 500;
+                            transition: all 0.2s ease;
+                        }
+
+                        /* ૬. સબ-મેનુની અંદરની લિંક પર માઉસ જાય ત્યારે ઇફેક્ટ */
+                        .mdm-dropdown .mdm-sub-menu li a:hover {
+                            background-color: #f1f5f9; /* આછો ગ્રે કલર */
+                            color: #f58220 !important;  /* અક્ષરો ઓરેન્જ થશે */
+                            padding-left: 23px;        /* માઉસ જતાં લખાણ થોડું જમણી તરફ સરકશે */
+                        }
+                    </style>
+                    <li class="mdm-dropdown">
+                        <a href="javascript:void(0);" class="mdm-dropbtn">
+                            શાળા પ્રવેશોત્સવ <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                        </a>
+
+                            <ul class="mdm-sub-menu">
+                                <li><a href="vali-form.html">વાલી ફોર્મ</a></li>
+                                <li class="mdm-dropdown praveshotsav-mega-menu">
+                                    <a href="javascript:void(0);" class="mdm-dropbtn">
+                                        પ્રવેશોત્સવ ફાઇલ <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                                    </a>
+
+                                    <ul class="mdm-sub-menu">
+                                        <li><a href="data.html">ડેટા</a></li>
+                                        <li><a href="ruparekha.html">રૂપરેખા</a></li>
+                                        <li><a href="guests.html">મુખ્ય મહેમાન</a></li>
+                                        <li><a href="SMC.html">SMC</a></li>
+                                        <li><a href="panchayat.html">પંચાયત સભ્યો</a></li>
+                                        <li><a href="teachers1-5.html">1 થી 5 શિક્ષકોની માહિતી</a></li>
+                                        <li><a href="teachers6-8.html">6 થી 8 શિક્ષકોની માહિતી</a></li>
+                                        <li><a href="school-info.html">શાળાની માહિતી</a></li>
+                                        <li><a href="village-info.html">ગામની માહિતી</a></li>
+                                        <li><a href="sheet-balvatika.html">બાલવાટિકા પ્રવેશયાદી</a></li>
+                                        <li><a href="sheet-std1.html">ધોરણ 1 પ્રવેશયાદી</a></li>
+                                        <li><a href="toppers.html">3-8 પ્રથમ નંબર</a></li>
+                                        <li><a href="attendance3-8.html">3 થી 8 હાજરી</a></li>
+                                        <li><a href="survey-bv.html">સર્વે BV</a></li>
+                                        <li><a href="survey-std1.html">સર્વે ધોરણ- 1</a></li>
+                                        <li><a href="caste-count.html">જાતિવાર સંખ્યા</a></li>
+                                        <li><a href="cet.html">CET પરીક્ષા</a></li>
+                                        <li><a href="nmms.html">NMMS પરીક્ષા</a></li>
+                                        <li><a href="gyansadhana.html">જ્ઞાન સાધના પરીક્ષા</a></li>
+                                        <li><a href="jnv.html">JVN પરીક્ષા</a></li>
+                                        <li><a href="sat.html">SAT પરીક્ષા</a></li>
+                                        <li><a href="activities.html">પ્રવૃત્તિ</a></li>
+                                        <li><a href="sutro.html">સુત્રો </a></li>
+                                        <li><a href="guno.html">GUNO</a></li>
+                                    </ul>
+                                </li>
+                                <style>
+                                    /* 🎯 ૧. શરૂઆતમાં મેનૂ સંપૂર્ણપણે છુપાયેલું જ રહેશે */
+                                    .mdm-dropdown.praveshotsav-mega-menu .mdm-sub-menu {
+                                        display: none !important;
+                                        position: absolute;
+                                        top: -80%;
+                                        left: 100%;
+                                        background-color: #ffffff;
+                                        
+                                        /* ૨ કોલમનું ગ્રીડ સેટિંગ */
+                                        grid-template-columns: repeat(2, 220px) !important;
+                                        gap: 4px 15px !important;
+                                        
+                                        min-width: 460px !important;
+                                        box-shadow: 4px 4px 25px rgba(0, 0, 0, 0.18) !important;
+                                        border-radius: 8px !important;
+                                        padding: 15px !important;
+                                        margin: 0;
+                                        list-style: none;
+                                        z-index: 99999 !important;
+                                        border-left: 4px solid #f58220 !important;
+                                    }
+
+                                    /* 🎯 ૨. જ્યારે માત્ર ને માત્ર "પ્રવેશોત્સવ ફાઇલ" (praveshotsav-mega-menu) પર જ માઉસ હોવર થાય ત્યારે જ ખુલે */
+                                    .mdm-dropdown.praveshotsav-mega-menu:hover > .mdm-sub-menu {
+                                        display: grid !important; /* '>' સાઇન ફક્ત આના જ ચાઇલ્ડ મેનૂને ઓપન કરશે */
+                                    }
+
+                                    /* ૩. અંદરની લિંક્સ (ટેક્સ્ટ) ની ડિઝાઇન */
+                                    .mdm-dropdown.praveshotsav-mega-menu .mdm-sub-menu li {
+                                        width: 100% !important;
+                                        display: block !important;
+                                    }
+
+                                    .mdm-dropdown.praveshotsav-mega-menu .mdm-sub-menu li a {
+                                        color: #475569 !important;
+                                        padding: 8px 12px !important;
+                                        text-decoration: none !important;
+                                        display: block !important;
+                                        font-size: 14px !important;
+                                        font-weight: 500 !important;
+                                        border-radius: 4px !important;
+                                        transition: all 0.2s ease !important;
+                                        white-space: nowrap !important;
+                                    }
+
+                                    /* ૪. માઉસ ઓવર ઇફેક્ટ */
+                                    .mdm-dropdown.praveshotsav-mega-menu .mdm-sub-menu li a:hover {
+                                        background-color: #f1f5f9 !important;
+                                        color: #f58220 !important;
+                                        padding-left: 16px !important;
+                                    }
+                                </style>
+                                <li><a href="praveshotsav-speech.html">પ્રવેશોત્સવ સ્પીચ</a></li>
+                                <li><a href="photo.html">ફોટો</a></li>
+                            </ul>
+                    </li>
+                    <li class="mdm-dropdown">
+                        <a href="javascript:void(0);" class="mdm-dropbtn">
+                            પત્રકો <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                        </a>
+
+                        <ul class="mdm-sub-menu">
+                            <li><a href="fln.html">FLN પત્રક</a></li>
+                            <li><a href="election-info.html">ચુંટણી માહિતી</a></li>
+                            <li><a href="letter-pad.html">શાળાનું લેટર પેડ</a></li>
+                            <li><a href="rojmel.html">રોજમેળ</a></li>
+                            <li><a href="higher-grade.html">ઉચ્ચતર પગાર ધોરણ ફાઇલ</a></li>
+                            <li><a href="birth-certificate.html">જન્મ તારીખનો દાખલો / બોનફાઇટ સટ્રી</a></li>
+                        </ul>
+                    </li>
+                    <li class="mdm-dropdown">
+                        <a href="javascript:void(0);" class="mdm-dropbtn">
+                            વાર્ષિક પત્રક <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                        </a>
+
+                        <ul class="mdm-sub-menu">
+                            <li><a href="mdm-report.html">ઇજાફા પત્રક</a></li>
+                            <li><a href="bv-report.html">જુલાઈ સેટ-અપ પત્રક</a></li>
+                            <li><a href="mdm-report.html">બાળ સંસદ</a></li>
+                            <li><a href="bv-report.html">સમય પત્રક</a></li>
+                            <li><a href="mdm-report.html">સર્વે યાદી</a></li>
+                            <li><a href="bv-report.html">પે રોલ</a></li>
+                            <li><a href="bv-report.html">પાઠ્યપુસ્તક પહોંચ</a></li>
+                            <li><a href="mdm-report.html">શિષ્યવૃતિ</a></li>
+                        </ul>
+                    </li>
+                        <li><a href="transport.html">ટ્રાન્સપોર્ટેશન રજીસ્ટર</a></li>
+                        <li><a href="gr-register.html">જનરલ રજીસ્ટર (G.R.)</a></li>
+                        <li><a href="https://ahmedabad.sasgujarat.in/">માસિક/પગાર પત્રક</a></li>
+
+                    </ul>
+                    </li>
+                <li class="nav-link-item">
+                    <a href="javascript:void(0);" class="nav-main-link"><i class="fa-solid fa-bowl-rice"></i> ભોજન યોજના <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="gov-dropdown">
+                        <li class="mdm-dropdown">
+                            <a href="javascript:void(0);" class="mdm-dropbtn">
+                                એમ.ડી.એમ <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                            </a>
+                    
+                            <ul class="mdm-sub-menu">
+                                <li><a href="mdm-report.html">એમ.ડી.એમ. પત્રક</a></li>
+                                <li><a href="bv-report.html"> બાળવાટિકા પત્રક</a></li>
+                                <li><a href="class-1to5-report.html"> ધોરણ ૧ થી ૫</a></li>
+                                <li><a href="class-6to8-report.html">ધોરણ ૬ થી ૮</a></li>
+                                <li><a href="date-wise-report.html">તારીખ મુજબનો અહેવાલ </a></li>
+                            </ul>
+                        </li>
+                        <li><a href="mdm-menu.html">સાપ્તાહિક મેનૂ પત્રક</a></li>
+                        <li><a href="mdm-stock.html">દૈનિક સ્ટોક રજીસ્ટર</a></li>
+                    </ul>
+                </li>
+                <li class="nav-link-item">
+                    <a href="javascript:void(0);" class="nav-main-link">
+                        <i class="fa-solid fa-bowl-rice"></i> એસ.એમ.સી. (SMC) <i class="fa-solid fa-chevron-down arrow"></i>
+                    </a>
+                    <ul class="gov-dropdown">
+                        <li><a href="mdm-menu.html">એસ.એમ.સી.સભ્યો </a></li>
+                        <li><a href="mdm-stock.html">એસ.એમ.સી.ની પુન:રચના </a></li>
+                    </ul>
+                </li>
+                <li class="nav-link-item">
+                    <a href="attendance.html" class="nav-main-link"><i class="fa-solid fa-calendar-days"></i> દૈનિક હાજરી</a>
+                </li>
+                <li class="nav-link-item nav-logout">
+                    <a href="index.html" class="nav-main-link" onclick="logoutSystem()"><i class="fa-solid fa-power-off"></i>લોગ આઉટ</a>
+                </li>
+                <li class="menu-close-space">
+                    <label for="menu-toggle"></label>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
 <div class="container">
     <div class="back-btn-container">
@@ -304,11 +1110,37 @@
                 <span style="font-size: 1.1rem; font-weight: normal;">હાજીપુર પ્રાથમિક શાળા</span>
             </div>
         </div>
-        
     </div>
-
 </div>
 
+
+    <!-- સત્તાવાર સરકારી ફૂટર સેક્શન -->
+    <footer class="gov-footer">
+        <div class="gov-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>હાજીપુર પ્રાથમિક શાળા</h4>
+                    <p>ગુજરાત સરકાર દ્વારા સંચાલિત આદર્શ પ્રાથમિક શાળા.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>ઉપયોગી સરકારી વેબસાઇટ</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://education.gujarat.gov.in" target="_blank"><i class="fa-solid fa-angle-right"></i> શિક્ષણ વિભાગ, ગુજરાત</a></li>
+                        <li><a href="https://ssagujarat.org/" target="_blank"><i class="fa-solid fa-angle-right"></i> સમગ્ર શિક્ષા </a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>સંપર્ક વિગત</h4>
+                    <div class="footer-contact-item"><i class="fa-solid fa-location-dot"></i><span>તા. કલોલ, જિ. ગાંધીનગર, ગુજરાત.</span></div>
+                    <div class="footer-contact-item"><i class="fa-solid fa-phone"></i><span>+91 9512104218</span></div>
+                     <div class="footer-contact-item"><i class="fa-solid fa-envelope"></i><span>principal24060303601@ssguj.in</span></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 હાજીપુર પ્રાથમિક શાળા. સર્વાધિકાર સુરક્ષિત | શિક્ષણ વિભાગ, ગુજરાત રાજ્ય</p>
+            </div>
+        </div>
+    </footer>
 <script>
     let currentType = 'janma';
     let studentList = [];
