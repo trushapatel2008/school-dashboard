@@ -3,154 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>શાળાના બાળકોની જાતિવાર આંકડા દર્શાવતું પત્રક</title>
+    <title>ઇજાફા પત્રક ૨૦૨૬</title>
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f6f9;
-            margin: 0;
+            color: #333;
         }
-        .main-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            border: 2px solid #000000;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            position: relative;
-            margin-top: 20px;
-        }
-        .top-nav {
+
+        .action-bar {
             display: flex;
-            justify-content: flex-end;
+            align-items: center;
             gap: 10px;
             margin-bottom: 15px;
+            flex-wrap: wrap;
+            padding: 15px;
         }
+
         .btn {
-            padding: 8px 18px;
+            padding: 8px 16px;
             font-size: 14px;
             font-weight: bold;
             border: none;
-            border-radius: 20px;
+            border-radius: 4px;
             cursor: pointer;
             transition: 0.3s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
+        }
+
+        .btn-back { background-color: #7f8c8d; color: white; }
+        .btn-print { background-color: #2980b9; color: white; }
+        .btn-save { background-color: #27ae60; color: white; }
+        .btn-add { background-color: #8e44ad; color: white; }
+        .btn-delete { background-color: #e74c3c; color: white; padding: 4px 8px; font-size: 12px; border-radius: 3px; }
+        #status { font-weight: bold; font-size: 14px; margin-left: 10px; }
+
+        .tab-container {
+            display: flex;
             gap: 5px;
+            border-bottom: 2px solid #2c3e50;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
         }
-        .btn-print { background-color: #e2e8f0; color: #4a5568; }
-        .btn-back { background-color: #3182ce; color: white; }
-        .btn-submit {
-            background: linear-gradient(135deg, #ff4e50, #f9d423);
-            color: #333;
-            padding: 12px 30px;
-            font-size: 16px;
-            border-radius: 25px;
-            margin: 20px auto;
-            display: block;
-            box-shadow: 0 4px 10px rgba(255, 78, 80, 0.3);
-        }
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-        
-        .header-section {
-            text-align: center;
-            color: #0c4a60;
-            margin-bottom: 25px;
-        }
-        .header-section h2 { color: #ff007f; margin: 5px 0; font-size: 26px; }
-        .header-section h1 { font-size: 36px; margin: 5px 0; color: #02475e; font-weight: bold; }
-        .school-info { font-size: 14px; color: #666; margin: 5px 0; font-weight: 500; }
-        .festival-title { font-size: 18px; color: #02475e; font-weight: bold; margin-top: 10px; }
-        .table-title {
-            text-align: center;
-            color: #d11141;
-            font-size: 20px;
+
+        .tab-btn {
+            padding: 10px 18px;
+            background: #e2e8f0;
+            border: none;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
             font-weight: bold;
-            margin: 20px 0;
+            cursor: pointer;
         }
-        
+
+        .tab-btn.active {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        .tab-content.active { display: block; }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 15px;
-            background-color: #fffdf2;
-        }
-        th, td {
-            border: 1px solid #444;
-            text-align: center;
-            padding: 6px 4px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        th { background-color: #fff9db; color: #000; }
-        .bg-total { background-color: #e6fffa; }
-        
-        input[type="number"] {
-            width: 100%;
-            border: none;
-            background: transparent;
-            text-align: center;
-            font-size: 15px;
-            font-weight: bold;
-            color: #0056b3;
-            outline: none;
-        }
-        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-            -webkit-appearance: none; margin: 0;
-        }
-        
-        .total-val { color: #234e52; }
-        .grand-total { color: #007722; }
-        .footer-text {
-            color: #cc0000;
             font-size: 13px;
-            font-weight: bold;
-            margin-top: 25px;
-            line-height: 1.4;
+            text-align: center;
+            border: 2px solid #000;
         }
 
-        /* Loading Overlay */
-        #loader {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.9);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 1000; font-size: 20px; font-weight: bold; color: #02475e;
+        th, td {
+            border: 1px solid #000;
+            padding: 6px 4px;
+            white-space: nowrap;
         }
 
-        @media print {
-            body { background: none; padding: 10px; }
-            .main-container { border: none; box-shadow: none; padding: 10px; }
-            .top-nav, .btn-submit { display: none !important; }
-            input[type="number"] { border: none; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        .title-hdr { font-size: 16px; font-weight: bold; background-color: #ffffff; text-align: center; }
+
+        td[contenteditable="true"]:focus {
+            background-color: #e8f0fe;
+            outline: 2px solid #2980b9;
         }
+
+        .text-left { text-align: left !important; padding-left: 8px; }
+
         @media print {
-            @page { margin: 8mm 10mm; size: A4 portrait; }
-            body { background-color: white; padding: 0; margin: 0; }
-            
-            /* ❌ પ્રિન્ટમાંથી ટોપ હેડર, શાળાનું નામ, લોગો, મેનુ અને બટનોને સંપૂર્ણ દૂર કરવા માટે */
-            .gov-top-ribbon, 
-            .main-gov-header, 
-            .logo-section-left, 
-            .logo-title-text, 
-            .ministry-right, 
-            .gov-navbar, 
-            .top-actions, 
-            .form-box, 
-            .col-action, 
-            .action-cell, 
-            .gov-footer { 
-                display: none !important; 
-            } 
-            
-            .container { box-shadow: none; padding: 0; width: 100%; }
-            th { background-color: #f5f5f5 !important; }
-            th, td { padding: 8px 5px; font-size: 14px; border: 1.5px solid #000 !important; }
+            .action-bar, .tab-container, .no-print { display: none !important; }
+            body { padding: 0; background: white; }
+            .tab-content { display: none !important; box-shadow: none; padding: 0; }
+            .tab-content.active { display: block !important; }
+            td[contenteditable="true"] { outline: none; }
         }
     </style>
 </head>
@@ -870,6 +819,7 @@ body{
                             <li><a href="rojmel.html">રોજમેળ</a></li>
                             <li><a href="higher-grade.html">ઉચ્ચતર પગાર ધોરણ ફાઇલ</a></li>
                             <li><a href="birth-certificate.html">જન્મ તારીખનો દાખલો / બોનફાઇટ સટ્રી</a></li>
+                            <li><a href="ijafa.html">ઇજાફ પત્રક</a></li>
                         </ul>
                     </li>
                     <li class="mdm-dropdown">
@@ -884,7 +834,7 @@ body{
                             <li><a href="bv-report.html">સમય પત્રક</a></li>
                             <li><a href="mdm-report.html">સર્વે યાદી</a></li>
                             <li><a href="bv-report.html">પે રોલ</a></li>
-                            <li><a href="pa-pu.html">પાઠ્યપુસ્તક પહોંચ</a></li>
+                            <li><a href="bv-report.html">પાઠ્યપુસ્તક પહોંચ</a></li>
                             <li><a href="mdm-report.html">શિષ્યવૃતિ</a></li>
                         </ul>
                     </li>
@@ -919,7 +869,7 @@ body{
                         <i class="fa-solid fa-bowl-rice"></i> એસ.એમ.સી. (SMC) <i class="fa-solid fa-chevron-down arrow"></i>
                     </a>
                     <ul class="gov-dropdown">
-                        <li><a href="mdm-menu.html">એસ.એમ.સી.સભ્યો </a></li>
+                        <li><a href="SMC.html">એસ.એમ.સી.સભ્યો </a></li>
                         <li><a href="SMC_Reconstitution_Hajipur.html">એસ.એમ.સી.ની પુન:રચના </a></li>
                     </ul>
                 </li>
@@ -935,272 +885,298 @@ body{
             </ul>
         </div>
     </nav>
-<div id="loader">ગુગલ શીટમાંથી લાઈવ ડેટા લોડ થઈ રહ્યો છે... કૃપા કરીને રાહ જુઓ...</div>
 
-<div class="main-container">
-    <div class="top-nav">
-        <button class="btn btn-print" onclick="window.print()">🖨️ પ્રિન્ટ આઉટ કાઢો</button>
-        <a href="home.html" class="btn btn-back">⬅️ પાછા જાઓ</a>
-    </div>
-
-    <div class="header-section">
-        <h2>સમગ્ર શિક્ષા અભિયાન - ગાંધીનગર જિલ્લો</h2>
-        <h1>હાજીપુર પ્રાથમિક શાળા</h1>
-        <p class="school-info">ગામ:- હાજીપુર, તાલુકો:- કલોલ, જીલ્લો:- ગાંધીનગર, સી.આર.સી:- ભોયણ મોટી, ડાયસ કોડ:- 24060303601</p>
-        <p class="festival-title">※ કન્યા કેળવણી મહોત્સવ / શાળા પ્રવેશોત્સવ વર્ષ :- <span class="dynamic-year"></span> ※</p>
-    </div>
-
-    <div class="table-title">※ શાળાના બાળકોની જાતિવાર આંકડા દર્શાવતું પત્રક ※</div>
-
-    <form id="casteForm">
-        <table>
-            <thead>
-                <tr>
-                    <th rowspan="2" style="width: 8%;">ધોરણ</th>
-                    <th colspan="3">અનુ.જાતિ</th>
-                    <th colspan="3">અનુ.જન.જાતિ</th>
-                    <th colspan="3">બક્ષીપંચ</th>
-                    <th colspan="3">અન્ય</th>
-                    <th colspan="3" class="bg-total">કુલ</th>
-                </tr>
-                <tr>
-                    <th style="color: #1a365d;">કુમાર</th><th style="color: #9b2c2c;">કન્યા</th><th>કુલ</th>
-                    <th style="color: #1a365d;">કુમાર</th><th style="color: #9b2c2c;">કન્યા</th><th>કુલ</th>
-                    <th style="color: #1a365d;">કુમાર</th><th style="color: #9b2c2c;">કન્યા</th><th>કુલ</th>
-                    <th style="color: #1a365d;">કુમાર</th><th style="color: #9b2c2c;">કન્યા</th><th>કુલ</th>
-                    <th class="bg-total" style="color: #1a365d;">કુમાર</th><th class="bg-total" style="color: #9b2c2c;">કન્યા</th><th class="bg-total">કુલ</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-            <tfoot>
-                <tr style="background-color: #fff9db;">
-                    <td>કુલ</td>
-                    <td id="tot_sc_m" class="grand-total">0</td><td id="tot_sc_f" class="grand-total">0</td><td id="tot_sc_t" class="grand-total">0</td>
-                    <td id="tot_st_m" class="grand-total">0</td><td id="tot_st_f" class="grand-total">0</td><td id="tot_st_t" class="grand-total">0</td>
-                    <td id="tot_obc_m" class="grand-total">0</td><td id="tot_obc_f" class="grand-total">0</td><td id="tot_obc_t" class="grand-total">0</td>
-                    <td id="tot_gen_m" class="grand-total">0</td><td id="tot_gen_f" class="grand-total">0</td><td id="tot_gen_t" class="grand-total">0</td>
-                    <td id="tot_grand_m" class="grand-total" style="background-color: #e6fffa;">0</td>
-                    <td id="tot_grand_f" class="grand-total" style="background-color: #e6fffa;">0</td>
-                    <td id="tot_grand_total" class="grand-total" style="background-color: #b2f5ea;">0</td>
-                </tr>
-            </tfoot>
-        </table>
-
-        <button type="submit" class="btn btn-submit">💾 બધી માહિતી શીટમાં સેવ કરો</button>
-    </form>
-
+<div class="action-bar">
+    <button class="btn btn-back" onclick="window.history.back()">⬅️ પાછા જાઓ</button>
+    <button class="btn btn-print" onclick="window.print()">🖨️ પ્રિન્ટ કરો</button>
+    <button class="btn btn-add" onclick="addNewRow()">➕ નવો ડેટા ઉમેરો</button>
+    <button class="btn btn-save" onclick="saveToGoogleSheet()">📊 Google Sheet માં સેવ કરો</button>
+    <span id="status"></span>
 </div>
 
-    
+<div class="tab-container">
+    <button class="tab-btn active" onclick="openTab(event, 'july')">જુલાઈ (July)</button>
+    <button class="tab-btn" onclick="openTab(event, 'january')">જાન્યુઆરી (January)</button>
+    <button class="tab-btn" onclick="openTab(event, 'ifms-july')">IFMS JULY</button>
+    <button class="tab-btn" onclick="openTab(event, 'ifms-january')">IFMS JANUARY</button>
+    <button class="tab-btn" onclick="openTab(event, 'sas')">IJAFO SAS MUJAB</button>
+</div>
 
-    <!-- સત્તાવાર સરકારી ફૂટર સેક્શન -->
-    <footer class="gov-footer">
-        <div class="gov-container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h4>હાજીપુર પ્રાથમિક શાળા</h4>
-                    <p>ગુજરાત સરકાર દ્વારા સંચાલિત આદર્શ પ્રાથમિક શાળા.</p>
-                </div>
-                <div class="footer-column">
-                    <h4>ઉપયોગી સરકારી વેબસાઇટ</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://education.gujarat.gov.in" target="_blank"><i class="fa-solid fa-angle-right"></i> શિક્ષણ વિભાગ, ગુજરાત</a></li>
-                        <li><a href="https://ssagujarat.org/" target="_blank"><i class="fa-solid fa-angle-right"></i> સમગ્ર શિક્ષા </a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>સંપર્ક વિગત</h4>
-                    <div class="footer-contact-item"><i class="fa-solid fa-location-dot"></i><span>તા. કલોલ, જિ. ગાંધીનગર, ગુજરાત.</span></div>
-                    <div class="footer-contact-item"><i class="fa-solid fa-phone"></i><span>+91 9512104218</span></div>
-                     <div class="footer-contact-item"><i class="fa-solid fa-envelope"></i><span>principal24060303601@ssguj.in</span></div>
-                </div>
+<!-- 1. JULY -->
+<div id="july" class="tab-content active">
+    <table>
+        <thead>
+            <tr><th colspan="13" class="title-hdr">પત્રક - ૪</th></tr>
+            <tr><th colspan="13" class="title-hdr">હાજીપુર પ્રાથમિક શાળા ,પગાર કેન્દ્રનું નામ :ભોયણ મોટી</th></tr>
+            <tr><th colspan="13" class="title-hdr">કામ કરતા શિક્ષકોના જુલાઈ – 2026 ના ઇજાફાની માહિતી દર્શાવતું પત્રક (તા.30-06-2026 ની સ્થિતિએ)</th></tr>
+            <tr>
+                <th>ક્રમ</th><th>શિક્ષકોનું નામ</th><th>શાળાનું નામ</th><th>જી.પી.એફ./સી.પી.એફ.નં</th><th>30/06/2026 નો પગાર</th><th>૩% પ્રમાણે મળવાપાત્ર રકમ</th><th>કોલમ ૬ ની નજીકનો શતાંશ</th><th>સરવાળો (૫+૭)</th><th>01/07/2026 ના રોજ વાર્ષિક ઈજાફો ઉમેરતા પગારની વિગત</th><th>આઈ.એફ. એમ.એસ.માં ઓન લાઈન કેસની એન્ટ્રી થયેલ છે? હા કે ના</th><th>કોલમ નં ૧૦ મુજબ ના થવાના કારણો</th><th>રીમાર્કસ</th><th class="no-print">એક્શન</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td contenteditable="true">1</td><td contenteditable="true" class="text-left">ખરાંડી રમીલાબેન મરતાજી</td><td contenteditable="true">હાજીપુર પ્રા.શાળા</td><td contenteditable="true">5367</td><td contenteditable="true">72100</td><td contenteditable="true">2163</td><td contenteditable="true">2200</td><td contenteditable="true">74300</td><td contenteditable="true">74300</td><td contenteditable="true">હા</td><td contenteditable="true">-</td><td contenteditable="true">-</td><td class="no-print"><button class="btn btn-delete" onclick="deleteRow(this)">🗑️ ડીલીટ</button></td></tr>
+            <tr><td contenteditable="true">2</td><td contenteditable="true" class="text-left">પટેલ ગણપતભાઈ પ્રહલાદભાઈ</td><td contenteditable="true">હાજીપુર પ્રા.શાળા</td><td contenteditable="true">5691</td><td contenteditable="true">81200</td><td contenteditable="true">2436</td><td contenteditable="true">2400</td><td contenteditable="true">83600</td><td contenteditable="true">83600</td><td contenteditable="true">હા</td><td contenteditable="true">-</td><td contenteditable="true">-</td><td class="no-print"><button class="btn btn-delete" onclick="deleteRow(this)">🗑️ ડીલીટ</button></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 2. JANUARY -->
+<div id="january" class="tab-content">
+    <table>
+        <thead>
+            <tr><th colspan="13" class="title-hdr">પત્રક - ૪</th></tr>
+            <tr><th colspan="13" class="title-hdr">હાજીપુર પ્રાથમિક શાળા ,પગાર કેન્દ્રનું નામ :ભોયણ મોટી</th></tr>
+            <tr><th colspan="13" class="title-hdr">કામ કરતા શિક્ષકોના જાન્યુઆરી – 2027 ના ઇજાફાની માહિતી દર્શાવતું પત્રક (તા.31-12-2026 ની સ્થિતિએ)</th></tr>
+            <tr>
+                <th>ક્રમ</th><th>શિક્ષકોનું નામ</th><th>શાળાનું નામ</th><th>જી.પી.એફ./સી.પી.એફ.નં</th><th>31/12/2026 નો પગાર</th><th>૩% પ્રમાણે મળવાપાત્ર રકમ</th><th>કોલમ ૬ ની નજીકનો શતાંશ</th><th>સરવાળો (૫+૭)</th><th>01/01/2027 ના રોજ વાર્ષિક ઈજાફો ઉમેરતા પગારની વિગત</th><th>આઈ.એફ. એમ.એસ.માં ઓન લાઈન કેસની એન્ટ્રી થયેલ છે? હા કે ના</th><th>કોલમ નં ૧૦ મુજબ ના થવાના કારણો</th><th>રીમાર્કસ</th><th class="no-print">એક્શન</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td contenteditable="true">1</td><td contenteditable="true" class="text-left">પટેલ હિરેન રામાભાઇ</td><td contenteditable="true">હાજીપુર પ્રા.શાળા</td><td contenteditable="true">2015060445710018</td><td contenteditable="true">47600</td><td contenteditable="true">1428</td><td contenteditable="true">1400</td><td contenteditable="true">49000</td><td contenteditable="true">49000</td><td contenteditable="true">હા</td><td contenteditable="true">-</td><td contenteditable="true">જાન્યુઆરી માં ઇજાફો છૂટે છે</td><td class="no-print"><button class="btn btn-delete" onclick="deleteRow(this)">🗑️ ડીલીટ</button></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 3. IFMS JULY -->
+<div id="ifms-july" class="tab-content">
+    <table>
+        <thead>
+            <tr><th colspan="11" class="title-hdr">IFMS JULY IJAFO DETAILS</th></tr>
+            <tr>
+                <th>ક્રમ</th><th>શિક્ષકોનું નામ</th><th>Emp Code</th><th>Designation</th><th>Basic Pay</th><th>Next Inc Date</th><th>New Basic</th><th>Status</th><th>Verification</th><th>Remarks</th><th class="no-print">એક્શન</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td contenteditable="true">1</td><td contenteditable="true" class="text-left">ખરાંડી રમીલાબેન મરતાજી</td><td contenteditable="true">EMP001</td><td contenteditable="true">Primary Teacher</td><td contenteditable="true">72100</td><td contenteditable="true">01/07/2026</td><td contenteditable="true">74300</td><td contenteditable="true">Approved</td><td contenteditable="true">Yes</td><td contenteditable="true">-</td><td class="no-print"><button class="btn btn-delete" onclick="deleteRow(this)">🗑️ ડીલીટ</button></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 4. IFMS JANUARY -->
+<div id="ifms-january" class="tab-content">
+    <table>
+        <thead>
+            <tr><th colspan="11" class="title-hdr">IFMS JANUARY IJAFO DETAILS</th></tr>
+            <tr>
+                <th>ક્રમ</th><th>શિક્ષકોનું નામ</th><th>Emp Code</th><th>Designation</th><th>Basic Pay</th><th>Next Inc Date</th><th>New Basic</th><th>Status</th><th>Verification</th><th>Remarks</th><th class="no-print">એક્શન</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td contenteditable="true">1</td><td contenteditable="true" class="text-left">પટેલ હિરેન રામાભાઇ</td><td contenteditable="true">EMP003</td><td contenteditable="true">Primary Teacher</td><td contenteditable="true">47600</td><td contenteditable="true">01/01/2027</td><td contenteditable="true">49000</td><td contenteditable="true">Pending</td><td contenteditable="true">No</td><td contenteditable="true">-</td><td class="no-print"><button class="btn btn-delete" onclick="deleteRow(this)">🗑️ ડીલીટ</button></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 5. IJAFO SAS MUJAB -->
+<div id="sas" class="tab-content">
+    <table>
+        <thead>
+            <tr><th colspan="11" class="title-hdr">IJAFO SAS MUJAB REPORT</th></tr>
+            <tr>
+                <th>ક્રમ</th><th>શિક્ષકોનું નામ</th><th>SAS ID</th><th>School Name</th><th>Current Pay</th><th>Increment %</th><th>Increment Amount</th><th>Final Pay</th><th>SAS Status</th><th>Remarks</th><th class="no-print">એક્શન</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td contenteditable="true">1</td><td contenteditable="true" class="text-left">ખરાંડી રમીલાબેન મરતાજી</td><td contenteditable="true">SAS101</td><td contenteditable="true">હાજીપુર પ્રા.શાળા</td><td contenteditable="true">72100</td><td contenteditable="true">3%</td><td contenteditable="true">2200</td><td contenteditable="true">74300</td><td contenteditable="true">Updated</td><td contenteditable="true">-</td><td class="no-print"><button class="btn btn-delete" onclick="deleteRow(this)">🗑️ ડીલીટ</button></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ફૂટર સેક્શન -->
+<footer class="gov-footer" style="background-color: #0f172a; color: #cbd5e1; padding: 30px 15px; margin-top: 40px;">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+            <div>
+                <h4 style="color: #fff; margin-bottom: 15px;">હાજીપુર પ્રાથમિક શાળા</h4>
+                <p>ગુજરાત સરકાર દ્વારા સંચાલિત આદર્શ પ્રાથમિક શાળા.</p>
             </div>
-            <div class="footer-bottom">
-                <p>© 2026 હાજીપુર પ્રાથમિક શાળા. સર્વાધિકાર સુરક્ષિત | શિક્ષણ વિભાગ, ગુજરાત રાજ્ય</p>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 15px;">ઉપયોગી સરકારી વેબસાઇટ</h4>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li><a href="https://education.gujarat.gov.in" target="_blank" style="color: #cbd5e1; text-decoration: none;"><i class="fa-solid fa-angle-right"></i> શિક્ષણ વિભાગ, ગુજરાત</a></li>
+                    <li><a href="https://ssagujarat.org/" target="_blank" style="color: #cbd5e1; text-decoration: none;"><i class="fa-solid fa-angle-right"></i> સમગ્ર શિક્ષા</a></li>
+                </ul>
             </div>
+            <div>
+    <h4 style="color: #fff; margin-bottom: 15px;">સંપર્ક વિગત</h4>
+    <p style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+        <i class="fa-solid fa-location-dot" style="width: 20px; text-align: center;"></i> તા. કલોલ, જિ. ગાંધીનગર, ગુજરાત.
+    </p>
+    <p style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+        <i class="fa-solid fa-phone" style="width: 20px; text-align: center;"></i> +91 9512104218
+    </p>
+    <p style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+        <i class="fa-solid fa-envelope" style="width: 20px; text-align: center;"></i> principal24060303601@ssguj.in
+    </p>
+</div>
         </div>
-    </footer>
+        <div style="text-align: center; border-top: 1px solid #334155; padding-top: 20px; margin-top: 20px; font-size: 0.9rem;">
+            <p>© 2026 હાજીપુર પ્રાથમિક શાળા. સર્વાધિકાર સુરક્ષિત | શિક્ષણ વિભાગ, ગુજરાત રાજ્ય</p>
+        </div>
+    </div>
+</footer>
+
 <script>
-    // તમારી સાચી ગૂગલ વેબ એપ યુઆરએલ સેટ જ છે
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxkjDTNI3Bhc2hj58cungNwgZFThXeQeB6MXDLbcTirAcXExW0sFuc-n2E09PWhAfe6/exec";
-    
-    const standards = ["BV", "1", "2", "3", "4", "5", "6", "7", "8"];
-    const fields = ["sc_m", "sc_f", "st_m", "st_f", "obc_m", "obc_f", "gen_m", "gen_f"];
-    
-    // 🚀 ઓટોમેટિક વર્ષ ગણવા અને સેટ કરવા માટેનું ફંક્શન
-    function setAutomaticYear() {
-        let currentYear = new Date().getFullYear();
-        let nextYearShort = String(currentYear + 1).slice(-2); // જેમ કે 2026 માંથી 27 લેશે
-        let academicYear = `${currentYear}-${nextYearShort}`;
-        
-        // પેજ પર જ્યાં પણ .dynamic-year ક્લાસ છે ત્યાં વર્ષ બદલી નાખશે
-        document.querySelectorAll(".dynamic-year").forEach(el => {
-            el.innerText = academicYear;
-        });
-    }
+    // ⚠️ અહીં તમારી Google Apps Script ની Web App URL મૂકો
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyOqU-aQDPbIC4lxBKenYhy-3-VrFcvc-Gg10w4PbrqcAABf7cSRTLh_b8OBGx3Ou4/exec";
+    let activeTabId = "july";
 
-    // લાઈવ ટેબલ રો ક્રિએશન
-    const tableBody = document.getElementById("tableBody");
-    standards.forEach(std => {
-        let row = `<tr>
-            <td>${std}</td>
-            <td><input type="number" id="${std}_sc_m" value="0" oninput="calculateRowTotal('${std}')"></td>
-            <td><input type="number" id="${std}_sc_f" value="0" oninput="calculateRowTotal('${std}')"></td>
-            <td id="${std}_sc_t" class="total-val">0</td>
-            <td><input type="number" id="${std}_st_m" value="0" oninput="calculateRowTotal('${std}')"></td>
-            <td><input type="number" id="${std}_st_f" value="0" oninput="calculateRowTotal('${std}')"></td>
-            <td id="${std}_st_t" class="total-val">0</td>
-            <td><input type="number" id="${std}_obc_m" value="0" oninput="calculateRowTotal('${std}')"></td>
-            <td><input type="number" id="${std}_obc_f" value="0" oninput="calculateRowTotal('${std}')"></td>
-            <td id="${std}_obc_t" class="total-val">0</td>
-            <td><input type="number" id="${std}_gen_m" value="0" oninput="calculateRowTotal('${std}')"></td>
-            <td><input type="number" id="${std}_gen_f" value="0" oninput="calculateRowTotal('${std}')"></td>
-            <td id="${std}_gen_t" class="total-val">0</td>
-            <td id="${std}_grand_m" class="total-val bg-total" style="color: #1a365d;">0</td>
-            <td id="${std}_grand_f" class="total-val bg-total" style="color: #9b2c2c;">0</td>
-            <td id="${std}_grand_total" class="total-val" style="background-color: #e6fffa;">0</td>
-        </tr>`;
-        tableBody.insertAdjacentHTML('beforeend', row);
-    });
-
-    // ગૂગલ શીટમાંથી લાઈવ ડેટા લોડ કરવા માટે (JSONP Fetch)
     window.onload = function() {
-        setAutomaticYear(); // 🚀 પેજ લોડ થતાં જ ઓટોમેટિક વર્ષ સેટ થઈ જશે
-        
-        const script = document.createElement('script');
-        script.src = `${WEB_APP_URL}?apiType=survey_bv&callback=loadData`; 
-        document.body.appendChild(script);
+        loadSheetData(activeTabId);
     };
 
-    function loadData(data) {
-        document.getElementById("loader").style.display = "none";
-        if(!data || data.error) {
-            alert("ડેટા લોડ કરવામાં ભૂલ આવી અથવા કોઈ રેકોર્ડ નથી!");
-            return;
+    function openTab(evt, tabName) {
+        activeTabId = tabName;
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
         }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+
+        loadSheetData(tabName);
+    }
+
+    // 1. નવી લાઈન (Row) ઉમેરવા માટે
+    function addNewRow() {
+        const tbody = document.querySelector("#" + activeTabId + " tbody");
+        const rowCount = tbody.querySelectorAll("tr").length + 1;
+        const colCount = document.querySelectorAll("#" + activeTabId + " thead tr:last-child th").length;
+
+        const newRow = document.createElement("tr");
+
+        let rowHtml = `<td contenteditable="true">${rowCount}</td>`;
+        rowHtml += `<td contenteditable="true" class="text-left">નવું નામ</td>`;
         
-        data.forEach(row => {
-            let std = row.standard || row.patrak_no; 
-            if(std && standards.includes(String(std).toUpperCase().trim())) {
-                let formattedStd = String(std).toUpperCase().trim();
-                fields.forEach(field => {
-                    let inputElement = document.getElementById(`${formattedStd}_${field}`);
-                    if(inputElement) {
-                        inputElement.value = (row[field] !== undefined && row[field] !== "") ? row[field] : 0;
-                    }
-                });
-                calculateRowTotal(formattedStd);
+        for (let i = 2; i < colCount - 1; i++) {
+            rowHtml += `<td contenteditable="true">-</td>`;
+        }
+
+        rowHtml += `<td class="no-print"><button class="btn btn-delete" onclick="deleteRow(this)">🗑️ ડીલીટ</button></td>`;
+        
+        newRow.innerHTML = rowHtml;
+        tbody.appendChild(newRow);
+    }
+
+    // 2. લાઈન (Row) ડીલીટ કરવા માટે
+    function deleteRow(btn) {
+        if (confirm("શું તમે આ લાઈન ડિલીટ કરવા માંગો છો?")) {
+            const row = btn.closest("tr");
+            row.remove();
+            reIndexRows();
+        }
+    }
+
+    // ક્રમ (Sr No) ઓટોમેટિક ફરી સેટ કરવા માટે
+    function reIndexRows() {
+        const rows = document.querySelectorAll("#" + activeTabId + " tbody tr");
+        rows.forEach((row, index) => {
+            const firstCell = row.querySelector("td");
+            if (firstCell) {
+                firstCell.innerText = index + 1;
             }
         });
-        calculateGrandTotal();
     }
 
-    // આડી લાઈન (રો) નો સરવાળો
-    function calculateRowTotal(std) {
-        let sc_m = parseInt(document.getElementById(`${std}_sc_m`).value) || 0;
-        let sc_f = parseInt(document.getElementById(`${std}_sc_f`).value) || 0;
-        let st_m = parseInt(document.getElementById(`${std}_st_m`).value) || 0;
-        let st_f = parseInt(document.getElementById(`${std}_st_f`).value) || 0;
-        let obc_m = parseInt(document.getElementById(`${std}_obc_m`).value) || 0;
-        let obc_f = parseInt(document.getElementById(`${std}_obc_f`).value) || 0;
-        let gen_m = parseInt(document.getElementById(`${std}_gen_m`).value) || 0;
-        let gen_f = parseInt(document.getElementById(`${std}_gen_f`).value) || 0;
+    // 3. Google Sheet માંથી ડેટા લોડ કરશે
+    function loadSheetData(sheetName) {
+        const status = document.getElementById("status");
+        status.style.color = "blue";
+        status.innerText = "🔄 ડેટા લોડ થઈ રહ્યો છે...";
 
-        document.getElementById(`${std}_sc_t`).innerText = sc_m + sc_f;
-        document.getElementById(`${std}_st_t`).innerText = st_m + st_f;
-        document.getElementById(`${std}_obc_t`).innerText = obc_m + obc_f;
-        document.getElementById(`${std}_gen_t`).innerText = gen_m + gen_f;
+        fetch(SCRIPT_URL + "?sheetName=" + sheetName)
+        .then(response => response.json())
+        .then(data => {
+            if (data.rows && data.rows.length > 0) {
+                const tbody = document.querySelector("#" + sheetName + " tbody");
+                if (!tbody) return;
 
-        let total_m = sc_m + st_m + obc_m + gen_m;
-        let total_f = sc_f + st_f + obc_f + gen_f;
+                // હેડર વગરનો સાચો ડેટા ફિલ્ટર કરશે
+                let validRows = data.rows.filter(r => {
+                    let firstCol = String(r[0] || "").trim();
+                    return firstCol !== "" && !firstCol.includes("પત્રક") && !firstCol.includes("હાજીપુર") && !firstCol.includes("IFMS") && !firstCol.includes("IJAFO");
+                });
 
-        document.getElementById(`${std}_grand_m`).innerText = total_m;
-        document.getElementById(`${std}_grand_f`).innerText = total_f;
-        document.getElementById(`${std}_grand_total`).innerText = total_m + total_f;
+                if (validRows.length > 0) {
+                    tbody.innerHTML = ""; // જૂનો ડેટા ક્લિયર કરશે
 
-        calculateGrandTotal();
+                    validRows.forEach((rowData, rowIndex) => {
+                        const newRow = document.createElement("tr");
+                        let rowHtml = "";
+
+                        rowData.forEach((cellValue, cellIndex) => {
+                            let alignClass = cellIndex === 1 ? 'class="text-left"' : '';
+                            rowHtml += `<td contenteditable="true" ${alignClass}>${cellValue}</td>`;
+                        });
+
+                        rowHtml += `<td class="no-print"><button class="btn btn-delete" onclick="deleteRow(this)">🗑️ ડીલીટ</button></td>`;
+                        newRow.innerHTML = rowHtml;
+                        tbody.appendChild(newRow);
+                    });
+                }
+
+                status.style.color = "green";
+                status.innerText = "✅ ડેટા સેટ થઈ ગયો!";
+                setTimeout(() => { status.innerText = ""; }, 3000);
+            } else {
+                status.innerText = "";
+            }
+        })
+        .catch(err => {
+            status.innerText = "";
+            console.log("ડિફોલ્ટ ડેટા દર્શાવાય રહ્યો છે.");
+        });
     }
 
-    // ઊભી લાઈન (કોલમ) નો કુલ ગ્રાન્ડ ટોટલ
-    function calculateGrandTotal() {
-        let totals = { sc_m:0, sc_f:0, st_m:0, st_f:0, obc_m:0, obc_f:0, gen_m:0, gen_f:0, grand_m:0, grand_f:0, grand_total:0 };
+    // 4. Google Sheet માં ડેટા સેવ કરશે
+    function saveToGoogleSheet() {
+        const status = document.getElementById("status");
+        status.style.color = "orange";
+        status.innerText = "⏳ Google Sheet માં સેવ થઈ રહ્યું છે...";
 
-        standards.forEach(std => {
-            totals.sc_m += parseInt(document.getElementById(`${std}_sc_m`).value) || 0;
-            totals.sc_f += parseInt(document.getElementById(`${std}_sc_f`).value) || 0;
-            totals.st_m += parseInt(document.getElementById(`${std}_st_m`).value) || 0;
-            totals.st_f += parseInt(document.getElementById(`${std}_st_f`).value) || 0;
-            totals.obc_m += parseInt(document.getElementById(`${std}_obc_m`).value) || 0;
-            totals.obc_f += parseInt(document.getElementById(`${std}_obc_f`).value) || 0;
-            totals.gen_m += parseInt(document.getElementById(`${std}_gen_m`).value) || 0;
-            totals.gen_f += parseInt(document.getElementById(`${std}_gen_f`).value) || 0;
-            totals.grand_m += parseInt(document.getElementById(`${std}_grand_m`).innerText) || 0;
-            totals.grand_f += parseInt(document.getElementById(`${std}_grand_f`).innerText) || 0;
-            totals.grand_total += parseInt(document.getElementById(`${std}_grand_total`).innerText) || 0;
+        const tbodyRows = document.querySelectorAll("#" + activeTabId + " tbody tr");
+        const rows = [];
+
+        tbodyRows.forEach(row => {
+            const rowData = [];
+            const cells = row.querySelectorAll("td");
+            
+            // છેલ્લું Action/Delete કોલમ છોડીને બાકીનો ડેટા લેશે
+            for (let i = 0; i < cells.length - 1; i++) {
+                rowData.push(cells[i].innerText.trim());
+            }
+            if (rowData.length > 0) rows.push(rowData);
         });
 
-        document.getElementById("tot_sc_m").innerText = totals.sc_m;
-        document.getElementById("tot_sc_f").innerText = totals.sc_f;
-        document.getElementById("tot_sc_t").innerText = totals.sc_m + totals.sc_f;
-        
-        document.getElementById("tot_st_m").innerText = totals.st_m;
-        document.getElementById("tot_st_f").innerText = totals.st_f;
-        document.getElementById("tot_st_t").innerText = totals.st_m + totals.st_f;
-
-        document.getElementById("tot_obc_m").innerText = totals.obc_m;
-        document.getElementById("tot_obc_f").innerText = totals.obc_f;
-        document.getElementById("tot_obc_t").innerText = totals.obc_m + totals.obc_f;
-
-        document.getElementById("tot_gen_m").innerText = totals.gen_m;
-        document.getElementById("tot_gen_f").innerText = totals.gen_f;
-        document.getElementById("tot_gen_t").innerText = totals.gen_m + totals.gen_f;
-
-        document.getElementById("tot_grand_m").innerText = totals.grand_m;
-        document.getElementById("tot_grand_f").innerText = totals.grand_f;
-        document.getElementById("tot_grand_total").innerText = totals.grand_total;
-    }
-
-    // ડેટા સબમિટ (POST) કરવા માટે
-    document.getElementById("casteForm").addEventListener("submit", function(e) {
-        e.preventDefault();
-        document.getElementById("loader").style.display = "flex";
-        document.getElementById("loader").innerText = "માહિતી ગુગલ શીટમાં સેવ થઈ રહી છે...";
-
-        let rowsData = [];
-        standards.forEach(std => {
-            rowsData.push({
-                patrak_no: std, 
-                sc_m: parseInt(document.getElementById(`${std}_sc_m`).value) || 0,
-                sc_f: parseInt(document.getElementById(`${std}_sc_f`).value) || 0,
-                st_m: parseInt(document.getElementById(`${std}_st_m`).value) || 0,
-                st_f: parseInt(document.getElementById(`${std}_st_f`).value) || 0,
-                obc_m: parseInt(document.getElementById(`${std}_obc_m`).value) || 0,
-                obc_f: parseInt(document.getElementById(`${std}_obc_f`).value) || 0,
-                gen_m: parseInt(document.getElementById(`${std}_gen_m`).value) || 0,
-                gen_f: parseInt(document.getElementById(`${std}_gen_f`).value) || 0
-            });
-        });
-
-        let payload = {
-            api_type: "survey_bv_bulk", 
-            rows: rowsData
+        const payload = {
+            sheetName: activeTabId,
+            rows: rows
         };
 
-        fetch(WEB_APP_URL, {
+        fetch(SCRIPT_URL, {
             method: "POST",
             mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "text/plain"
+            },
             body: JSON.stringify(payload)
         })
         .then(() => {
-            document.getElementById("loader").style.display = "none";
-            alert("🎉 બધી માહિતી સફળતાપૂર્વક સેવ થઈ ગઈ છે!");
+            status.style.color = "green";
+            status.innerText = "✅ સફળતાપૂર્વક Google Sheet માં સેવ થઈ ગયું!";
+            setTimeout(() => { status.innerText = ""; }, 4000);
         })
         .catch(err => {
-            document.getElementById("loader").style.display = "none";
-            alert("ભૂલ આવી: " + err);
+            status.style.color = "red";
+            status.innerText = "❌ સેવ કરવામાં ભૂલ આવી.";
         });
-    });
+    }
 </script>
+
 </body>
 </html>

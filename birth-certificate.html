@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>જન્મ તારીખનો દાખલો / બોનફાઇડ સર્ટિફિકેટ (ડેટા સેવ સિસ્ટમ)</title>
-    <style>
+<style>
         :root {
             --primary-color: #4b39ef;
             --success-color: #24d160;
@@ -20,12 +20,14 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 0px;
+            padding: 15px;
         }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .selection-grid {
@@ -84,11 +86,19 @@
             margin-bottom: 30px;
         }
 
+        /* 📊 ટેબલ કન્ટેનર રિસ્પોન્સિવ કરવા માટે */
+        .table-responsive {
+            overflow-x: auto;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
             font-size: 0.95rem;
+            min-width: 750px; /* ટેબલ મોબાઇલમાં ભેગું થતું અટકાવશે */
         }
 
         th, td {
@@ -100,50 +110,69 @@
         th { background-color: #f8f9fa; color: #57636c; }
         tr:hover { background-color: #f1f4f8; }
 
-        /* સર્ટિફિકેટ પ્રિવ્યૂ */
+        /* 📜 સર્ટિફિકેટ પ્રિવ્યૂ માટે રિસ્પોન્સિવ રેપર */
+        .cert-scroll-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 25px;
+            background: #cbd5e1;
+            padding: 15px 0;
+            border-radius: 12px;
+        }
+
         .certificate-preview {
             border: 2px solid #000;
             padding: 40px;
-            margin-top: 25px;
             background: #fff;
             color: #000;
             box-sizing: border-box;
             position: relative;
+            width: 800px; /* A4 વિડ્થ ફિક્સ કરી દીધી જેથી અક્ષરો તૂટે નહિ */
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        /* 📸 ફોટો માટેનું સ્ક્વેર બોક્સ (હાલમાં ડિફોલ્ટ છુપાવેલું) */
-        /* 📸 ફોટો બોક્સને થોડું ઉપર અને જમણી બાજુ પરફેક્ટ સેટ કરવા માટે */
-.photo-box {
-    position: absolute;
-    top: 10px;       /* 40px માંથી ઘટાડીને 20px કર્યું જેથી બોક્સ ઉપર ચઢી જાય */
-    right: 35px;     /* જમણી બાજુથી પરફેક્ટ માર્જિન */
-    width: 132px;
-    height: 170px;
-    border: 2px dashed #000000;
-    display: none;   /* જાવાસ્ક્રિપ્ટથી કંટ્રોલ થશે */
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 0.85rem;
-    font-weight: bold;
-    color: #444;
-    background-color: #fafafa;
-}
+        .photo-box {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            width: 132px;
+            height: 170px;
+            border: 2px dashed #000000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #444;
+            background-color: #fafafa;
+        }
 
         .gov-sub-header { text-align: center; font-weight: bold; font-size: 1.25rem; margin-bottom: 15px; }
         .cert-header { text-align: center; margin-bottom: 20px; }
         .cert-header h1 { margin: 0; font-size: 2rem; }
         .cert-header p { margin: 5px 0 0 0; font-size: 1.15rem; }
         
-        /* ફોટો હોય ત્યારે હેડિંગ એડજસ્ટ કરવા માટેનો ક્લાસ */
-        /* ફોટો હોય ત્યારે હેડિંગ ડાબી બાજુ ખસેડવા માટે */
-.cert-header.has-photo, .gov-sub-header.has-photo {
-    padding-right: 140px; /* 120px માંથી વધારીને 140px કર્યું */
-}
+        .cert-header.has-photo, .gov-sub-header.has-photo {
+            padding-right: 140px;
+        }
 
         .cert-meta { display: flex; justify-content: space-between; margin-bottom: 30px; font-size: 1.2rem; margin-top: 20px; }
         .cert-title { text-align: center; margin: 25px 0; }
-        .cert-title span { border: 1px solid #000; padding: 6px 30px; font-weight: bold; font-size: 1.4rem; background: #f9f9f9; }
+        
+        /* 🏷️ બોનફાઇડ સર્ટિફિકેટ હેડિંગ બોક્સ ડિઝાઇન ફિક્સ */
+        .cert-title span { 
+            border: 1px solid #000; 
+            padding: 8px 30px; 
+            font-weight: bold; 
+            font-size: 1.4rem; 
+            background: #f9f9f9; 
+            display: inline-block;
+            white-space: nowrap;
+        }
+        
         .cert-body { font-size: 1.3rem; line-height: 2.3; text-align: justify; margin-bottom: 60px; }
         .blank-line { border-bottom: 1px dotted #000; padding: 0 8px; font-weight: bold; display: inline-block; }
         .cert-footer { display: flex; justify-content: space-between; margin-top: 40px; font-size: 1.2rem; align-items: center; }
@@ -155,72 +184,57 @@
         }
 
         /* બટન્સ */
-        .btn-container { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-container { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
         .btn-print { background-color: var(--primary-color); color: white; padding: 12px 28px; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
         .btn-save { background-color: var(--success-color); color: white; padding: 12px 28px; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
-        .btn-back { background-color: var(--btn-back-color); color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-size: 1.1rem; font-weight: bold; }
         .btn-action { padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
         .btn-view { background-color: #00bcd4; color: white; margin-right: 5px; }
         .btn-delete { background-color: #ff5252; color: white; }
 
-       /* BACK BUTTON CONTAINER */
-.back-btn-container {
-    display: flex;
-    justify-content: flex-end; /* આનાથી બટન જમણી બાજુ આવી જશે */
-    width: 102%;
-    margin-bottom: 10px; /* સ્પેસિંગ અહીં શિફ્ટ કરી */
-    padding-right: 10px; /* સેજ માર્જિન માટે */
-    box-sizing: border-box;
-    padding-top: 10px;
-}
-
-/* BACK BUTTON */
-.back-btn {
-    display: inline-block;
-    padding: 14px 28px;
-    border-radius: 40px;
-    text-decoration: none;
-    background: linear-gradient(45deg, #4facfe, #00c6fb);
-    color: white;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.back-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,198,251,0.3);
-}
-
-        @media print {
-            .selection-grid, .form-card-section, .btn-container, .table-section, .form-title-main, .back-btn { display: none !important; }
-            body { background: #fff; padding: 0; margin: 0; }
-            .main-card { box-shadow: none; padding: 0; margin: 0; }
-            .certificate-preview { border: 2px solid #000; padding: 30px; margin: 0 auto; width: 95% !important; box-sizing: border-box; }
-            .photo-box { border: 2px solid #000 !important; top: 0px !important; right: 20px !important; }
-            .stamp-box { color: #1d4ed8 !important; border-color: #1d4ed8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .back-btn-container {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            margin-bottom: 10px;
+            box-sizing: border-box;
         }
+
+        .back-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            background: linear-gradient(45deg, #4facfe, #00c6fb);
+            color: white;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,198,251,0.3);
+        }
+
+        /* 💻 મોબાઇલ રિસ્પોન્સિવ ક્વેરી */
+        @media screen and (max-width: 768px) {
+            body { padding: 10px; }
+            .selection-grid { grid-template-columns: 1fr; gap: 12px; }
+            .main-card { padding: 15px; }
+            .form-grid { grid-template-columns: 1fr; gap: 12px; }
+            .btn-container .btn-save, .btn-container .btn-print { width: 100%; text-align: center; }
+            .table-section { padding: 15px; }
+        }
+
+        /* 🖨️ પ્રિન્ટ લેઆઉટ સેટિંગ્સ */
         @media print {
+            .selection-grid, .form-card-section, .btn-container, .table-section, .back-btn-container, .gov-footer { display: none !important; }
+            body { background: #fff; padding: 0; margin: 0; }
+            .main-card { box-shadow: none; padding: 0; margin: 0; background: transparent; }
+            .cert-scroll-wrapper { background: transparent; padding: 0; overflow: visible; }
+            .certificate-preview { border: 2px solid #000; padding: 30px; margin: 0 auto; width: 100% !important; box-shadow: none; }
+            .photo-box { border: 2px solid #000 !important; top: 20px !important; right: 35px !important; }
+            .stamp-box { color: #1d4ed8 !important; border-color: #1d4ed8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             @page { margin: 8mm 10mm; size: A4 portrait; }
-            body { background-color: white; padding: 0; margin: 0; }
-            
-            /* ❌ પ્રિન્ટમાંથી ટોપ હેડર, શાળાનું નામ, લોગો, મેનુ અને બટનોને સંપૂર્ણ દૂર કરવા માટે */
-            .gov-top-ribbon, 
-            .main-gov-header, 
-            .logo-section-left, 
-            .logo-title-text, 
-            .ministry-right, 
-            .gov-navbar, 
-            .top-actions, 
-            .form-box, 
-            .col-action, 
-            .action-cell, 
-            .gov-footer { 
-                display: none !important; 
-            } 
-            
-            .container { box-shadow: none; padding: 0; width: 100%; }
-            th { background-color: #f5f5f5 !important; }
-            th, td { padding: 8px 5px; font-size: 14px; border: 1.5px solid #000 !important; }
         }
     </style>
 </head>
@@ -941,6 +955,7 @@ body{
                             <li><a href="rojmel.html">રોજમેળ</a></li>
                             <li><a href="higher-grade.html">ઉચ્ચતર પગાર ધોરણ ફાઇલ</a></li>
                             <li><a href="birth-certificate.html">જન્મ તારીખનો દાખલો / બોનફાઇટ સટ્રી</a></li>
+                            <li><a href="ijafa.html">ઇજાફ પત્રક</a></li>
                         </ul>
                     </li>
                     <li class="mdm-dropdown">
@@ -982,7 +997,7 @@ body{
                             </ul>
                         </li>
                         <li><a href="mdm-menu.html">સાપ્તાહિક મેનૂ પત્રક</a></li>
-                        <li><a href="mdm-stock.html">દૈનિક સ્ટોક રજીસ્ટર</a></li>
+                        <li><a href="SMC_Reconstitution_Hajipur.html">દૈનિક સ્ટોક રજીસ્ટર</a></li>
                     </ul>
                 </li>
                 <li class="nav-link-item">
@@ -1009,8 +1024,9 @@ body{
 
 <div class="container">
     <div class="back-btn-container">
-    <a href="home.html" class="back-btn">⬅ Back</a>
-</div>
+        <a href="home.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back</a>
+    </div>
+
     <div class="selection-grid">
         <div class="select-card active" id="btnJanma" onclick="switchType('janma')">
             <h2>📅 જન્મ તારીખનો દાખલો</h2>
@@ -1069,7 +1085,7 @@ body{
 
     <div class="table-section">
         <h3 style="margin-top: 0; color: #14181b; font-size: 1.15rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">📊 સેવ કરેલા વિદ્યાર્થીઓનો ડેટાબેઝ</h3>
-        <div style="overflow-x: auto;">
+        <div class="table-responsive">
             <table>
                 <thead>
                     <tr>
@@ -1082,65 +1098,65 @@ body{
                         <th>એક્શન</th>
                     </tr>
                 </thead>
-                <tbody id="studentTableBody">
-                    </tbody>
+                <tbody id="studentTableBody"></tbody>
             </table>
         </div>
     </div>
 
-    <div class="certificate-preview" id="certArea">
-        
-        <div class="photo-box" id="photoBoxContainer">અહીં વિદ્યાર્થીનો<br>પાસપોર્ટ સાઇઝ<br>ફોટો ચોંટાડવો</div>
-
-        <div class="gov-sub-header" id="govHeaderLine">ગાંધીનગર શિક્ષણ સમિતિ-૨૦૧૩-૧૪</div>
-        <div class="cert-header" id="certHeaderContainer">
-            <h1>હાજીપુર પ્રાથમિક શાળા</h1>
-            <p>તા. કલોલ, જી. ગાંધીનગર</p>
-        </div>
-        <div class="cert-meta">
-            <div><b>જા.નં:</b> <span id="lblJaNo" class="blank-line">·</span></div>
-            <div><b>જ.ર.નં:</b> <span id="lblGrNo" class="blank-line">5107</span></div>
-        </div>
-        <div class="cert-title"><span id="certTitleText">દાખલો</span></div>
-        <div class="cert-body" id="certBodyText"></div>
-        <div class="cert-footer">
-            <div class="stamp-box" id="stampBox">સિક્કો</div>
-            <div style="text-align: right; font-weight: bold; line-height: 1.6;">
-                આચાર્યશ્રીની સહી<br>
-                <span style="font-size: 1.1rem; font-weight: normal;">હાજીપુર પ્રાથમિક શાળા</span>
+    <!-- 📜 સર્ટિફિકેટ પ્રિવ્યૂ એરિયા વિથ હોરિઝોન્ટલ સ્ક્રોલ -->
+    <div class="cert-scroll-wrapper">
+        <div class="certificate-preview" id="certArea">
+            <div class="photo-box" id="photoBoxContainer">અહીં વિદ્યાર્થીનો<br>પાસપોર્ટ સાઇઝ<br>ફોટો ચોંટાડવો</div>
+            <div class="gov-sub-header" id="govHeaderLine">ગાંધીનગર શિક્ષણ સમિતિ-૨૦૧૩-૧૪</div>
+            <div class="cert-header" id="certHeaderContainer">
+                <h1>હાજીપુર પ્રાથમિક શાળા</h1>
+                <p>તા. કલોલ, જી. ગાંધીનગર</p>
+            </div>
+            <div class="cert-meta">
+                <div><b>જા.નં:</b> <span id="lblJaNo" class="blank-line">·</span></div>
+                <div><b>જ.ર.નં:</b> <span id="lblGrNo" class="blank-line">5107</span></div>
+            </div>
+            <div class="cert-title"><span id="certTitleText">દાખલો</span></div>
+            <div class="cert-body" id="certBodyText"></div>
+            <div class="cert-footer">
+                <div class="stamp-box" id="stampBox">સિક્કો</div>
+                <div style="text-align: right; font-weight: bold; line-height: 1.6;">
+                    આચાર્યશ્રીની સહી<br>
+                    <span style="font-size: 1.1rem; font-weight: normal;">હાજીપુર પ્રાથમિક શાળા</span>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-
-    <!-- સત્તાવાર સરકારી ફૂટર સેક્શન -->
-    <footer class="gov-footer">
-        <div class="gov-container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h4>હાજીપુર પ્રાથમિક શાળા</h4>
-                    <p>ગુજરાત સરકાર દ્વારા સંચાલિત આદર્શ પ્રાથમિક શાળા.</p>
-                </div>
-                <div class="footer-column">
-                    <h4>ઉપયોગી સરકારી વેબસાઇટ</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://education.gujarat.gov.in" target="_blank"><i class="fa-solid fa-angle-right"></i> શિક્ષણ વિભાગ, ગુજરાત</a></li>
-                        <li><a href="https://ssagujarat.org/" target="_blank"><i class="fa-solid fa-angle-right"></i> સમગ્ર શિક્ષા </a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>સંપર્ક વિગત</h4>
-                    <div class="footer-contact-item"><i class="fa-solid fa-location-dot"></i><span>તા. કલોલ, જિ. ગાંધીનગર, ગુજરાત.</span></div>
-                    <div class="footer-contact-item"><i class="fa-solid fa-phone"></i><span>+91 9512104218</span></div>
-                     <div class="footer-contact-item"><i class="fa-solid fa-envelope"></i><span>principal24060303601@ssguj.in</span></div>
-                </div>
+<!-- ફૂટર સેક્શન -->
+<footer class="gov-footer" style="background-color: #0f172a; color: #cbd5e1; padding: 30px 15px; margin-top: 40px;">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+            <div>
+                <h4 style="color: #fff; margin-bottom: 15px;">હાજીપુર પ્રાથમિક શાળા</h4>
+                <p>ગુજરાત સરકાર દ્વારા સંચાલિત આદર્શ પ્રાથમિક શાળા.</p>
             </div>
-            <div class="footer-bottom">
-                <p>© 2026 હાજીપુર પ્રાથમિક શાળા. સર્વાધિકાર સુરક્ષિત | શિક્ષણ વિભાગ, ગુજરાત રાજ્ય</p>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 15px;">ઉપયોગી સરકારી વેબસાઇટ</h4>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li><a href="https://education.gujarat.gov.in" target="_blank" style="color: #cbd5e1; text-decoration: none;"><i class="fa-solid fa-angle-right"></i> શિક્ષણ વિભાગ, ગુજરાત</a></li>
+                    <li><a href="https://ssagujarat.org/" target="_blank" style="color: #cbd5e1; text-decoration: none;"><i class="fa-solid fa-angle-right"></i> સમગ્ર શિક્ષા</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 15px;">સંપર્ક વિગત</h4>
+                <p><i class="fa-solid fa-location-dot"></i> તા. કલોલ, જિ. ગાંધીનગર, ગુજરાત.</p>
+                <p><i class="fa-solid fa-phone"></i> +91 9512104218</p>
+                <p><i class="fa-solid fa-envelope"></i> principal24060303601@ssguj.in</p>
             </div>
         </div>
-    </footer>
+        <div style="text-align: center; border-top: 1px solid #334155; padding-top: 20px; margin-top: 20px; font-size: 0.9rem;">
+            <p>© 2026 હાજીપુર પ્રાથમિક શાળા. સર્વાધિકાર સુરક્ષિત | શિક્ષણ વિભાગ, ગુજરાત રાજ્ય</p>
+        </div>
+    </div>
+</footer>
+
 <script>
     let currentType = 'janma';
     let studentList = [];
@@ -1178,14 +1194,11 @@ body{
         const govHeader = document.getElementById('govHeaderLine');
 
         if (currentType === 'janma') {
-            // 📅 જન્મ તારીખનો દાખલો સેટિંગ્સ (ફોટો છુપાવો)
             photoBox.style.display = 'none';
             certHeader.classList.remove('has-photo');
             govHeader.classList.remove('has-photo');
-            
             govHeader.style.display = 'block';
             document.getElementById('certTitleText').innerText = "દાખલો";
-            // ✅ અહીંથી 'Engineering-' કાઢીને લખાણ એકદમ ચોખ્ખું કરી દીધું છે
             document.getElementById('certBodyText').innerHTML = `
                 આથી દાખલો લખી આપવામાં આવે છે કે કુમાર / કુમારી શ્રી <div class="blank-line">${name}</div> 
                 સદર શાળાના ધોરણ <div class="blank-line">${sClass}</div> માં અભ્યાસ કરે છે/કરતા હતાં/કરતી હતી. 
@@ -1196,11 +1209,9 @@ body{
                 સદર વિદ્યાર્થીની જાતિ શાળા દફતરે <div class="blank-line">${caste}</div> નોંધાયેલ છે.
             `;
         } else {
-            // 🎓 બોનફાઇડ સર્ટિફિકેટ સેટિંગ્સ (ફોટો બતાવો)
             photoBox.style.display = 'flex';
             certHeader.classList.add('has-photo');
             govHeader.classList.add('has-photo');
-
             govHeader.style.display = 'none';
             document.getElementById('certTitleText').innerText = "બોનફાઇડ સર્ટિફિકેટ";
             document.getElementById('certBodyText').innerHTML = `
