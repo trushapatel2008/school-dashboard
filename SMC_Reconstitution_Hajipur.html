@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMC પુનઃરચના ફોર્મેટ - હાજીપુર પ્રાથમિક શાળા</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.9;
+            letter-spacing: 0.5px;
+            word-spacing: 1.5px;
+            color: #333;
+
+            background-color: #f9f9f9;
+        }
+        .container {
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #1a5f7a;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        h1 {
+            border-bottom: 3px solid #1a5f7a;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            margin-top: 25px;
+            margin-bottom: 25px;
+            background-color: #e8f1f5;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        h3 {
+            margin-top: 35px;
+            margin-bottom: 20px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 35px;
+            background: #f1f7f9;
+            padding: 25px;
+            border-radius: 5px;
+        }
+        .info-item {
+            font-weight: bold;
+        }
+        .info-item span {
+            font-weight: normal;
+            border-bottom: 1px dotted #333;
+            padding-right: 15px;
+            margin-left: 5px;
+        }
+        
+        /* પ્રિન્ટ સેટિંગ્સ: પેજ બ્રેક કંટ્રોલ */
+        table, .notice-box, .info-grid, .signature-section, .certification-box, .resolution-box {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+        
+        .page-section {
+            page-break-before: always;
+            break-before: page;
+        }
+        
+        .first-section {
+            page-break-before: auto !important;
+            break-before: auto !important;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 35px 0;
+            background: #fff;
+        }
+        table, th, td {
+            border: 1px solid #aaa;
+        }
+        th, td {
+            padding: 16px;
+            text-align: left;
+        }
+        th {
+            background-color: #1a5f7a;
+            color: white;
+            text-align: center;
+        }
+        .center-text {
+            text-align: center;
+        }
+        .right-text {
+            text-align: right;
+        }
+        .bullet-list {
+            padding-left: 25px;
+        }
+        .bullet-list li {
+            margin-bottom: 15px;
+        }
+        .signature-section {
+            margin-top: 60px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature-box {
+            text-align: center;
+            width: 250px;
+            padding-top: 70px;
+            border-top: 1px dashed #333;
+        }
+        .notice-box, .resolution-box {
+            border: 2px solid #1a5f7a;
+            padding: 35px;
+            margin: 20px 0;
+            border-radius: 8px;
+            background-color: #fffdf5;
+            line-height: 2;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ccc;
+            margin: 40px 0;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        
+        .print-btn-container {
+            text-align: right;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+        .print-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background 0.3s;
+        }
+        .print-btn:hover {
+            background-color: #219653;
+        }
+
+        @media print {
+            body {
+                background-color: #fff;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 10px;
+            }
+            .print-btn-container {
+                display: none;
+            }
+            hr {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+   <style>
+/* રીસેટ અને ગુજરાત સરકારી થીમ કલર્સ */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+:root {
+    --gov-blue: #0b3c5d;   /* ઓફિશિયલ સરકારી બ્લુ કલર */
+    --gov-orange: #f58220; /* રાષ્ટ્રીય નારંગી / કેસરી કલર */
+    --gov-gold: #d4af37;   /* સરકારી ગોલ્ડન ટચ */
+    --bg-light: #f8fafc;
+    --text-dark: #1e293b;
+}
+
+body{
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+/* મુખ્ય સરકારી કન્ટેનર */
+.gov-container {
+    max-width: 1350px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* --- ૧. સત્તાવાર ટોપ બાર (Government Top Ribbon) --- */
+.gov-top-ribbon {
+    background: #e2e8f0;
+    padding: 6px 30px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #334155;
+    border-bottom: 2px solid var(--gov-orange);
+    font-weight: 600;
+}
+.gov-top-ribbon .right-links a { color: #334155; text-decoration: none; margin-left: 15px; }
+
+/* --- ૨. શિક્ષણ વિભાગ મુખ્ય હેડર (Official School Header) --- */
+/* હેડરનું મુખ્ય કન્ટેનર જે બંને વિભાગને એક લાઈનમાં લાવશે */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 20px;
+
+    box-sizing: border-box;
+}
+
+/* ડાબી બાજુનું સેક્શન (આઇકોન + સ્કૂલ ટેક્સ્ટ) */
+.logo-section-left {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* આઇકોન અને લખાણ વચ્ચેની જગ્યા */
+}
+
+/* ગ્રેજ્યુએશન કેપ આઇકોન સ્ટાઇલ */
+.emblem-icon, .logo-section-left i {
+    font-size: 45px; /* આઇકોનની સાઇઝ નાની-મોટી કરવા માટે */
+    color: #1a5f7a;
+}
+
+/* શાળાના નામનું સેટિંગ - જે સ્પેસ ઓછી કરશે */
+.logo-title-text h1 {
+    font-size: 24px;
+    color: #1a5f7a;
+    margin: 0;
+    padding: 0;
+
+}
+
+.logo-title-text p {
+    font-size: 13px;
+    color: #555;
+    margin: 4px 0 0 0;
+    padding: 0;
+}
+
+/* જમણી બાજુનું સેક્શન (મિનિસ્ટ્રી વિગત) */
+.ministry-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-left: 2px solid #ccc; /* વચ્ચેની ઊભી લાઈન */
+    padding-left: 20px;
+    height: 50px; /* ઊભી લાઈનની હાઇટ ફિક્સ કરવા */
+}
+
+/* બિલ્ડિંગ આઇકોન સ્ટાઇલ */
+.ministry-right i {
+    font-size: 35px;
+    color: #e67e22; /* ઇમેજ મુજબ ઓરેન્જ/બ્રાઉન કલર આપવા */
+}
+
+/* શિક્ષણ વિભાગ લખાણની સ્પેસ કંટ્રોલ */
+.ministry-right h2 {
+    font-size: 18px;
+    color: #1a5f7a;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    background: none; /* જો જૂનો બેકગ્રાઉન્ડ કલર નડતો હોય તો */
+}
+
+.ministry-right p {
+    font-size: 12px;
+    color: #777;
+    margin: 2px 0 0 0;
+    padding: 0;
+}
+/* --- ૩. નેવિગેશન બાર --- */
+.gov-navbar {
+    background: var(--gov-blue);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+}
+
+.nav-link-item {
+    position: relative;
+}
+
+.nav-main-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 24px;
+    color: #f1f5f9;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.nav-main-link i.arrow {
+    font-size: 10px;
+    transition: transform 0.2s;
+}
+
+.nav-link-item:hover .nav-main-link {
+    background: var(--gov-orange);
+    color: white;
+}
+.nav-link-item:hover .nav-main-link i.arrow {
+    transform: rotate(180deg);
+}
+
+.gov-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 260px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: all 0.3s ease;
+    border-top: 3px solid var(--gov-orange);
+    z-index: 1000;
+}
+
+.gov-dropdown a {
+    display: block;
+    padding: 13px 20px;
+    color: #334155;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-bottom: 1px solid #f1f5f9;
+}
+.gov-dropdown a:last-child { border-bottom: none; }
+
+.gov-dropdown a:hover {
+    background: #f8fafc;
+    color: var(--gov-blue);
+    padding-left: 25px;
+}
+
+.nav-link-item:hover .gov-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.nav-logout {
+    margin-left: auto;
+    background: #dc2626 !important;
+}
+.nav-logout:hover .nav-main-link { background: #b91c1c !important; }
+
+/* --- ૧૦. સત્તાવાર સરકારી ફૂટર સેક્શન --- */
+.gov-footer {
+    background: var(--gov-blue);
+    color: #cbd5e1;
+    padding: 40px 0 20px 0;
+    margin-top: 50px;
+    border-top: 5px solid var(--gov-orange);
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+.footer-column h4 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 15px;
+    position: relative;
+    padding-bottom: 8px;
+}
+.footer-column h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gov-orange);
+}
+.footer-column p { font-size: 14px; line-height: 1.6; margin-bottom: 10px; }
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links li a { color: #cbd5e1; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+.footer-links li a:hover { color: var(--gov-orange); padding-left: 5px; }
+.footer-contact-item { display: flex; align-items: center; gap: 10px; font-size: 14px; margin-bottom: 12px; }
+.footer-contact-item i { color: var(--gov-orange); }
+.footer-bottom { border-top: 1px solid #1e4d73; padding-top: 20px; text-align: center; font-size: 13px; color: #94a3b8; }
+
+/* ડેસ્કટોપ વ્યુ માટે હિડન સેટિંગ્સ */
+.menu-checkbox {
+    display: none;
+}
+.hamburger-label {
+    display: none;
+    background: var(--gov-orange);
+    color: white;
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* ==========================================================
+   📱 મોબાઈલ સાઈઝ (Phone View) માટે પરફેક્ટ સાઇડબાર અને ટોગલ CSS
+   ========================================================== */
+@media(max-width: 992px) {
+    /* ૧. હેમબર્ગર લેબલને સાઇડબારની ઉપર બરાબર સેટ કરવું */
+    .hamburger-label {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* 🆕 સ્પેસ બીટવીન હટાવીને ફ્લેક્સ સ્ટાર્ટ કર્યું જેથી બંને જોડે આવી જાય */
+        gap: 12px;                  /* આયકન અને મેનુ લખાણ વચ્ચેની પરફેક્ટ જગ્યા */
+        padding: 15px 20px;
+        background: var(--gov-orange);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        position: relative;
+        z-index: 1000;
+    }
+
+    /* ૨. મેનુ લિસ્ટ (સાઇડબાર જે ઓવરલેપ થશે) */
+    .nav-list {
+        display: flex !important;
+        flex-direction: column;
+        position: fixed !important;
+        top: 0;
+        left: -280px;             /* શરૂઆતમાં ડાબી બાજુ છુપાયેલું */
+        width: 280px !important;  
+        height: 100vh !important; 
+        background: var(--gov-blue);
+        z-index: 9999 !important; /* કન્ટેન્ટની ઉપર તરશે */
+        padding-top: 60px !important; /* ઉપરથી બટન માટે જગ્યા છોડી */
+        overflow-y: auto !important;
+        transition: left 0.3s ease-in-out !important;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+    }
+
+    /* ૩. જ્યારે ચેકબોક્સ ટીક (મેનુ ઓપન) થાય ત્યારે સાઇડબાર સ્ક્રીન પર આવશે */
+    .menu-checkbox:checked ~ .nav-list {
+        left: 0 !important;
+    }
+
+    /* 🆕 પ્યોર CSS મેજિક: જ્યારે મેનુ ખુલે ત્યારે 'મેનુ' લખેલું આખું લેબલ સાઇડબારની ઉપર આવી જશે */
+    .menu-checkbox:checked ~ .hamburger-label {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 280px !important; 
+        z-index: 10000 !important; 
+        background: #0d4368 !important; 
+        box-sizing: border-box;
+        justify-content: flex-start !important; /* 🆕 અહીં પણ જોડે જ રહેશે */
+    }
+
+    /* 🆕 સુપર ટ્રીક: જ્યારે મેનુ ખુલે ત્યારે ૩-લાઇન (fa-bars) ને ચોકડી (X) માં ફેરવવા માટે */
+    .menu-checkbox:checked ~ .hamburger-label .fa-bars::before {
+        content: "\f00d" !important; /* આ FontAwesome માં 'X' (Close) નો કોડ છે */
+    }
+
+    /* મોબાઈલ ડ્રોપડાઉન સેટિંગ્સ */
+    .gov-dropdown {
+        position: static !important;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        padding-left: 15px;
+        background: #0f4c75;
+        width: 100% !important;
+        border-top: none;
+        display: none;
+    }
+    .nav-link-item:hover .gov-dropdown {
+        display: block;
+    }
+    .gov-dropdown a {
+        color: #e2e8f0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        white-space: normal !important;
+    }
+
+    /* નેસ્ટેડ સબ-મેનુ સેટિંગ્સ */
+    .mdm-dropdown .mdm-sub-menu {
+        position: static !important;
+        box-shadow: none;
+        background: #155e8a;
+        min-width: 100% !important;
+        border-left: 2px solid var(--gov-orange);
+        padding-left: 10px;
+        display: none !important;
+    }
+    .mdm-dropdown:hover .mdm-sub-menu {
+        display: block !important;
+    }
+
+    /* મેગા મેનુ મોબાઈલ સેટિંગ્સ */
+    .mdm-dropdown.praveshotsav-mega-menu .mdm-sub-menu {
+        position: static !important;
+        grid-template-columns: 1fr !important;
+        min-width: 100% !important;
+        box-shadow: none !important;
+        background: #1b6ca8 !important;
+        padding: 10px !important;
+        display: none !important;
+        
+    }
+    .mdm-dropdown.praveshotsav-mega-menu:hover > .mdm-sub-menu {
+        display: block !important;
+    }
+
+    .nav-logout {
+        margin-left: 0;
+    }
+}
+        @media print {
+            @page { margin: 8mm 10mm; size: A4 portrait; }
+            body { background-color: white; padding: 0; margin: 0; }
+            
+            /* ❌ પ્રિન્ટમાંથી ટોપ હેડર, શાળાનું નામ, લોગો, મેનુ અને બટનોને સંપૂર્ણ દૂર કરવા માટે */
+            .gov-top-ribbon, 
+            .main-gov-header, 
+            .logo-section-left, 
+            .logo-title-text, 
+            .ministry-right, 
+            .gov-navbar, 
+            .top-actions, 
+            .form-box, 
+            .col-action, 
+            .action-cell, 
+            .gov-footer { 
+                display: none !important; 
+            } 
+            
+            .container { box-shadow: none; padding: 0; width: 100%; }
+            th { background-color: #f5f5f5 !important; }
+            th, td { padding: 8px 5px; font-size: 14px; border: 1.5px solid #000 !important; }
+        }
+/* મોબાઈલમાં સ્કૂલનું નામ પ્રોપર સેટ કરવા અને જમણી બાજુનું સેક્શન ડીલીટ કરવા માટે */
+@media(max-width: 992px) {
+    /* ૧. આખા હેડરને સેન્ટર કરવા અને વર્ટિકલ (ઉભું) ગોઠવવા */
+    .header { 
+        flex-direction: column !important; 
+        text-align: center !important; 
+        padding: 20px 15px !important;
+    }
+
+    /* ૨. સ્કૂલના નામ અને ટોપીવાળા આયકનને સેન્ટરમાં ગોઠવવા */
+    .logo-section-left { 
+        flex-direction: column !important; 
+        gap: 10px !important; 
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* ૩. સ્કૂલના નામની સાઈઝ મોબાઈલ સ્ક્રીન પ્રમાણે સેટ કરવા */
+    .logo-title-text h1 { 
+        font-size: 24px !important; 
+        text-align: center !important;
+    }
+    .logo-title-text p {
+        font-size: 13px !important;
+        text-align: center !important;
+    }
+
+    /* ૪. જમણી બાજુનું "પ્રાથમિક શિક્ષણ વિભાગ" વાળું આખું બોક્સ મોબાઈલમાંથી ડીલીટ (Hide) કરવા */
+    .ministry-right { 
+        display: none !important; 
+    }
+}
+/* મોબાઈલમાં ટોપ રીબન (પહેલી લાઇન) ને વ્યવસ્થિત કરવા માટે */
+@media(max-width: 992px) {
+    .gov-top-ribbon { 
+        flex-direction: column !important; /* ડાબે-જમણેથી બદલીને ઉપર-નીચે કરવા */
+        text-align: center !important;     /* લખાણ સેન્ટર કરવા */
+        gap: 6px !important;              /* બંને વચ્ચે સ્પેસ આપવા */
+        padding: 10px 15px !important;     /* સરસ ગેપ આપવા */
+        font-size: 12px !important;        /* અક્ષરો થોડા મોટા અને વંચાય તેવા કરવા */
+    }
+    
+    .gov-top-ribbon .right-links a { 
+        margin-left: 0 !important;         /* વધારાની સ્પેસ કાઢવા */
+    }
+}
+/* ફક્ત મોબાઈલમાં લોગો નાનો કરવા માટે */
+@media(max-width: 992px) {
+    .intro-logo-box img { 
+        max-width: 140px !important; /* લોગોની સાઈઝ નાની કરી */
+        width: 140px !important;
+        height: auto !important;
+        margin: 15px auto 0 auto !important;
+        display: block !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+    <div class="gov-top-ribbon">
+        <div class="left-links">
+            <span>ગુજરાત સરકાર | શિક્ષણ વિભાગ</span>
+        </div>
+        <div class="right-links">
+            <a href="#">મુ.પો. હાજીપુર, તા.કલોલ, જી.ગાંધીનગર</a> | 
+            <a href="#">ગુજરાત</a>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="logo-section-left">
+            <i class="fa-solid fa-graduation-cap emblem-icon"></i>
+            <div class="logo-title-text">
+                <h1>હાજીપુર પ્રાથમિક શાળા</h1>
+                <p>શિક્ષણ વિભાગ, ગુજરાત સરકાર સંચાલિત સત્તાવાર શાળા પોર્ટલ</p>
+            </div>
+        </div>
+        <div class="ministry-right">
+            <i class="fa-solid fa-building-columns"></i>
+            <div>
+                <h2>પ્રાથમિક શિક્ષણ વિભાગ</h2>
+                <p>ગુજરાત રાજ્ય</p>
+            </div>
+        </div>
+    </div>
+
+<nav class="gov-navbar">
+    <div class="gov-container" style="padding: 0;">
+        
+        <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+        <label for="menu-toggle" class="hamburger-label"><i class="fa-solid fa-bars"></i> મેનુ</label>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    /* ... તમારો ઓરિજિનલ CSS કોડ અહીં રહેશે ... */
+
+    /* ==========================================================================
+       📱 મોબાઇલ સાઇઝમાં મેનુ, એરો અને ટેબલ પરફેક્ટ દેખાય તે માટેનો રિસ્પોન્સિવ CSS
+       ========================================================================== */
+    @media screen and (max-width: 768px) {
+        
+        /* ૧. મુખ્ય પેજ અને કન્ટેનર સેટિંગ્સ */
+        .page-wrapper {
+            padding: 10px 5px !important;
+        }
+        .footer-container {
+            padding: 15px 10px !important;
+            border-radius: 8px !important;
+            width: 100% !important;
+        }
+
+        /* ૨. મોબાઇલ મેનુ બાર અને લિસ્ટ સેટિંગ */
+        .gov-navbar {
+            padding: 0 !important;
+        }
+        .gov-container-nav {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .nav-list {
+            flex-direction: column; /* મેનુ આઇટમ એકબીજાની નીચે આવશે */
+            width: 100%;
+        }
+        .nav-main-link {
+            padding: 12px 15px;
+            border-bottom: 1px solid #075985;
+            display: flex;
+            justify-content: space-between; /* એરો જમણી બાજુ પરફેક્ટ ગોઠવવા */
+            align-items: center;
+        }
+
+        /* ૩. ડ્રોપડાઉન મેનૂ મોબાઇલ સેટિંગ */
+        .gov-dropdown {
+            position: relative !important;
+            top: 0 !important;
+            box-shadow: none !important;
+            background: #075985 !important;
+        }
+        .gov-dropdown li a {
+            color: #bae6fd !important;
+            padding-left: 30px !important; /* અંદરની તરફ જગ્યા આપવા */
+            border-bottom: 1px solid #0c4a6e;
+        }
+
+        /* ૪. ઇનપુટ ફોર્મ સેટિંગ */
+        .form-grid {
+            grid-template-columns: 1fr !important; /* બધા જ બોક્સ ૧૦૦% વિડ્થના થશે */
+            gap: 10px !important;
+        }
+        .btn-row {
+            text-align: center !important;
+        }
+        .btn {
+            width: 48%;
+            display: inline-block;
+        }
+
+        /* ૫. 📊 ટેબલ આડું સ્ક્રોલ સેટિંગ (કટ અટકાવવા) */
+        .table-responsive {
+            width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 15px;
+            border: 1px solid #cbd5e1;
+        }
+        table {
+            min-width: 650px; /* ટેબલને કટ થતું અટકાવશે */
+        }
+        th, td {
+            padding: 8px 5px !important;
+            font-size: 13px !important;
+        }
+    }
+</style>
+        <ul class="nav-list">
+                <li class="nav-link-item">
+                    <a href="home.html" class="nav-main-link"><i class="fa-solid fa-house-user"></i> હોમ</a>
+                </li>
+                <li class="nav-link-item">
+                    <a href="javascript:void(0);" class="nav-main-link"><i class="fa-solid fa-school"></i> શાળા પરિચય<i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="gov-dropdown">
+                        <li><a href="school-information.html">શાળાની માહિતી</a></li>
+                        <li><a href="teacher-information.html">શિક્ષકની માહિતી</a></li>
+                        <li><a href="student-detail.html">વિદ્યાર્થી માહિતી</a></li>
+                    </ul>
+                </li>
+                <li class="nav-link-item">
+                    <a href="javascript:void(0);" class="nav-main-link"><i class="fa-solid fa-file-pdf"></i> પત્રકો / ફાઇલો <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="gov-dropdown">
+                        <li class="mdm-dropdown">
+                            <a href="javascript:void(0);" class="mdm-dropbtn">
+                                પરીક્ષા અને પરિણામ ફાઇલ <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                            </a>
+                    
+                            <ul class="mdm-sub-menu">
+                                <li><a href="examfile.html">પરીક્ષા ફાઇલ</a></li>
+                                <li><a href="report-card.html">પરિણામ પત્રક</a></li>
+                            </ul>
+                        </li>
+                    <style>
+                        /* ૧. મુખ્ય લિસ્ટ આઇટમ (એમ.ડી.એમ) નું સેટિંગ */
+                        .mdm-dropdown {
+                            position: relative; /* આ લાઇન સબ-મેનુને આની સાપેક્ષમાં બાજુમાં રાખશે */
+                            list-style: none;
+                        }
+
+                        /* ૨. એમ.ડી.એમ લિંક (બટન) ની ડિઝાઇન */
+                        .mdm-dropbtn {
+                            display: flex !important;
+                            align-items: center;
+                            justify-content: space-between; /* અક્ષરો ડાબે અને એરો જમણે સેટ કરશે */
+                            padding: 10px 20px;
+                            color: #334155;
+                            text-decoration: none;
+                            font-weight: 500;
+                            transition: background 0.2s;
+                        }
+
+                        /* ૩. 🎯 સાઇડમાં ખુલવા વાળું સબ-મેનુ (શરૂઆતમાં છુપાયેલું રહેશે) */
+                        .mdm-dropdown .mdm-sub-menu {
+                            display: none;          /* શરૂઆતમાં મેનુ દેખાશે નહીં */
+                            position: absolute;
+                            top: 0;                 /* બરાબર 'એમ.ડી.એમ.' ની સામેથી જ શરૂ થશે */
+                            left: 100%;             /* ૧૦૦% ખસીને બરાબર જમણી બાજુ (Right-side) ગોઠવાશે */
+                            background-color: #ffffff;
+                            min-width: 220px;       /* સબ-મેનુની પહોળાઈ */
+                            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15); /* સુંદર પડછાયો */
+                            border-radius: 6px;
+                            padding: 8px 0;
+                            margin: 0;
+                            list-style: none;
+                            z-index: 9999;          /* આનાથી મેનુ કોઈ સ્લાઈડર કે બેનરની પાછળ છુપાશે નહીં */
+                            border-left: 3px solid #f58220; /* તમારી થીમ મુજબની ઓરેન્જ બોર્ડર લાઇન */
+                        }
+
+                        /* ૪. 🎯 મેજિક હોવર ઇફેક્ટ: માઉસ 'એમ.ડી.એમ' પર જતાં જ સાઇડમાં મેનુ ઓપન થશે */
+                        .mdm-dropdown:hover .mdm-sub-menu {
+                            display: block !important;
+                        }
+
+                        /* ૫. સબ-મેનુની અંદરની દરેક લિંક્સ (પત્રકો) ની ડિઝાઇન */
+                        .mdm-dropdown .mdm-sub-menu li a {
+                            color: #475569 !important;
+                            padding: 10px 18px;
+                            text-decoration: none;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;              /* આઇકોન અને લખાણ વચ્ચે જગ્યા રાખશે */
+                            font-size: 14px;
+                            font-weight: 500;
+                            transition: all 0.2s ease;
+                        }
+
+                        /* ૬. સબ-મેનુની અંદરની લિંક પર માઉસ જાય ત્યારે ઇફેક્ટ */
+                        .mdm-dropdown .mdm-sub-menu li a:hover {
+                            background-color: #f1f5f9; /* આછો ગ્રે કલર */
+                            color: #f58220 !important;  /* અક્ષરો ઓરેન્જ થશે */
+                            padding-left: 23px;        /* માઉસ જતાં લખાણ થોડું જમણી તરફ સરકશે */
+                        }
+                    </style>
+                    <li class="mdm-dropdown">
+                        <a href="javascript:void(0);" class="mdm-dropbtn">
+                            શાળા પ્રવેશોત્સવ <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                        </a>
+
+                            <ul class="mdm-sub-menu">
+                                <li><a href="vali-form.html">વાલી ફોર્મ</a></li>
+                                <li class="mdm-dropdown praveshotsav-mega-menu">
+                                    <a href="javascript:void(0);" class="mdm-dropbtn">
+                                        પ્રવેશોત્સવ ફાઇલ <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                                    </a>
+
+                                    <ul class="mdm-sub-menu">
+                                        <li><a href="data.html">ડેટા</a></li>
+                                        <li><a href="ruparekha.html">રૂપરેખા</a></li>
+                                        <li><a href="guests.html">મુખ્ય મહેમાન</a></li>
+                                        <li><a href="SMC.html">SMC</a></li>
+                                        <li><a href="panchayat.html">પંચાયત સભ્યો</a></li>
+                                        <li><a href="teachers1-5.html">1 થી 5 શિક્ષકોની માહિતી</a></li>
+                                        <li><a href="teachers6-8.html">6 થી 8 શિક્ષકોની માહિતી</a></li>
+                                        <li><a href="school-info.html">શાળાની માહિતી</a></li>
+                                        <li><a href="village-info.html">ગામની માહિતી</a></li>
+                                        <li><a href="sheet-balvatika.html">બાલવાટિકા પ્રવેશયાદી</a></li>
+                                        <li><a href="sheet-std1.html">ધોરણ 1 પ્રવેશયાદી</a></li>
+                                        <li><a href="toppers.html">3-8 પ્રથમ નંબર</a></li>
+                                        <li><a href="attendance3-8.html">3 થી 8 હાજરી</a></li>
+                                        <li><a href="survey-bv.html">સર્વે BV</a></li>
+                                        <li><a href="survey-std1.html">સર્વે ધોરણ- 1</a></li>
+                                        <li><a href="caste-count.html">જાતિવાર સંખ્યા</a></li>
+                                        <li><a href="cet.html">CET પરીક્ષા</a></li>
+                                        <li><a href="nmms.html">NMMS પરીક્ષા</a></li>
+                                        <li><a href="gyansadhana.html">જ્ઞાન સાધના પરીક્ષા</a></li>
+                                        <li><a href="jnv.html">JVN પરીક્ષા</a></li>
+                                        <li><a href="sat.html">SAT પરીક્ષા</a></li>
+                                        <li><a href="activities.html">પ્રવૃત્તિ</a></li>
+                                        <li><a href="sutro.html">સુત્રો </a></li>
+                                        <li><a href="guno.html">GUNO</a></li>
+                                    </ul>
+                                </li>
+                                <style>
+                                    /* 🎯 ૧. શરૂઆતમાં મેનૂ સંપૂર્ણપણે છુપાયેલું જ રહેશે */
+                                    .mdm-dropdown.praveshotsav-mega-menu .mdm-sub-menu {
+                                        display: none !important;
+                                        position: absolute;
+                                        top: -80%;
+                                        left: 100%;
+                                        background-color: #ffffff;
+                                        
+                                        /* ૨ કોલમનું ગ્રીડ સેટિંગ */
+                                        grid-template-columns: repeat(2, 220px) !important;
+                                        gap: 4px 15px !important;
+                                        
+                                        min-width: 460px !important;
+                                        box-shadow: 4px 4px 25px rgba(0, 0, 0, 0.18) !important;
+                                        border-radius: 8px !important;
+                                        padding: 15px !important;
+                                        margin: 0;
+                                        list-style: none;
+                                        z-index: 99999 !important;
+                                        border-left: 4px solid #f58220 !important;
+                                    }
+
+                                    /* 🎯 ૨. જ્યારે માત્ર ને માત્ર "પ્રવેશોત્સવ ફાઇલ" (praveshotsav-mega-menu) પર જ માઉસ હોવર થાય ત્યારે જ ખુલે */
+                                    .mdm-dropdown.praveshotsav-mega-menu:hover > .mdm-sub-menu {
+                                        display: grid !important; /* '>' સાઇન ફક્ત આના જ ચાઇલ્ડ મેનૂને ઓપન કરશે */
+                                    }
+
+                                    /* ૩. અંદરની લિંક્સ (ટેક્સ્ટ) ની ડિઝાઇન */
+                                    .mdm-dropdown.praveshotsav-mega-menu .mdm-sub-menu li {
+                                        width: 100% !important;
+                                        display: block !important;
+                                    }
+
+                                    .mdm-dropdown.praveshotsav-mega-menu .mdm-sub-menu li a {
+                                        color: #475569 !important;
+                                        padding: 8px 12px !important;
+                                        text-decoration: none !important;
+                                        display: block !important;
+                                        font-size: 14px !important;
+                                        font-weight: 500 !important;
+                                        border-radius: 4px !important;
+                                        transition: all 0.2s ease !important;
+                                        white-space: nowrap !important;
+                                    }
+
+                                    /* ૪. માઉસ ઓવર ઇફેક્ટ */
+                                    .mdm-dropdown.praveshotsav-mega-menu .mdm-sub-menu li a:hover {
+                                        background-color: #f1f5f9 !important;
+                                        color: #f58220 !important;
+                                        padding-left: 16px !important;
+                                    }
+                                </style>
+                                <li><a href="praveshotsav-speech.html">પ્રવેશોત્સવ સ્પીચ</a></li>
+                                <li><a href="photo.html">ફોટો</a></li>
+                            </ul>
+                    </li>
+                    <li class="mdm-dropdown">
+                        <a href="javascript:void(0);" class="mdm-dropbtn">
+                            પત્રકો <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                        </a>
+
+                        <ul class="mdm-sub-menu">
+                            <li><a href="fln.html">FLN પત્રક</a></li>
+                            <li><a href="election-info.html">ચુંટણી માહિતી</a></li>
+                            <li><a href="letter-pad.html">શાળાનું લેટર પેડ</a></li>
+                            <li><a href="rojmel.html">રોજમેળ</a></li>
+                            <li><a href="higher-grade.html">ઉચ્ચતર પગાર ધોરણ ફાઇલ</a></li>
+                            <li><a href="birth-certificate.html">જન્મ તારીખનો દાખલો / બોનફાઇટ સટ્રી</a></li>
+                        </ul>
+                    </li>
+                    <li class="mdm-dropdown">
+                        <a href="javascript:void(0);" class="mdm-dropbtn">
+                            વાર્ષિક પત્રક <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                        </a>
+
+                        <ul class="mdm-sub-menu">
+                            <li><a href="mdm-report.html">ઇજાફા પત્રક</a></li>
+                            <li><a href="bv-report.html">જુલાઈ સેટ-અપ પત્રક</a></li>
+                            <li><a href="mdm-report.html">બાળ સંસદ</a></li>
+                            <li><a href="bv-report.html">સમય પત્રક</a></li>
+                            <li><a href="mdm-report.html">સર્વે યાદી</a></li>
+                            <li><a href="payroll.html">પે રોલ</a></li>
+                            <li><a href="pa-pu.html">પાઠ્યપુસ્તક પહોંચ</a></li>
+                            <li><a href="mdm-report.html">શિષ્યવૃતિ</a></li>
+                        </ul>
+                    </li>
+                        <li><a href="transport.html">ટ્રાન્સપોર્ટેશન રજીસ્ટર</a></li>
+                        <li><a href="gr-register.html">જનરલ રજીસ્ટર (G.R.)</a></li>
+                        <li><a href="https://ahmedabad.sasgujarat.in/">માસિક/પગાર પત્રક</a></li>
+
+                    </ul>
+                    </li>
+                <li class="nav-link-item">
+                    <a href="javascript:void(0);" class="nav-main-link"><i class="fa-solid fa-bowl-rice"></i> ભોજન યોજના <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="gov-dropdown">
+                        <li class="mdm-dropdown">
+                            <a href="javascript:void(0);" class="mdm-dropbtn">
+                                એમ.ડી.એમ <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                            </a>
+                    
+                            <ul class="mdm-sub-menu">
+                                <li><a href="mdm-report.html">એમ.ડી.એમ. પત્રક</a></li>
+                                <li><a href="bv-report.html"> બાળવાટિકા પત્રક</a></li>
+                                <li><a href="class-1to5-report.html"> ધોરણ ૧ થી ૫</a></li>
+                                <li><a href="class-6to8-report.html">ધોરણ ૬ થી ૮</a></li>
+                                <li><a href="date-wise-report.html">તારીખ મુજબનો અહેવાલ </a></li>
+                            </ul>
+                        </li>
+                        <li><a href="mdm-menu.html">સાપ્તાહિક મેનૂ પત્રક</a></li>
+                        <li><a href="SMC_Reconstitution_Hajipur.html">દૈનિક સ્ટોક રજીસ્ટર</a></li>
+                    </ul>
+                </li>
+                <li class="nav-link-item">
+                    <a href="javascript:void(0);" class="nav-main-link">
+                        <i class="fa-solid fa-bowl-rice"></i> એસ.એમ.સી. (SMC) <i class="fa-solid fa-chevron-down arrow"></i>
+                    </a>
+                    <ul class="gov-dropdown">
+                        <li><a href="SMC.html">એસ.એમ.સી.સભ્યો </a></li>
+                        <li><a href="SMC_Reconstitution_Hajipur.html">એસ.એમ.સી.ની પુન:રચના </a></li>
+                    </ul>
+                </li>
+                <li class="nav-link-item">
+                    <li class="nav-link-item">
+                    <a href="javascript:void(0);" class="nav-main-link">
+                        <i class="fa-solid fa-calendar-days"></i> દૈનિક હાજરી <i class="fa-solid fa-chevron-down arrow"></i>
+                    </a>
+                    <ul class="gov-dropdown">
+                        <li><a href="attendance.html">દૈનિક હાજરી </a></li>
+                        
+       
+                            <li class="mdm-dropdown">
+                            <a href="javascript:void(0);" class="mdm-dropbtn">
+                                રજિસ્ટર સંખ્યા <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: 3px;"></i>
+                            </a>
+                    
+                            <ul class="mdm-sub-menu">
+                                <li><a href="register.html">વિદ્યાર્થી</a></li>
+                                <li><a href="register-teacher.html">શિક્ષક</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    </li>
+                </li>
+                <li class="nav-link-item nav-logout">
+                    <a href="index.html" class="nav-main-link" onclick="logoutSystem()"><i class="fa-solid fa-power-off"></i>લોગ આઉટ</a>
+                </li>
+                <li class="menu-close-space">
+                    <label for="menu-toggle"></label>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<div class="print-btn-container">
+    <button class="print-btn" onclick="window.print()">🖨️ સંપૂર્ણ ફાઈલ પ્રિન્ટ કરો</button>
+</div>
+
+<div class="container">
+
+    <!-- પેજ ૧: મુખ્ય માહિતી અને મૂળ પ્રસ્તાવના -->
+    <div class="page-section first-section">
+        <h1>શાળા વ્યવસ્થાપન સમિતિ (SMC) રચના / પુનઃરચના  <strong>૨૦___-૨૦___</strong></h1>
+        <p class="center-text"><strong>(સંદર્ભ: શિક્ષણ વિભાગનો ઠરાવ ક્રમાંક: ED/DOGOI/GOI/3/20___/3241/K, <strong>તા.___-___-20___ </strong>મુજબ)</strong></p>
+
+        <div class="info-grid">
+            <div class="info-item">શાળાનું નામ: <span>હાજીપુર પ્રાથમિક શાળા</span></div>
+            <div class="info-item">શાળાનો ડાયસ કોડ (U-DISE): <span>24060303601</span></div>
+            <div class="info-item">તાલુકો: <span>કલોલ</span></div>
+            <div class="info-item">જિલ્લો: <span>ગાંધીનગર</span></div>
+            <div><strong>કુલ વિદ્યાર્થી સંખ્યા: </strong><span>___________</span></div>
+            <div class="info-item">SMC સભ્યોની કુલ સંખ્યા: <span>૧૫ થી ૨૦</span></div>
+        </div>
+        <p style="font-size: 0.9em; color: #555;">(નોંધ: 100 સુધી 12-15 સભ્યો, 100-500 સુધી 15-20 સભ્યો, 500 થી વધુ માટે 20-25 સભ્યો રાખવા.)</p>
+
+        <h3>એસ.એમ.સી પુન:રચના પ્રક્રિયા માટે ઠરાવ <strong>૨૦___-૨૦___</strong></h3>
+        <p><strong>કામ નં:</strong> શાળા વ્યવસ્થાપન સમિતિ એસ.એમ.સીની પુન:રચના કરવા બાબત</p>
+        <p><strong>ઠરાવ નં:</strong> ______________</p>
+        
+        <p>સમગ્ર શિક્ષા અભિયાન,શિક્ષણ સમિતિ ગાંધીનગર જિલ્લા પંચાયત અનુસંધાને આપણી શાળા વ્યવસ્થાપન સમિતિ (SMC) હાજીપુર  પ્રાથમિક શાળામાં સરકારશ્રી શિક્ષણ વિભાગનો ઠરાવ ક્રમાંક: ED/DOGOI/GOI/3/<strong>20___</strong>/3241/K, <strong>તા.___-___-20___ </strong>મુજબ શૈક્ષણિક <strong>વર્ષ-૨૦___ </strong>અને <strong>વર્ષ ૨૦___</strong> માટે શાળા વ્યવસ્થાપન સમિતિ (SMC) ની પુન:રચના કરવાની થાય છે.પરિપત્રની જોગવાઇ અનુસાર શાળામાં ભણતા તમામ બાળકોના માતા-પિતા/વાલીઓની મિંટંગ કરી <strong>વર્ષ-૨૦___-____</strong> માં આ પ્રકિયાપૂર્ણ કરવાની હોઇ સમિતિના અધ્યક્ષશ્રી અને સભ્યસચિવશ્રીએ શાળા અને વાલીઓની અનુકુળતા ધ્યાને લઇ સત્વરે વાલીઓને લેખિત આમંત્રણ આપવામાં આવ્યું તેમજ ગામના જાહેર સ્થળોએ જાહેરાત લખવામાં આવી તથા વાલી મિટીંગ બોલાવી સમિતિની પુન:રચનાની કામગીરી પૂર્ણ કરવા આજની સભા બહાલી આપેછે. જે સર્વાનુંમતે મંજૂર છે...
+અભ્યાસ કરતા દરેક બાળકના માતા-પિતા અથવા વાલીને આ અંગે લેખિત જાણ અથવા જાહેર સ્થળ ઉપર નોટીસ લગાવી જાણ કર્યા બાદ પરિપત્ર જોગવાઇ મુજબ “હાથ ઉચો કરીને સભ્યો પસંદ કરવાના” અન્યથા લોકશાહી ઢબે ચુટણી દ્વારા સભ્યો લેવાના થાય.
+ નીચે સહી કરનાર જુના એસ.એમ. સી સભ્યો હાજર રહેલ છે અને સહી કરેલ છે. 
+</p>
+    </div>
+
+    <!-- પેજ ૨: જૂની સમિતિના સભ્યોની વિગત -->
+    <div class="page-section">
+        <h2>જૂની એસ.એમ.સી સમિતિના હાજર સભ્યોની યાદી</h2>
+        <p>નીચે સહી કરનાર જુના એસ.એમ.સી સભ્યો સભામાં હાજર રહેલ છે અને તેમણે સંમતિ દર્શાવી સહી કરેલ છે:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 10%;">ક્રમ</th>
+                    <th style="width: 50%;">નામ</th>
+                    <th style="width: 25%;">હોદ્દો</th>
+                    <th style="width: 15%;">સહી</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="center-text">1</td><td></td><td>સભ્યસચિવ</td><td></td></tr>
+                <tr><td class="center-text">2</td><td></td><td>PRI સભ્ય</td><td></td></tr>
+                <tr><td class="center-text">3</td><td></td><td>શિક્ષણવિદ્દ્</td><td></td></tr>
+                <tr><td class="center-text">4</td><td></td><td>અધ્યક્ષ</td><td></td></tr>
+                <tr><td class="center-text">5</td><td></td><td>મહિલા પો.સભ્ય</td><td></td></tr>
+                <tr><td class="center-text">6</td><td></td><td>વાલીસભ્ય</td><td></td></tr>
+                <tr><td class="center-text">7</td><td></td><td>વાલીસભ્ય</td><td></td></tr>
+                <tr><td class="center-text">8</td><td></td><td>વાલીસભ્ય</td><td></td></tr>
+                <tr><td class="center-text">9</td><td></td><td>વાલીસભ્ય</td><td></td></tr>
+                <tr><td class="center-text">10</td><td></td><td>વાલીસભ્ય</td><td></td></tr>
+                <tr><td class="center-text">11</td><td></td><td>વાલીસભ્ય</td><td></td></tr>
+                <tr><td class="center-text">12</td><td></td><td>વાલીસભ્ય</td><td></td></tr>
+                <tr><td class="center-text">13</td><td></td><td>કડિયો</td><td></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- પેજ ૩: જાહેર આમંત્રણ નોટિસ -->
+    <div class="page-section">
+        <div class="notice-box">
+            <h2>જાહેર આમંત્રણ / નોટિસ</h2>
+            <p class="center-text"><strong>હાજીપુર પ્રાથમિક શાળા, તા-કલોલ, જિ-ગાંધીનગર</strong></p>
+            <p>આથી સર્વે ગ્રામજનોને જણાવવામાં આવે છે કે આપણા ગામની પ્રાથમિક શાળામાં <strong>વર્ષ-૨૦___</strong> અને <strong>વર્ષ-૨૦___</strong> એમ બે વર્ષ માટે એસ.એમ.સીની પુન:રચના કરવાની થાય છે. આ માટે શાળામાં ભણતા વિધાર્થીઓના માતા-પિતા/વાલીઓએ શાળામાં <strong>તારીખ-_____/_____/૨૦___ </strong>ને <strong>_____વારે </strong>નીચે દર્શાવેલ સમયે અને સ્થળે વાલી મીટીંગમાં અવશ્ય હાજર રહેવાની જાણ કરવામાં આવે છે. </p>
+            
+            <p><strong>તારીખ:</strong> ___/___/૨૦__ (_______ વાર)</p>
+            <p><strong>સમય:</strong> સવારે- ____ : ____ કલાકે</p>
+            <p><strong>સ્થળ:</strong> પ્રાથમિક શાળા,હાજીપુર </p>
+            
+            <div class="right-text" style="margin-top: 40px;">
+                <p><strong>મુખ્યશિક્ષક</strong><br>હાજીપુર પ્રા. શાળા</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- પેજ ૪: વાલીઓને લેખિત સૂચના (નોટિસ) -->
+    <div class="page-section">
+        <div class="notice-box">
+            <h2 style="background: none; padding: 0;">વાલીઓને લેખિત સૂચના (નોટિસ)</h2>
+            <p class="center-text">(સંદર્ભ: માર્ગદર્શિકા મુદ્દા ક્રમાંક ૩.૨ - ચૂંટણી પ્રક્રિયા)</p>
+            <p><strong>શાળાનું નામ:</strong> હાજીપુર પ્રાથમિક શાળા</p>
+            <p><strong>તારીખ:</strong> ____/____/૨૦___</p>
+            <hr>
+            <p>આથી હાજીપુર પ્રાથમિક શાળામાં અભ્યાસ કરતા તમામ વિદ્યાર્થીઓના માતા-પિતા/વાલીઓને જણાવવાનું કે, શૈક્ષણિક <strong>વર્ષ ૨૦___ </strong>માટે શિક્ષણ વિભાગના<strong> તા.____-____-૨૦___</strong> ના ઠરાવ મુજબ નવી શાળા વ્યવસ્થાપન સમિતિ (SMC) ની લોકશાહી ઢબે રચના કરવાની છે.</p>
+            
+            <h3>ચૂંટણી પ્રક્રિયાની વિગતો:</h3>
+            <p><strong>તારીખ:</strong> ____/____/૨૦___ </p>
+            <p><strong>સમય:</strong>____________ કલાકે</p>
+            <p><strong>સ્થળ:</strong>હાજીપુર  પ્રાથમિક શાળાનું પટાંગણ</p>
+            <h3>ચૂંટણી પ્રક્રિયાના નિયમો:</h3>
+            <ul class="bullet-list">
+                <li>દરેક વિદ્યાર્થીના પ્રવેશ ફોર્મમાં નોંધાયેલા માતા-પિતા કે વાલી પૈકી માત્ર એક જ વ્યક્તિ મતદાન કરવા માટે પાત્ર ગણાશે.</li>
+                <li>જો ઉમેદવારોની સંખ્યા નિર્ધારિત બેઠકો કરતાં વધુ હશે તો ચૂંટણી "હાથ ઊંચા કરીને અથવા ધ્વનિમતથી" કરવામાં આવશે.</li>
+                <li>સમિતિના ૭૫% સભ્યો વાલીઓમાંથી ચૂંટવાના હોવાથી અને ૫૦% મહિલા અનામત હોવાથી, તમામ વાલીઓને ફરજિયાત હાજર રહેવા વિનંતી છે.</li>
+            </ul>
+
+            <div class="signature-section">
+                <span></span>
+                <div class="right-text">
+                    <p>આપનો વિશ્વાસુ,</p>
+                    <p>(સહી)____________</p>
+                    <p style="margin-top: 20px;"><strong>આચાર્યશ્રી / સભ્ય-સચિવ</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- પેજ 5: [નવું ઉમેરેલું પેજ] વાલી સામાન્ય સભાની કાર્યવાહી નોંધ (ચૂંટણી પ્રક્રિયા) -->
+    <div class="page-section">
+        <h2>વાલી સામાન્ય સભાની કાર્યવાહી નોંધ (ચૂંટણી પ્રક્રિયા) </h2>
+        <p class="center-text"><strong>(સંદર્ભ: માર્ગદર્શિકા મુદ્દા ક્રમાંક ૩.૨(૪) – “હાથ ઊંચા કરીને ચૂંટણી)</strong></p>
+        
+        <div class="resolution-box">
+            <p>આજ રોજ <strong>તારીખ ___/___/૨૦___</strong>  ના <strong>કલાકે ______ </strong>હાજીપુર  પ્રાથમિક શાળા ખાતે SMC ની રચના કરવા માટે વાલીઓની સામાન્ય સભા બોલાવવામાં આવી. જેમાં નીચે મુજબની કાર્યવાહી લોકશાહી ઢબે કરવામાં આવી: </p>
+            <ol class="bullet-list">
+                <li>શાળાના આચાર્ય <strong>........................................</strong>દ્વારા SMC ની ભૂમિકા અને ઠરાવ મુજબ ૭૫% વાલી સભ્યો (જેમાં ૫૦% મહિલા અને SC/ST/OBC/OPEN નું પ્રતિનિધિત્વ) ની પસંદગી માટે સમજૂતી આપવામાં આવી.</li>
+                <li>ઉમેદવારોની સંખ્યા નિર્ધારિત બેઠકો કરતાં વધુ હોવાથી ઠરાવના મુદ્દા ક્રમાંક ૩.૨(૪) મુજબ ચૂંટણી "હાથ ઊંચા કરીને / ધ્વનિમતથી" યોજવામાં આવી.</li>
+                <li>હાજર વાલીઓએ બહુમતીથી નીચે મુજબના સભ્યોની SMC ના વાલી પ્રતિનિધિ તરીકે પસંદગી કરી છે:</li>
+            </ol>
+            <table>
+            <thead>
+                <tr>
+                    <th style="width: 10%;">ક્રમ</th>
+                    <th style="width: 50%;">SMC પસંદ થયેલ સભ્યનું  નામ  (વાલી)</th>
+                    <th style="width: 25%;">મળેલ મંજૂરી (હાથ ઊંચા કરનારની સંખ્યા)</th>
+                    <th style="width: 15%;">ચૂંટાયેલ જાહેર (હા/ના)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="center-text">1</td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">2</td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">3</td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">4</td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">5</td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">6</td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">7</td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">8</td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">9</td><td></td><td></td><td></td></tr>
+            </tbody>
+        </table>
+        <p><strong>ઠરાવ:</strong></p>
+        <p>આ સભામાં કોઈ વિવાદ ન હોવાથી ગુપ્ત મતદાનની જરૂરિયાત ઊભી થયેલ નથી અને સમગ્ર પ્રક્રિયા પારદર્શક રીતે હાજર વાલીઓની બહુમતીથી પૂર્ણ થયેલ છે. આ નામો સત્તાવાર નોંધપોથીમાં દાખલ કરવામાં આવે છે. </p>
+        </div>
+        
+        <div style="text-align: right;">
+            <p>(સહી અને સિક્કો)</p>
+            <p>આચાર્યશ્રી / મુખ્ય શિક્ષક</p>
+            <p>હાજીપુર પ્રાથમિક શાળા </p>
+        </div>
+    </div>
+
+    <!-- પેજ 6: [નવું ઉમેરેલું પેજ] SMC ની પ્રથમ બેઠક (અધ્યક્ષ અને ઉપાધ્યક્ષની પસંદગી) -->
+    <div class="page-section">
+        <h2>SMC ની પ્રથમ બેઠક (અધ્યક્ષ અને ઉપાધ્યક્ષની પસંદગી)</h2>
+        <p class="center-text"><strong>(સંદર્ભ: માર્ગદર્શિકા મુદ્દા ક્રમાંક ૩.૨(૮) - પ્રથમ બેઠક)</strong></p>
+        
+        <div class="resolution-box">
+            <p><strong>તારીખ: ___/___/૨૦__</strong></p>
+            
+            <p>સમય: ______</p>
+            <p>ચૂંટણી પૂર્ણ થયા બાદ આજ રોજ નવા ચૂંટાયેલા SMC સભ્યોની પ્રથમ બેઠક યોજવામાં આવી. આ બેઠકમાં ઠરાવ મુજબ અધ્યક્ષ અને ઉપાધ્યક્ષની પસંદગી વાલી સભ્યોમાંથી કરવામાં આવી છે.</p>
+            <p><strong>સર્વાનુમતે પસંદ થયેલ હોદ્દેદારો:</strong></p>
+            <ol class="bullet-list">
+                <li><strong>અધ્યક્ષનું નામ: </strong>  _________________________________________ (સહી: _________________)</li>
+                <li><strong>ઉપાધ્યક્ષનું નામ: </strong>  ________________________________________ (સહી: _________________)</li>
+            </ol>
+        </div>
+        <div style="text-align: right;">
+            <p>સહી અને સિક્કો</p>
+            <p>સભ્ય-સચિવ (આચાર્ય)</p>
+            <p>_________________</p>
+        </div>
+    </div>
+
+    <!-- પેજ 7: [નવું ઉમેરેલું પેજ] શાળા વ્યવસ્થાપન સમિતિ (SMC) નું અંતિમ રચના પત્રક -->
+    <div class="page-section">
+        <h2>શાળા વ્યવસ્થાપન સમિતિ (SMC) નું  અંતિમ રચના પત્રક</h2>
+        <p>વિભાગ ૧: વાલી સભ્યો (કુલ સભ્યોના ૭૫% - ૫૦% મહિલા અને SC/ST/OBC/CwSN પ્રતિનિધિત્વ સાથે)</p>
+        <p>વિભાગ ૨: અન્ય સભ્યો (કુલ સભ્યોના ૨૫%)</p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 7%;">ક્રમ</th>
+                    <th style="width: 13%;">હોદ્દો</th>
+                    <th style="width: 15%;">SMC પસંદ થયેલ સભ્યનું નામ</th>
+                    <th style="width: 15%;">વિદ્યાર્થીનું નામ/ધોરણ</th>
+                    <th style="width: 10%;">કેટેગરી</th>
+                    <th style="width: 20%;">મોબાઇલ નં</th>
+                    <th style="width: 20%;">સહી</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="center-text">૧</td><td>અધ્યક્ષ</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૨</td><td>ઉપાધ્યક્ષ</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૩</td><td>સભ્ય</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૪</td><td>સભ્યસચિવ</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૫</td><td>સભ્ય</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૬</td><td>સભ્ય</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૭</td><td>સભ્ય</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૮</td><td>સભ્ય</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૯</td><td>સભ્ય</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૧૦</td><td>સભ્ય</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૧૧</td><td>સભ્ય</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૧૨</td><td>સભ્ય</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૧૩</td><td>સ્થા.મંડળના ચૂંટાયેલા સભ્ય</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૧૪</td><td>શિક્ષક પ્રતિનિધિ (શિક્ષકો દ્વારા નક્કી કરાયેલ)</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="center-text">૧૫</td><td>સ્થાનિક શિક્ષણશાસ્ત્રી / આંગણવાડી કાર્યકર (AWW/ASHA/ANM) અથવા ભૂતપૂર્વ વિદ્યાર્થી</td><td></td><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+        </table>
+        <p>વિભાગ ૨: અન્ય સભ્યો (કુલ સભ્યોના ૨૫%)</p>
+        <p>માર્ગદર્શિકાના મુદ્દા ૨.૨ મુજબ ૨૫% સભ્યોની ફાળવણી ૩ સમાન ભાગમાં (૧/૩, ૧/૩, ૧/૩) કરવાની રહેશે</p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 25%;">નિયમ (૨૫% ના ભાગ)</th>
+                    <th style="width: 25%;">હોદ્દો / પ્રતિનિધિત્વ</th>
+                    <th style="width: 25%;">સભ્યનું  નામ</th>
+                    <th style="width: 25%;">સહી</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>૧/૩ ભાગ</td><td>સ્થાનિક સત્તામંડળના ચૂંટાયેલા સભ્ય</td><td></td><td></td></tr>
+                <tr><td>૧/૩ ભાગ</td><td>શાળાના શિક્ષક પ્રતિનિધિ (શિક્ષકો દ્વારા નક્કી કરાયેલ)</td><td></td><td></td></tr>
+                <tr><td>૧/૩ ભાગ</td><td>સ્થાનિક શિક્ષણશાસ્ત્રી / આંગણવાડી કાર્યકર (AWW/ASHA/ANM) અથવા ભૂતપૂર્વ વિદ્યાર્થી</td><td></td><td></td></tr>
+                <tr><td>હોદ્દાની રૂએ આચાર્ય</td><td>સભ્ય-સચિવ (આચાર્ય / મુખ્ય શિક્ષક)</td><td></td><td></td></tr>
+            </tbody>
+        </table>
+        <p><strong>નોંધ:</strong> શિક્ષકોની સંખ્યા SMC ની કુલ સંખ્યા મુજબ ૨૫% ના ૧/૩ ભાગ જેટલી લેવાની રહેશે. દા.ત. જો કુલ સભ્યો ૧૨ હોય, તો ૨૫% એટલે ૩ સભ્યો થાય. તેમાં ૧ સ્થાનિક સત્તામંડળ, ૧ શિક્ષક, ૧ આંગણવાડી કાર્યકર લેવાના થાય.</p>
+        <div style="text-align: right;">
+            <p>સહી અને સિક્કો</p>
+            <p>આચાર્યશ્રી / મુખ્ય શિક્ષક</p>
+            <p>હાજીપુર પ્રાથમિક શાળા</p>
+        </div>
+    </div>
+
+    <!-- પેજ ૧૧: ૨૫% અન્ય સભ્યોની વહેંચણી માર્ગદર્શિકા ટેબલ -->
+    <div class="page-section">
+        <h2>શાળા વ્યવસ્થાપન સમિતિ (SMC) ૨૫% અન્ય સભ્યોની વહેંચણી કોષ્ટક</h2>
+        <p class="center-text"><strong>(પરિપત્રના નિયમ ૨.૨ મુજબ ૧/૩ ની ગણતરી) </strong></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>SMC કુલ સભ્યો</th>
+                    <th>૨૫% વિશેષ સભ્યો</th>
+                    <th>સ્થાનિક સત્તામંડળ (૧/૩)</th>
+                    <th>શિક્ષક પ્રતિનિધિ (૧/૩)</th>
+                    <th>આંગણવાડી / શિક્ષણવિદ (૧/૩)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="center-text"><td>12</td><td>3</td><td>1</td><td>1</td><td>1</td></tr>
+                <tr class="center-text"><td>13</td><td>4</td><td>2</td><td>1</td><td>1</td></tr>
+                <tr class="center-text"><td>14</td><td>4</td><td>2</td><td>1</td><td>1</td></tr>
+                <tr class="center-text"><td>15</td><td>4</td><td>2</td><td>1</td><td>1</td></tr>
+                <tr class="center-text"><td>16</td><td>4</td><td>2</td><td>1</td><td>1</td></tr>
+                <tr class="center-text"><td>17</td><td>5</td><td>2</td><td>2</td><td>1</td></tr>
+                <tr class="center-text"><td>18</td><td>5</td><td>2</td><td>2</td><td>1</td></tr>
+                <tr class="center-text"><td>19</td><td>5</td><td>2</td><td>2</td><td>1</td></tr>
+                <tr class="center-text"><td>20</td><td>5</td><td>2</td><td>2</td><td>1</td></tr>
+                <tr class="center-text"><td>21</td><td>6</td><td>2</td><td>2</td><td>2</td></tr>
+                <tr class="center-text"><td>22</td><td>6</td><td>2</td><td>2</td><td>2</td></tr>
+                <tr class="center-text"><td>23</td><td>6</td><td>2</td><td>2</td><td>2</td></tr>
+                <tr class="center-text"><td>24</td><td>6</td><td>2</td><td>2</td><td>2</td></tr>
+                <tr class="center-text"><td>25</td><td>7</td><td>3</td><td>2</td><td>2</td></tr>
+            </tbody>
+        </table>
+        <p><strong>નોંધ:</strong> આ કોષ્ટક ગુજરાત સરકારના શિક્ષણ વિભાગના પરિપત્ર (નિયમ ૨.૨) મુજબ તૈયાર કરવામાં આવ્યું છે. અહીં ૨૫% વિશેષ સભ્યોની ૧/૩ ના ભાગમાં વહેંચણી કરવામાં આવી છે. અપૂર્ણાંક સભ્યો (જ્યારે સંખ્યા ૩ વડે વિભાજ્ય ન હોય) ના કિસ્સામાં પ્રાધાન્યતા મુજબ વધારાના સભ્યને ક્રમશઃ 'સ્થાનિક સત્તામંડળ' અને 'શિક્ષક પ્રતિનિધિ' માં ફાળવવામાં આવેલ છે.</p>
+    </div>
+
+    <!-- પેજ ૧૨: પેટા-સમિતિઓની રચના -->
+    <div class="page-section">
+        <h2>શાળા વ્યવસ્થાપન સમિતિ (SMC) ની પેટા-સમિતિઓની રચના</h2>
+        <p><strong>શાળાનું નામ: </strong>હાજીપુર પ્રાથમિક શાળા</p>
+        <p><strong>સંદર્ભ:</strong> શિક્ષણ વિભાગ, ગુજરાત સરકારના પરિપત્ર ક્રમાંક: ED/DOGOI/GOI/3/<strong>20___</strong>/3241/K <strong>(તા.____-____-૨૦___)</strong></p>
+        <h3><strong>SMC ની પેટા સમિતીઓ વિશે</strong> </h3>
+        <p>શાળા વ્યવસ્થાપન સમિતિ (SMC) ના અસરકારક સંચાલન માટે અધ્યક્ષ, ઉપાધ્યક્ષ અને સભ્ય સચિવ દ્વારા જરૂરિયાત મુજબ સભ્યોમાંથી નીચેની બે મહત્વની પેટા-સમિતિઓની રચના કરવાની રહેશે:</p>
+        <h3>૧. શાળા ભવન સમિતિ</h3>
+        <p><strong>મુખ્ય ભૂમિકા:</strong>શાળાના સિવિલ અને માળખાકીય કામોનું આયોજન, અંદાજ, સંચાલન અને દેખરેખ રાખવી.</p>
+        <p><strong>જવાબદારીઓ:</strong></p>
+        <ul class="bullet-list">
+            <li>શાળાના મકાનના બાંધકામ, નવીનીકરણ, સમારકામ, જાળવણી અને તેના નાણાકીય-ટેકનીકલ ધોરણોનું પાલન કરાવીને તમામ કામો સમયસર પૂર્ણ થાય તે સુનિશ્ચિત કરવુ.</li>
+            <li>શાળામાં સુરક્ષા, બાળકોને અનૂકુળ અને વિદ્યાર્થી-વિદ્યાર્થીનીઓ (જેન્ડર સેન્સિટાઇઝ) માટે અલગ સુવિધાઓ તેમજ દિવ્યાંગો માટે સર્વસુગમ્યતા સુનિશ્ચિત કરવી.</li>
+        </ul>
+
+        <h3>૨. શૈક્ષણિક સમિતિ</h3>
+        <p><strong>મુખ્ય ભૂમિકા:</strong>શાળાની તમામ શૈક્ષણિક પ્રવૃત્તિઓનું આયોજન, મોનિટરિંગ અને ડેટા મેનેજમેન્ટ કરવું.</p>
+        <p><strong>જવાબદારીઓ:</strong></p>
+        <ul class="bullet-list">
+            <li>શૈક્ષણિક પ્રવૃત્તિઓની દેખરેખ અને UDISE+ માટે જરૂરી ડેટા એકત્રિત કરવો.</li>
+            <li>સામાજિક-આર્થિક, જાતીય કે દિવ્યાંગતા સંબંધિત અવરોધો દૂર કરી શિક્ષણની ગુણવત્તા અને સમાનતા સુધારવી.</li>
+            <li>શિક્ષકો-વિદ્યાર્થીઓની હાજરી અને વિદ્યાર્થીઓની શૈક્ષણિક સિદ્ધિઓની નોંધ રાખવી.</li>
+            <li>માર્ગદર્શન, કાઉન્સેલિંગ અને વિકાસલક્ષી શૈક્ષણિક પ્રવૃત્તિઓ દ્વારા વિદ્યાર્થીઓ અને શિક્ષકોના સર્વાંગી શૈક્ષણિક, સામાજિક તથા વ્યક્તિત્વ વિકાસને પ્રોત્સાહન આપવું.</li>
+            <li>આ સમિતિ શાળાના શૈક્ષણિક સ્વાસ્થ્યના પ્રથમ રક્ષક તરીકે કામ કરશે.</li>
+        </ul>
+
+        <h3>૩. અન્ય પેટા-સમિતિઓ</h3>
+        <p>સ્થાનિક જરૂરિયાતોને ધ્યાનમાં રાખીને SMC દ્વારા નીચે મુજબની અન્ય પેટા-સમિતિઓની રચના કરી શકાશે:</p>
+        <ul class="bullet-list">
+            <li>પી.એમ. પોષણ / આરોગ્ય અને પોષણ સમિતિ</li>
+            <li>સલામતી સમિતિ</li>
+            <li>સામાજિક ઓડિટ સમિતિ તથા અન્ય જરૂરી પેટા-સમિતિઓ</li>
+        </ul>
+        <p>આ તમામ પેટા-સમિતિઓ SMC ના સર્વાંગી માર્ગદર્શન અને દેખરેખ હેઠળ કાર્ય કરશે. કાર્ય વહેંચણીના ભાગ રૂપે SMC પોતાની સત્તા જરૂરિયાત મુજબ આ વિવિધ પેટા-સમિતિઓને સોંપી શકશે.</p>
+
+        <h3>પેટા-સમિતિઓની વિગત</h3>
+                <table>
+            <thead>
+                <tr>
+                    <th>ક્રમ</th>
+                    <th>પેટા-સમિતિનું નામ</th>
+                    <th>સભ્યોની સંખ્યા</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="center-text"><td>1</td><td>શાળા ભવન સમિતિ</td><td>જરૂરિયાત મુજબ (SMC ના સભ્યોમાંથી) સભ્યનું નામ <br>1. __________ <br>2. __________<br>3. __________<br>4. __________</td></tr>
+                <tr class="center-text"><td>2</td><td>શૈક્ષણિક સમિતિ</td><td>જરૂરિયાત મુજબ (SMC ના સભ્યોમાંથી)  સભ્યનું નામ <br>1. __________ <br>2. __________<br>3. __________<br>4. __________</td></tr>
+                <tr class="center-text"><td>3</td><td>પી.એમ. પોષણ / આરોગ્ય અને પોષણ સમિતિ</td><td>સ્થાનિક જરૂરિયાત મુજબ સભ્યનું નામ <br>1. __________ <br>2. __________<br>3. __________<br>4. __________ </td></tr>
+                <tr class="center-text"><td>4</td><td>શાળા સલામતી સમિતિ</td><td>સ્થાનિક જરૂરિયાત મુજબ સભ્યનું નામ <br>1. __________ <br>2. __________<br>3. __________<br>4. __________</td></tr>
+                <tr class="center-text"><td>5</td><td>સામાજિક ઓડિટ સમિતિ</td><td>સ્થાનિક જરૂરિયાત મુજબ સભ્યનું નામ<br>1. __________ <br>2. __________<br>3. __________<br>4. __________</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- પેજ ૧૩: બેંક પત્ર અને પ્રમાણપત્ર -->
+    <div class="page-section">
+        <h2>બેંક સહી નમૂના બદલવા અંગેનો પત્ર</h2>
+        <div style="text-align: right;">
+            <p>હાજીપુર  પ્રાથમિક શાળા</p>
+            <p>તા-કલોલ , જિ-ગાંધીનગર </p>
+            <p>મો-___________________ </p>
+            <p>તારીખ-___/___/20___</p>
+        </div>
+        <div>
+            <p>પ્રતિશ્રી,</p>
+            <p>બેંક મેનેજરશ્રી,</p>
+            <p>બેંક ઓફ બરોડા,કલોલ</p>
+        </div>
+        <p><strong>વિષય:-</strong>બેંક એકાઉન્ટમાં સહીના નમૂના બદલવા બાબત</p>
+        <p>જય ભારત સાથ જણાવવાનું કે હાજીપુર  પ્રાથમિક શાળાના એસ.એમ.સી પુન:રચના થતા નીચે દર્શાવેલ “બેંક એકાઉન્ટ”માં સહીના નમુના બદલવા આપ સાહેબશ્રીને નમ્ર વિનંતિ. એસ.એમ.સી ઠરાવના નમૂનાની નકલ આ સાથે સામેલ છે. આભારસહ...</p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 10%;">ક્રમ</th>
+                    <th style="width: 45%;">બેંક એકાઉન્ટ નામ</th>
+                    <th style="width: 45%;">બેંક એકાઉન્ટ નંબર</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="center-text">1</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 100%;">મહિલા સભ્ય અને સભ્યસચિવ સહીનો નમુનો (સિક્કા સાથે)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td></td></tr>
+                <tr><td></td></tr>
+                <tr><td></td></tr>
+                <tr><td></td></tr>
+                <tr><td></td></tr>
+            </tbody>
+        </table>
+        <p><strong>બીડાણ:</strong></p>
+        <p>1.એસ.એમ.સીઠરાવનીનકલ</p>
+        <p>2.પાસબુકનકલ</p>
+        <p>3.આધારકાર્ડનીનકલ (મહિલાસભ્ય) પ્રમાણિતકરેલ</p>
+        <p>4. પાનકાર્ડ(મહિલાસભ્ય)જો હોય તો આપવું</p>
+        <div style="text-align: right;">
+            <p><strong>મુખ્યશિક્ષક</strong><br>હાજીપુર પ્રાથમિક શાળા</p>
+        </div>
+
+        <div class="certification-box" style="border: 2px dashed #333; padding: 25px; text-align: center; background-color: #fff;">
+            <h2>એસ.એમ.સીની પુન:રચના કર્યા બદલ પ્રમાણપત્ર</h2>
+            <p>આથી પ્રમાણપત્ર આપવામાં આવે છે કે હાજીપુર  પ્રાથમિક શાળામાં શિક્ષણ વિભાગનો ઠરાવ ક્રમાંક: ED/DOGOI/GOI/3/<strong>20___</strong>/3241/K, <strong>તારીખ-____-____-20___</strong>મુજબ અનુસાર એસ.એમ.સીની પુન:રચના નિયમાનુસાર થઇ છે. જેની ખાત્રી બદલ આ પ્રમાણપત્ર આપવામાં આવે છે. </p>
+            <div class="right-text" style="margin-top: 20px;">
+                <p><strong>મુખ્યશિક્ષક</strong><br>હાજીપુર પ્રાથમિક શાળા</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- ફૂટર સેક્શન -->
+<footer class="gov-footer" style="background-color: #0f172a; color: #cbd5e1; padding: 30px 15px; margin-top: 40px;">
+    <div class="footer-container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+            <div>
+                <h4 style="color: #fff; margin-bottom: 15px;">હાજીપુર પ્રાથમિક શાળા</h4>
+                <p>ગુજરાત સરકાર દ્વારા સંચાલિત આદર્શ પ્રાથમિક શાળા.</p>
+            </div>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 15px;">ઉપયોગી સરકારી વેબસાઇટ</h4>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li><a href="https://education.gujarat.gov.in" target="_blank" style="color: #cbd5e1; text-decoration: none;"><i class="fa-solid fa-angle-right"></i> શિક્ષણ વિભાગ, ગુજરાત</a></li>
+                    <li><a href="https://ssagujarat.org/" target="_blank" style="color: #cbd5e1; text-decoration: none;"><i class="fa-solid fa-angle-right"></i> સમગ્ર શિક્ષા</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 15px;">સંપર્ક વિગત</h4>
+                <p><i class="fa-solid fa-location-dot"></i> તા. કલોલ, જિ. ગાંધીનગર, ગુજરાત.</p>
+                <p><i class="fa-solid fa-phone"></i> +91 9512104218</p>
+                <p><i class="fa-solid fa-envelope"></i> principal24060303601@ssguj.in</p>
+            </div>
+        </div>
+        <div style="text-align: center; border-top: 1px solid #334155; padding-top: 20px; margin-top: 20px; font-size: 0.9rem;">
+            <p>© 2026 હાજીપુર પ્રાથમિક શાળા. સર્વાધિકાર સુરક્ષિત | શિક્ષણ વિભાગ, ગુજરાત રાજ્ય</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
